@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../core/models/tag_model.dart';
-import '../../core/viewmodels/tag_crud_model.dart';
-import '../../ui/widgets/tag_card.dart';
+import 'package:team_elearny/flutter_utils/ff_util.dart';
+import '../../../core/models/tag_model.dart';
+import '../../../core/viewmodels/tag_crud_model.dart';
+import '../../../ui/widgets/tag_card.dart';
 import 'package:provider/provider.dart';
 
 class ListTags extends StatefulWidget {
@@ -22,7 +23,7 @@ class ListTagsState extends State<ListTags> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add_tag');
+          context.pushNamed('AddTag');
         },
         child: const Icon(Icons.add),
       ),
@@ -34,8 +35,9 @@ class ListTagsState extends State<ListTags> {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               tags = snapshot.data!.docs
-              .map((doc) => Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
-              .toList();
+                  .map((doc) =>
+                      Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
+                  .toList();
               return ListView.builder(
                 itemCount: tags.length,
                 itemBuilder: (buildContext, index) => TagCard(tag: tags[index]),

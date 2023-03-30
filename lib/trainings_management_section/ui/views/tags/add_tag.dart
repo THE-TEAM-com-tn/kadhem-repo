@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/models/tag_model.dart';
-import '../../core/viewmodels/tag_crud_model.dart';
-import '../../ui/widgets/G_text_form_field.dart';
+import '../../../core/models/tag_model.dart';
+import '../../../core/viewmodels/tag_crud_model.dart';
+import '../../../ui/widgets/G_text_form_field.dart';
 
-class ModifyTag extends StatefulWidget {
-  final Tag tag;
-
-  const ModifyTag({super.key, required this.tag});
+class AddTag extends StatefulWidget {
+  const AddTag({super.key});
 
   @override
-  ModifyTagState createState() => ModifyTagState();
+  AddTagState createState() => AddTagState();
 }
 
-class ModifyTagState extends State<ModifyTag> {
+class AddTagState extends State<AddTag> {
   final _formKey = GlobalKey<FormState>();
-
   late String label;
   late String color;
 
   @override
   Widget build(BuildContext context) {
-    final tagProvider = Provider.of<TagCRUDModel>(context);
-
+    var tagProvider = Provider.of<TagCRUDModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text('Modify Tag Details'),
+          child: Text('Add Tag'),
         ),
       ),
       body: Padding(
@@ -36,18 +32,16 @@ class ModifyTagState extends State<ModifyTag> {
           child: Column(
             children: <Widget>[
               GTextFormField(
-                initVal: widget.tag.label,
-                ifEmpty: "Tag label is required",
-                onSaved: (value) => label = value!,
-                hint: "Tag Name"
+                  ifEmpty: "Tag label is required",
+                  onSaved: (value) => label = value!,
+                  hint: "Tag Label"),
+              const SizedBox(
+                height: 16,
               ),
-              const SizedBox(height: 16, ),
               GTextFormField(
-                initVal: widget.tag.color,
-                ifEmpty: "Tag color is required",
-                onSaved: (value) => color = value!,
-                hint: "Tag Color"
-              ),
+                  ifEmpty: "Tag color is required",
+                  onSaved: (value) => color = value!,
+                  hint: "Tag Color"),
               const SizedBox(
                 height: 16,
               ),
@@ -56,12 +50,17 @@ class ModifyTagState extends State<ModifyTag> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await tagProvider.updateTag(Tag(label: label, color: color), widget.tag.id!);
+                    await tagProvider.addTag(Tag(
+                      label: label,
+                      color: color,
+                    ));
+                    // Navigator.pushNamed(context, '/list_categories');
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('Update Tag',
+                child: const Text('Add Tag',
                     style: TextStyle(color: Colors.white)),
+                // color: Colors.blue,
               )
             ],
           ),

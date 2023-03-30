@@ -1,4 +1,4 @@
-import '../product_details_page/global/device_type.dart';
+import '../trainings_management_section/global/device_type.dart';
 import 'package:flutter/material.dart';
 
 class AppModel with ChangeNotifier {

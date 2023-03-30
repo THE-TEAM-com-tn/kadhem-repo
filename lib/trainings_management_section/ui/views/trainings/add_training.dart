@@ -7,31 +7,35 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../core/models/training_model.dart';
 import 'package:provider/provider.dart';
-import '../../core/models/training_model.dart';
-import '../../core/viewmodels/training_crud_model.dart';
-import '../../ui/widgets/G_text_form_field.dart';
-import '../../ui/widgets/multi_select_tool.dart';
-import 'package:team_elearny/product_details_page/ui/widgets/multi_select_tags_tool.dart';
+import '../../../ui/widgets/G_text_form_field.dart';
+import '../../../ui/widgets/multi_select_tags_tool.dart';
+import '../../../ui/widgets/multi_select_tool.dart';
+import '../../../core/viewmodels/training_crud_model.dart';
 
-class ModifyTraining extends StatefulWidget {
-  final Training training;
-
-  const ModifyTraining({super.key, required this.training});
+class AddTraining extends StatefulWidget {
+  const AddTraining({super.key});
 
   @override
-  ModifyTrainingState createState() => ModifyTrainingState();
+  AddTrainingState createState() => AddTrainingState();
 }
 
-class ModifyTrainingState extends State<ModifyTraining> {
+class AddTrainingState extends State<AddTraining> {
   final _formKey = GlobalKey<FormState>();
 
   List<String> _selectedCategories = [];
   List<String> _selectedTags = [];
   String imageUrl = "";
 
+  late String title;
+  late String description;
+  late String author;
+  late String duration;
+  late double price;
+  late String trailerVid;
+
   void _showMultiSelect() async {
-    
     final List<String>? results = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -48,7 +52,6 @@ class ModifyTrainingState extends State<ModifyTraining> {
   }
 
   void _showMultiSelect_() async {
-
     final List<String>? results = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -71,129 +74,112 @@ class ModifyTrainingState extends State<ModifyTraining> {
 
     if (!kIsWeb) {
       print("##### Mobile Detetcted!");
-      
+
       String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
       print("##### Image unique name: $uniqueFileName");
 
       Reference referenceRoot = FirebaseStorage.instance.ref();
       Reference referenceDirImg = referenceRoot.child("images");
       Reference referenceImgToUpload = referenceDirImg.child(uniqueFileName);
-      
+
       try {
         await referenceImgToUpload.putFile(File(file!.path));
         imageUrl = await referenceImgToUpload.getDownloadURL();
         print("##### Image URL: $imageUrl");
-      } catch(error) {
+      } catch (error) {
         print("#####ERROR: $error");
       }
     } else if (kIsWeb) {
       print("##### Web Detetcted!");
 
       var imageBytes = await file?.readAsBytes();
-      
+
       String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
       print("##### Image unique name: $uniqueFileName");
 
       Reference referenceRoot = FirebaseStorage.instance.ref();
       Reference referenceDirImg = referenceRoot.child("images");
       Reference referenceImgToUpload = referenceDirImg.child(uniqueFileName);
-      
+
       try {
         await referenceImgToUpload.putData(imageBytes!);
         imageUrl = await referenceImgToUpload.getDownloadURL();
         print("##### Image URL: $imageUrl");
-      } catch(error) {
+      } catch (error) {
         print("#####ERROR: $error");
       }
-    } 
+    }
   }
-
-  late String title;
-  late String description;
-  late String author;
-  late String duration;
-  late String price;
-  late String trailerVid;
 
   @override
   Widget build(BuildContext context) {
-    final trainingProvider = Provider.of<TrainingCRUDModel>(context);
-    
+    var trainingProvider = Provider.of<TrainingCRUDModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text('Modify Training Details'),
+          child: Text('Add Training'),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
               GTextFormField(
-                initVal: widget.training.title,
-                ifEmpty: "Category name is required",
-                onSaved: (value) => title = value!,
-                hint: "Training Title"
-              ),
+                  ifEmpty: "Training title is required",
+                  onSaved: (value) => title = value!,
+                  hint: "Training Title"),
               const SizedBox(
                 height: 16,
               ),
               GTextFormField(
-                initVal: widget.training.description,
-                ifEmpty: "Please enter Training description",
-                onSaved: (value) => description = value!,
-                hint: "Description"
-              ),
+                  ifEmpty: "Training description is required",
+                  onSaved: (value) => description = value!,
+                  hint: "Training description"),
               const SizedBox(
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: _showMultiSelect,
-                child: const Text('Select Categories'),
+                  onPressed: _showMultiSelect,
+                  child: const Text('Select Categories')),
+              const SizedBox(
+                height: 16,
               ),
+              // display selected items
               Wrap(
                 children: _selectedCategories
-                .map((e) => Chip(label: Text(e)))
-                .toList(),
+                    .map((e) => Chip(label: Text(e)))
+                    .toList(),
               ),
               const SizedBox(
                 height: 16,
               ),
               GTextFormField(
-                initVal: widget.training.author,
-                ifEmpty: "Please enter Training author name",
-                onSaved: (value) => author = value!,
-                hint: "Author"
-              ),
+                  ifEmpty: "Training author name is required",
+                  onSaved: (value) => author = value!,
+                  hint: "Training Author Name"),
               const SizedBox(
                 height: 16,
               ),
               GTextFormField(
-                initVal: widget.training.duration,
-                ifEmpty: "Please enter Training duration",
-                onSaved: (value) => duration = value!,
-                hint: "Duration"
-              ),
+                  ifEmpty: "Training duration is required",
+                  onSaved: (value) => duration = value!,
+                  hint: "Training Duration"),
               const SizedBox(
                 height: 16,
               ),
               GTextFormField(
-                initVal: widget.training.price.toString(),
-                ifEmpty: "Please enter Training price",
-                onSaved: (value) => price = value!,
-                hint: "Price"
-              ),
+                  ifEmpty: "Training price is required",
+                  onSaved: (value) => price = double.parse(value!),
+                  hint: "Training Price"),
               const SizedBox(
                 height: 16,
               ),
               GTextFormField(
-                initVal: widget.training.trailerVid,
-                ifEmpty: "Please enter The Trailer video URL",
-                onSaved: (value) => trailerVid = value!,
-                hint: "Trailer Video URL"
-              ),
+                  ifEmpty: "Training trailer video URL is required",
+                  onSaved: (value) => trailerVid = value!,
+                  hint: "Training Trailer Video URL"),
               const SizedBox(
                 height: 16,
               ),
@@ -205,29 +191,45 @@ class ModifyTrainingState extends State<ModifyTraining> {
                 height: 16,
               ),
               ElevatedButton(
+                onPressed: _showMultiSelect_,
+                child: const Text('Select Tags'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              // display selected items
+              Wrap(
+                children: _selectedTags
+                    .map((e) => Chip(
+                          label: Text(e),
+                        ))
+                    .toList(),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
                 // splashColor: Colors.red,
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await trainingProvider.updateTraining(
-                      Training(
+                    await trainingProvider.addTraining(Training(
                         title: title,
                         description: description,
                         category: _selectedCategories,
                         author: author,
                         duration: duration,
-                        price: double.parse(price),
+                        price: price,
                         trailerVid: trailerVid,
                         image: imageUrl,
                         tags: _selectedTags,
-                        creationDate: Timestamp.now()),
-                        widget.training.id!
-                      );
+                        creationDate: Timestamp.now()));
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('update Training',
+                child: const Text('add Training',
                     style: TextStyle(color: Colors.white)),
+                // color: Colors.blue,
               )
             ],
           ),

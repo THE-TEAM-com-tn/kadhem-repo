@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_elearny/product_details_page/ui/widgets/image-card-widget/src/image_card_content.dart';
+import 'package:team_elearny/trainings_management_section/ui/widgets/image-card-widget/src/image_card_content.dart';
 
 class FillImageCard extends StatelessWidget {
   const FillImageCard({

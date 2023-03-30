@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/models/category_model.dart';
-import '../../core/viewmodels/category_crud_model.dart';
-import '../../ui/widgets/G_text_form_field.dart';
+import '../../../core/models/category_model.dart';
+import '../../../core/viewmodels/category_crud_model.dart';
+import '../../../ui/widgets/G_text_form_field.dart';
 
 class ModifyCategory extends StatefulWidget {
   final TrainingCategory category;
@@ -36,13 +36,18 @@ class ModifyCategoryState extends State<ModifyCategory> {
           child: Column(
             children: <Widget>[
               GTextFormField(
-                initVal: widget.category.name,
-                ifEmpty: "Category name is required",
-                onSaved: (value) => name = value!,
-                hint: "Category Name"
+                  initVal: widget.category.name,
+                  ifEmpty: "Category name is required",
+                  onSaved: (value) => name = value!,
+                  hint: "Category Name"),
+              const SizedBox(
+                height: 16,
               ),
-              const SizedBox(height: 16, ),
-              GTextFormField(initVal: widget.category.description, ifEmpty: "Category description is required", onSaved: (value) => description = value!, hint: "Category Description"),
+              GTextFormField(
+                  initVal: widget.category.description,
+                  ifEmpty: "Category description is required",
+                  onSaved: (value) => description = value!,
+                  hint: "Category Description"),
               const SizedBox(
                 height: 16,
               ),
@@ -51,7 +56,9 @@ class ModifyCategoryState extends State<ModifyCategory> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await categoryProvider.updateCategory(TrainingCategory(name: name, description: description), widget.category.id!);
+                    await categoryProvider.updateCategory(
+                        TrainingCategory(name: name, description: description),
+                        widget.category.id!);
                     Navigator.pop(context);
                   }
                 },

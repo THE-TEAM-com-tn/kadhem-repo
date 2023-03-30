@@ -3,14 +3,13 @@ export 'sample_page/sample_page_widget.dart' show SamplePageWidget;
 
 export 'home_page/home_page_widget.dart' show HomePageWidget;
 
-// export 'product_details_page/product_details_page_widget.dart'
-//     show ProductDetailsPageWidget;
+export 'trainings_management_section/ui/views/home_view.dart' show HomeView;
 
-export 'product_details_page/product_details_page_widget.dart'
-    show ProductDetailsPageWidget;
+export 'trainings_management_section/ui/views/trainings/list_trainings.dart'
+    show ListTrainings;
 
-export 'product_details_page/ui/views/list_trainings.dart' show ListTrainings;
-export 'product_details_page/ui/views/add_training.dart' show AddTraining;
+export 'trainings_management_section/ui/views/trainings/add_training.dart'
+    show AddTraining;
 
 export 'users_and_group_page/users_and_group_page_widget.dart'
     show UsersAndGroupPageWidget;

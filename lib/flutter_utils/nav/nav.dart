@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/categories/add_category.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/tags/add_tag.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/categories/list_categories.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/tags/list_tags.dart';
 
 import '../../index.dart';
 import '../../main.dart';
@@ -77,20 +81,43 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
 
             //##### My part
             FFRoute(
-              name: 'TrainingsManagement',
-              path: 'trainingsManagement',
-              builder: (context, params) => ProductDetailsPageWidget(),
-            ),
-            FFRoute(
               name: 'ListTrainings',
               path: 'listTrainings',
               builder: (context, params) => ListTrainings(),
             ),
             FFRoute(
               name: 'AddTraining',
-              path: 'addTrainings',
+              path: 'addTraining',
               builder: (context, params) => AddTraining(),
             ),
+            FFRoute(
+              name: 'ListCategories',
+              path: 'listCategories',
+              builder: (context, params) => ListCategories(),
+            ),
+            FFRoute(
+              name: 'AddCategory',
+              path: 'addCategory',
+              builder: (context, params) => AddCategory(),
+            ),
+            FFRoute(
+              name: 'ListTags',
+              path: 'listTags',
+              builder: (context, params) => ListTags(),
+            ),
+            FFRoute(
+              name: 'AddTag',
+              path: 'addTag',
+              builder: (context, params) => AddTag(),
+            ),
+
+            FFRoute(
+              name: 'HomeView',
+              path: 'homeView',
+              builder: (context, params) => HomeView(),
+            ),
+
+            // #####
 
             FFRoute(
               name: 'LessonPage',

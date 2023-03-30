@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:team_elearny/product_details_page/core/viewmodels/training_crud_model.dart';
-import 'package:team_elearny/product_details_page/locator.dart';
+import 'package:team_elearny/trainings_management_section/core/viewmodels/category_crud_model.dart';
+import 'package:team_elearny/trainings_management_section/core/viewmodels/tag_crud_model.dart';
+import 'package:team_elearny/trainings_management_section/core/viewmodels/training_crud_model.dart';
+import 'package:team_elearny/trainings_management_section/locator.dart';
 import 'flutter_utils/ff_theme.dart';
 import 'flutter_utils/ff_util.dart';
 import 'flutter_utils/internationalization.dart';
@@ -15,13 +17,10 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await FFTheme.initialize();
   await FFLocalizations.initialize();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupLocator();
-
   runApp(MyApp());
 }
 
@@ -67,7 +66,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => locator<TrainingCRUDModel>())
+        ChangeNotifierProvider(create: (_) => locator<TrainingCRUDModel>()),
+        ChangeNotifierProvider(create: (_) => locator<CategoryCRUDModel>()),
+        ChangeNotifierProvider(create: (_) => locator<TagCRUDModel>())
       ],
       child: MaterialApp.router(
         title: 'team-elearny',
@@ -119,7 +120,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'HomePage': HomePageWidget(),
       'UsersAndGroupPage': UsersAndGroupPageWidget(),
-      'ProductDetailsPage': ProductDetailsPageWidget(),
+      'Trainings': HomeView(),
       'LessonPage': LessonPageWidget(),
       'SettingsPage': SettingsPageWidget(),
       'SamplePage': SamplePageWidget(),

@@ -2,31 +2,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/models/category_model.dart';
-import '../../core/viewmodels/category_crud_model.dart';
-import '../../ui/views/modify_category.dart';
+import '../../core/models/tag_model.dart';
+import '../../core/viewmodels/tag_crud_model.dart';
+import '../../ui/views/tags/modify_tag.dart';
 
-class CategoryCard extends StatelessWidget {
-  final TrainingCategory category;
-  const CategoryCard({super.key, required this.category});
+class TagCard extends StatelessWidget {
+  final Tag tag;
+  const TagCard({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = Provider.of<CategoryCRUDModel>(context);
+    final tagProvider = Provider.of<TagCRUDModel>(context);
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => ModifyCategory(category: category)));
+            context, MaterialPageRoute(builder: (_) => ModifyTag(tag: tag)));
       },
       child: Padding(
           padding: const EdgeInsets.all(8),
           child: Card(
-            child: Column(
-              children: [
-              AppBar(
+              child: Column(children: [
+            AppBar(
               backgroundColor: Theme.of(context).primaryColor,
               actions: <Widget>[
                 IconButton(
@@ -35,19 +32,20 @@ class CategoryCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    await categoryProvider.removeCategory(category.id!);
+                    await tagProvider.removeTag(tag.id!);
                     Navigator.pop(context);
                   },
                 )
               ],
             ),
             ListTile(
-              title: Text("Title: ${category.name}"),
+              title: Text("Label: ${tag.label}"),
               subtitle: Container(
                 child: (Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Category: ${category.description}", style: const TextStyle(fontSize: 14)),
+                    Text("Color: ${tag.color}",
+                        style: const TextStyle(fontSize: 14)),
                   ],
                 )),
               ),

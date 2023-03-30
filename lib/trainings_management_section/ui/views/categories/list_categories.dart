@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../core/models/category_model.dart';
-import '../../core/viewmodels/category_crud_model.dart';
-import '../../ui/widgets/category_card.dart';
+import 'package:team_elearny/flutter_utils/ff_util.dart';
+import '../../../core/models/category_model.dart';
+import '../../../core/viewmodels/category_crud_model.dart';
+import '../../../ui/widgets/category_card.dart';
 import 'package:provider/provider.dart';
 
 class ListCategories extends StatefulWidget {
@@ -22,7 +23,7 @@ class ListCategoriesState extends State<ListCategories> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add_category');
+          context.pushNamed('AddCategory');
         },
         child: const Icon(Icons.add),
       ),
@@ -34,11 +35,13 @@ class ListCategoriesState extends State<ListCategories> {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               categories = snapshot.data!.docs
-              .map((doc) => TrainingCategory.fromJson(doc.data() as Map<String, dynamic>, doc.id))
-              .toList();
+                  .map((doc) => TrainingCategory.fromJson(
+                      doc.data() as Map<String, dynamic>, doc.id))
+                  .toList();
               return ListView.builder(
                 itemCount: categories.length,
-                itemBuilder: (buildContext, index) => CategoryCard(category: categories[index]),
+                itemBuilder: (buildContext, index) =>
+                    CategoryCard(category: categories[index]),
               );
             } else {
               return const Text('fetching');

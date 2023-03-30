@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/models/tag_model.dart';
-import '../../core/viewmodels/tag_crud_model.dart';
-import '../../ui/widgets/G_text_form_field.dart';
+import '../../../core/models/tag_model.dart';
+import '../../../core/viewmodels/tag_crud_model.dart';
+import '../../../ui/widgets/G_text_form_field.dart';
 
-class AddTag extends StatefulWidget {
-  const AddTag({super.key});
+class ModifyTag extends StatefulWidget {
+  final Tag tag;
+
+  const ModifyTag({super.key, required this.tag});
 
   @override
-  AddTagState createState() => AddTagState();
+  ModifyTagState createState() => ModifyTagState();
 }
 
-class AddTagState extends State<AddTag> {
+class ModifyTagState extends State<ModifyTag> {
   final _formKey = GlobalKey<FormState>();
+
   late String label;
   late String color;
 
   @override
   Widget build(BuildContext context) {
-    var tagProvider = Provider.of<TagCRUDModel>(context);
+    final tagProvider = Provider.of<TagCRUDModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text('Add Tag'),
+          child: Text('Modify Tag Details'),
         ),
       ),
       body: Padding(
@@ -32,13 +36,15 @@ class AddTagState extends State<AddTag> {
           child: Column(
             children: <Widget>[
               GTextFormField(
+                  initVal: widget.tag.label,
                   ifEmpty: "Tag label is required",
                   onSaved: (value) => label = value!,
-                  hint: "Tag Label"),
+                  hint: "Tag Name"),
               const SizedBox(
                 height: 16,
               ),
               GTextFormField(
+                  initVal: widget.tag.color,
                   ifEmpty: "Tag color is required",
                   onSaved: (value) => color = value!,
                   hint: "Tag Color"),
@@ -50,16 +56,13 @@ class AddTagState extends State<AddTag> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await tagProvider.addTag(Tag(
-                        label: label,
-                        color: color,));
-                    // Navigator.pushNamed(context, '/list_categories');
+                    await tagProvider.updateTag(
+                        Tag(label: label, color: color), widget.tag.id!);
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('Add Tag',
+                child: const Text('Update Tag',
                     style: TextStyle(color: Colors.white)),
-                // color: Colors.blue,
               )
             ],
           ),

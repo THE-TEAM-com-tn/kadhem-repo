@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../core/models/category_model.dart';
+import '../../../core/models/category_model.dart';
 import 'package:provider/provider.dart';
-import '../../core/viewmodels/category_crud_model.dart';
-import '../../ui/widgets/G_text_form_field.dart';
+import '../../../core/viewmodels/category_crud_model.dart';
+import '../../../ui/widgets/G_text_form_field.dart';
 
 class AddCategory extends StatefulWidget {
   const AddCategory({super.key});
@@ -51,8 +51,9 @@ class AddCategoryState extends State<AddCategory> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     await categoryProvider.addCategory(TrainingCategory(
-                        name: name,
-                        description: description,));
+                      name: name,
+                      description: description,
+                    ));
                     // Navigator.pushNamed(context, '/list_categories');
                     Navigator.pop(context);
                   }

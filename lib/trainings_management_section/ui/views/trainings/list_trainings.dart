@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:team_elearny/flutter_utils/ff_util.dart';
-import 'package:team_elearny/product_details_page/ui/router/app_route_constants.dart';
-import '../../core/models/training_model.dart';
-import '../../core/viewmodels/training_crud_model.dart';
-import '../../ui/widgets/training_card.dart';
+import '../../../core/models/training_model.dart';
+import '../../../core/viewmodels/training_crud_model.dart';
+import '../../../ui/widgets/training_card.dart';
 import 'package:provider/provider.dart';
 
 class ListTrainings extends StatefulWidget {
@@ -24,8 +23,7 @@ class ListTrainingsState extends State<ListTrainings> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GoRouter.of(context)
-              .pushNamed(MyAppRouteConstants.addTrainingRouteName);
+          context.pushNamed("AddTraining");
         },
         child: const Icon(Icons.add),
       ),

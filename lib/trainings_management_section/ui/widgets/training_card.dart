@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../core/models/training_model.dart';
 import '../../core/viewmodels/training_crud_model.dart';
-import '../../ui/views/trainings/modify_training.dart';
+import '../views/trainings/modify_training_page.dart';
 
 class TrainingCard extends StatelessWidget {
   final Training training;

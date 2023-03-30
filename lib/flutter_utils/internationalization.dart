@@ -107,6 +107,21 @@ Locale createLocale(String language) => language.contains('_')
 final kTranslationsMap = <Map<String, Map<String, String>>>[
   // SamplePage
   {
+    // ##### Trainings Management Section
+    '001': {'en': 'Title', 'fr': 'Titre'},
+    '002': {'en': 'Description', 'fr': 'Déscription'},
+    '003': {'en': 'Select Categories', 'fr': 'Sélectionner Catégories'},
+    '004': {'en': 'Author', 'fr': 'Auteur'},
+    '005': {'en': 'Duration', 'fr': 'Durée'},
+    '006': {'en': 'Price', 'fr': 'Prix'},
+    '007': {'en': 'Trailer Video', 'fr': 'Vidéo Bande-Annonce'},
+    '008': {'en': 'Image', 'fr': 'image'},
+    '009': {'en': 'Tags', 'fr': 'Etiquettes'},
+    '010': {'en': 'Select Image', 'fr': 'Sélectionner Image'},
+    '011': {'en': 'Select Tags', 'fr': 'Sélectionner Etiquettes'},
+    '012': {'en': 'Add Training', 'fr': 'Ajouter Formation'},
+    // #####
+
     '402lhcmc': {
       'en': 'My Team',
       'fr': 'Mon équipe',

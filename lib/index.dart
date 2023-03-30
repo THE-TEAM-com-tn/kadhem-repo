@@ -5,10 +5,10 @@ export 'home_page/home_page_widget.dart' show HomePageWidget;
 
 export 'trainings_management_section/ui/views/home_view.dart' show HomeView;
 
-export 'trainings_management_section/ui/views/trainings/list_trainings.dart'
+export 'trainings_management_section/ui/views/trainings/list_trainings_page.dart'
     show ListTrainings;
 
-export 'trainings_management_section/ui/views/trainings/add_training.dart'
+export 'trainings_management_section/ui/views/trainings/add_training_page.dart'
     show AddTraining;
 
 export 'users_and_group_page/users_and_group_page_widget.dart'

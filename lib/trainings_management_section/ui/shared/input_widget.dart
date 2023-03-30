@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../flutter_utils/ff_theme.dart';
 import '../../../flutter_utils/internationalization.dart';
 
-class EditUserProfileInputWidget extends StatefulWidget {
+class InputWidget extends StatefulWidget {
   final model;
   final String? Function(String?) validator;
   final text;
@@ -12,25 +12,23 @@ class EditUserProfileInputWidget extends StatefulWidget {
   final onChanged;
   final obscureText;
 
-  const EditUserProfileInputWidget(
+  const InputWidget(
       {Key? key,
-      required this.initialValue,
+      this.initialValue = "",
       required this.model,
       required this.validator,
       required this.text,
-      required this.enabled,
-      required this.onChanged,
+      this.enabled,
+      this.onChanged,
       required this.obscureText,
-      this.maxLines = null})
+      this.maxLines})
       : super(key: key);
 
   @override
-  State<EditUserProfileInputWidget> createState() =>
-      _EditUserProfileInputWidgetState();
+  State<InputWidget> createState() => InputWidgetState();
 }
 
-class _EditUserProfileInputWidgetState
-    extends State<EditUserProfileInputWidget> {
+class InputWidgetState extends State<InputWidget> {
   late var _model;
 
   late String? Function(String?) _validator;

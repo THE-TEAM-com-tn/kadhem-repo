@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:team_elearny/flutter_utils/ff_model.dart';
+import 'package:team_elearny/trainings_management_section/ui/shared/input_widget.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/tags/tag_page_model.dart';
 import '../../../core/models/category_model.dart';
 import '../../../core/viewmodels/category_crud_model.dart';
 import '../../../ui/widgets/G_text_form_field.dart';
@@ -14,7 +17,25 @@ class ModifyCategory extends StatefulWidget {
 }
 
 class ModifyCategoryState extends State<ModifyCategory> {
+  late TagPageModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => TagPageModel());
+    _model.tagLabelController ??= TextEditingController();
+    _model.tagColorController ??= TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+    super.dispose();
+  }
 
   late String name;
   late String description;
@@ -35,19 +56,19 @@ class ModifyCategoryState extends State<ModifyCategory> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              GTextFormField(
-                  initVal: widget.category.name,
-                  ifEmpty: "Category name is required",
-                  onSaved: (value) => name = value!,
-                  hint: "Category Name"),
+              InputWidget(
+                  model: _model.tagLabelController,
+                  validator: _model.tagLabelValidator,
+                  text: '013', // ### Label ###
+                  obscureText: false),
               const SizedBox(
                 height: 16,
               ),
-              GTextFormField(
-                  initVal: widget.category.description,
-                  ifEmpty: "Category description is required",
-                  onSaved: (value) => description = value!,
-                  hint: "Category Description"),
+              InputWidget(
+                  model: _model.tagColorController,
+                  validator: _model.tagColorValidator,
+                  text: '014', // ### Color ###
+                  obscureText: false),
               const SizedBox(
                 height: 16,
               ),

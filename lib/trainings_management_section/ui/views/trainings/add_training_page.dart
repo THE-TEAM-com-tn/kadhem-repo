@@ -57,13 +57,6 @@ class AddTrainingState extends State<AddTraining> {
   List<String> _selectedTags = [];
   String imageUrl = "";
 
-  // late String title;
-  // late String description;
-  // late String author;
-  // late String duration;
-  // late double price;
-  // late String trailerVid;
-
   void _showMultiSelect() async {
     final List<String>? results = await showDialog(
       context: context,

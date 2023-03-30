@@ -122,6 +122,18 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '012': {'en': 'Add Training', 'fr': 'Ajouter Formation'},
     // #####
 
+    // ##### Tags Management Section
+    '013': {'en': 'Label', 'fr': 'Libellé'},
+    '014': {'en': 'Color', 'fr': 'Couleur'},
+    '018': {'en': 'Add Tag', 'fr': 'Ajouter Tag'},
+    // #####
+
+    // ##### Categories Management Section
+    '015': {'en': 'Name', 'fr': 'Nom'},
+    '016': {'en': 'Description', 'fr': 'Déscription'},
+    '017': {'en': 'Add Category', 'fr': 'Ajouter Catégorie'},
+    // #####
+
     '402lhcmc': {
       'en': 'My Team',
       'fr': 'Mon équipe',

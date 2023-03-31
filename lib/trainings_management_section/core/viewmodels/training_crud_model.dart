@@ -12,11 +12,16 @@ class TrainingCRUDModel extends ChangeNotifier {
 
   late List<Training> trainings;
 
+  Future<bool> isThere(String fieldName, String fieldValue) async {
+    return await _api.exsists(fieldName, fieldValue);
+  }
+
   Future<List<Training>> fetchTrainings() async {
     var result = await _api.getDataCollection();
     trainings = result.docs
-    .map((doc) => Training.fromJson(doc.data as Map<String, dynamic>, doc.id))
-    .toList();
+        .map((doc) =>
+            Training.fromJson(doc.data as Map<String, dynamic>, doc.id))
+        .toList();
     return trainings;
   }
 

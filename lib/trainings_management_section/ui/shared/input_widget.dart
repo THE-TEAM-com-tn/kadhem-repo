@@ -4,7 +4,7 @@ import '../../../flutter_utils/internationalization.dart';
 
 class InputWidget extends StatefulWidget {
   final model;
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
   final text;
   final enabled;
   final initialValue;
@@ -16,7 +16,7 @@ class InputWidget extends StatefulWidget {
       {Key? key,
       this.initialValue = "",
       required this.model,
-      required this.validator,
+      this.validator,
       required this.text,
       this.enabled,
       this.onChanged,
@@ -39,7 +39,7 @@ class InputWidgetState extends State<InputWidget> {
   void initState() {
     super.initState();
     _model = widget.model;
-    _validator = widget.validator;
+    _validator = widget.validator!;
     _text = widget.text;
     _model.text = widget.initialValue;
   }

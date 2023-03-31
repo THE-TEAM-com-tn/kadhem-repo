@@ -1,3 +1,5 @@
+import 'package:team_elearny/trainings_management_section/core/viewmodels/training_crud_model.dart';
+
 import '/flutter_utils/ff_util.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +11,16 @@ class TrainingPageModel extends FFModel {
   TextEditingController? trainingPriceController;
   TextEditingController? trainingTrailerVidController;
 
-  ///  State fields for stateful widgets in this page.
+  late TrainingCRUDModel crudModel;
 
-  // bool isMediaUploading = false;
-  // FFUploadedFile uploadedLocalFile =
-  //     FFUploadedFile(bytes: Uint8List.fromList([]));
+  // Future<String?> trainingTitleValidator(String? value) async {
+  //   if (value!.isEmpty) {
+  //     return "Title is required !";
+  //   } else if (await crudModel.isThere("title", value)) {
+  //     return "Title already exsists!";
+  //   }
+  //   return null;
+  // }
 
   String? trainingTitleValidator(String? value) {
     if (value!.isEmpty) {

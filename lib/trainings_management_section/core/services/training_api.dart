@@ -29,4 +29,9 @@ class TrainingAPI {
   Future<void> updateDocument(Map data, String id) {
     return ref.doc(id).update(data as Map<Object, Object?>);
   }
+
+  Future<bool> exsists(String fieldName, String fieldValue) async {
+    final snapshot = await ref.where(fieldName, isEqualTo: fieldValue).get();
+    return snapshot.docs.isNotEmpty ? true : false;
+  }
 }

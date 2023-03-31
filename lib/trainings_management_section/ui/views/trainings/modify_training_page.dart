@@ -233,7 +233,6 @@ class ModifyTrainingState extends State<ModifyTraining> {
                   InputWidget(
                       initialValue: widget.training.trailerVid,
                       model: _model.trainingTrailerVidController,
-                      validator: _model.trainingTitleValidator,
                       text: '007', // ### Trailer ###
                       obscureText: false),
                   const SizedBox(

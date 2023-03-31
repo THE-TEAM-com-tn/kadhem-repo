@@ -429,6 +429,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  image_card:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: image_card_widget
+      resolved-ref: "7709ec79b8dcdef43abe1e680234c4497bf6578f"
+      url: "https://github.com/THE-TEAM-com-tn/kadhem-repo.git"
+    source: git
+    version: "0.0.4"
   image_picker:
     dependency: "direct main"
     description:

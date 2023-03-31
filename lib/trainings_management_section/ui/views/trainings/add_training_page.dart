@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:team_elearny/flutter_utils/ff_model.dart';
 import 'package:team_elearny/flutter_utils/ff_theme.dart';
 import 'package:team_elearny/flutter_utils/ff_util.dart';
 import 'package:team_elearny/flutter_utils/ff_widgets.dart';
@@ -16,7 +15,6 @@ import 'package:team_elearny/trainings_management_section/ui/shared/input_widget
 import 'package:team_elearny/trainings_management_section/ui/views/trainings/training_page_model.dart';
 import '../../../core/models/training_model.dart';
 import 'package:provider/provider.dart';
-import '../../../ui/widgets/G_text_form_field.dart';
 import '../../../ui/widgets/multi_select_tags_tool.dart';
 import '../../../ui/widgets/multi_select_tool.dart';
 import '../../../core/viewmodels/training_crud_model.dart';
@@ -56,6 +54,21 @@ class AddTrainingState extends State<AddTraining> {
   List<String> _selectedCategories = [];
   List<String> _selectedTags = [];
   String imageUrl = "";
+
+  void handleSubmit(TrainingCRUDModel provider) async {
+    await provider.addTraining(Training(
+        title: _model.trainingTitleController.text,
+        description: _model.trainingDescriptionController.text,
+        category: _selectedCategories,
+        author: _model.trainingAuthorController.text,
+        duration: _model.trainingDurationController.text,
+        price: double.parse(_model.trainingPriceController.text),
+        trailerVid: _model.trainingTrailerVidController.text,
+        image: imageUrl,
+        tags: _selectedTags,
+        creationDate: Timestamp.now()));
+    context.pushNamed("ListTrainings");
+  }
 
   void _showMultiSelect() async {
     final List<String>? results = await showDialog(
@@ -311,21 +324,7 @@ class AddTrainingState extends State<AddTraining> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        await trainingProvider.addTraining(Training(
-                            title: _model.trainingTitleController.text,
-                            description:
-                                _model.trainingDescriptionController.text,
-                            category: _selectedCategories,
-                            author: _model.trainingAuthorController.text,
-                            duration: _model.trainingDurationController.text,
-                            price: double.parse(
-                                _model.trainingPriceController.text),
-                            trailerVid:
-                                _model.trainingTrailerVidController.text,
-                            image: imageUrl,
-                            tags: _selectedTags,
-                            creationDate: Timestamp.now()));
-                        context.pushNamed("ListTrainings");
+                        handleSubmit(trainingProvider);
                       }
                     },
                     text: FFLocalizations.of(context).getText(

@@ -50,43 +50,46 @@ class ModifyCategoryState extends State<ModifyCategory> {
           child: Text('Modify Category Details'),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              InputWidget(
-                  model: _model.tagLabelController,
-                  validator: _model.tagLabelValidator,
-                  text: '013', // ### Label ###
-                  obscureText: false),
-              const SizedBox(
-                height: 16,
-              ),
-              InputWidget(
-                  model: _model.tagColorController,
-                  validator: _model.tagColorValidator,
-                  text: '014', // ### Color ###
-                  obscureText: false),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                // splashColor: Colors.red,
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    await categoryProvider.updateCategory(
-                        TrainingCategory(name: name, description: description),
-                        widget.category.id!);
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Update Category',
-                    style: TextStyle(color: Colors.white)),
-              )
-            ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                InputWidget(
+                    model: _model.tagLabelController,
+                    validator: _model.tagLabelValidator,
+                    text: '013', // ### Label ###
+                    obscureText: false),
+                const SizedBox(
+                  height: 16,
+                ),
+                InputWidget(
+                    model: _model.tagColorController,
+                    validator: _model.tagColorValidator,
+                    text: '014', // ### Color ###
+                    obscureText: false),
+                const SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                  // splashColor: Colors.red,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      await categoryProvider.updateCategory(
+                          TrainingCategory(
+                              name: name, description: description),
+                          widget.category.id!);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Update Category',
+                      style: TextStyle(color: Colors.white)),
+                )
+              ],
+            ),
           ),
         ),
       ),

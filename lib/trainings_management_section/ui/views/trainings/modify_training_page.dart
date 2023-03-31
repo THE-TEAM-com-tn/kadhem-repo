@@ -31,7 +31,7 @@ class ModifyTraining extends StatefulWidget {
 class ModifyTrainingState extends State<ModifyTraining> {
   late TrainingPageModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  // final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -222,7 +222,7 @@ class ModifyTrainingState extends State<ModifyTraining> {
                     height: 16,
                   ),
                   InputWidget(
-                      initialValue: widget.training.price,
+                      initialValue: widget.training.price.toString(),
                       model: _model.trainingPriceController,
                       validator: _model.trainingPriceValidator,
                       text: '006', // ### Price ###
@@ -295,6 +295,58 @@ class ModifyTrainingState extends State<ModifyTraining> {
                       },
                       text: FFLocalizations.of(context).getText(
                         '011' /* Select Tags */,
+                      ),
+                      options: FFButtonOptions(
+                        width: 130.0,
+                        height: 40.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FFTheme.of(context).primaryBackground,
+                        textStyle: FFTheme.of(context).bodyText1.override(
+                              fontFamily: 'Lexend Deca',
+                              color: FFTheme.of(context).primaryColor,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FFTheme.of(context).bodyText1Family),
+                            ),
+                        elevation: 1.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  FFButtonWidget(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          await trainingProvider.updateTraining(
+                              Training(
+                                  title: _model.trainingTitleController.text,
+                                  description:
+                                      _model.trainingDescriptionController.text,
+                                  category: _selectedCategories,
+                                  author: _model.trainingAuthorController.text,
+                                  duration:
+                                      _model.trainingDurationController.text,
+                                  price: double.parse(
+                                      _model.trainingPriceController.text),
+                                  trailerVid:
+                                      _model.trainingTrailerVidController.text,
+                                  image: imageUrl,
+                                  tags: _selectedTags,
+                                  creationDate: Timestamp.now()),
+                              widget.training.id!);
+                          Navigator.pop(context);
+                        }
+                      },
+                      text: FFLocalizations.of(context).getText(
+                        '021' /* Update */,
                       ),
                       options: FFButtonOptions(
                         width: 130.0,

@@ -51,65 +51,68 @@ class AddCategoryState extends State<AddCategory> {
           child: Text('Add Training Category'),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              InputWidget(
-                  model: _model.categoryNameController,
-                  validator: _model.categoryNameValidator,
-                  text: '015', // ### Name ###
-                  obscureText: false),
-              const SizedBox(
-                height: 16,
-              ),
-              InputWidget(
-                  model: _model.categoryDescriptionController,
-                  validator: _model.categoryDescriptionValidator,
-                  text: '016', // ### Description ###
-                  obscureText: false),
-              const SizedBox(
-                height: 16,
-              ),
-              FFButtonWidget(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      await categoryProvider.addCategory(TrainingCategory(
-                        name: name,
-                        description: description,
-                      ));
-                      // Navigator.pushNamed(context, '/list_categories');
-                      Navigator.pop(context);
-                    }
-                  },
-                  text: FFLocalizations.of(context).getText(
-                    '017' /* Add Category */,
-                  ),
-                  options: FFButtonOptions(
-                    width: 130.0,
-                    height: 40.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FFTheme.of(context).primaryBackground,
-                    textStyle: FFTheme.of(context).bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                          color: FFTheme.of(context).primaryColor,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal,
-                          useGoogleFonts: GoogleFonts.asMap()
-                              .containsKey(FFTheme.of(context).bodyText1Family),
-                        ),
-                    elevation: 1.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                InputWidget(
+                    model: _model.categoryNameController,
+                    validator: _model.categoryNameValidator,
+                    text: '015', // ### Name ###
+                    obscureText: false),
+                const SizedBox(
+                  height: 16,
+                ),
+                InputWidget(
+                    model: _model.categoryDescriptionController,
+                    validator: _model.categoryDescriptionValidator,
+                    text: '016', // ### Description ###
+                    obscureText: false),
+                const SizedBox(
+                  height: 16,
+                ),
+                FFButtonWidget(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        await categoryProvider.addCategory(TrainingCategory(
+                          name: name,
+                          description: description,
+                        ));
+                        // Navigator.pushNamed(context, '/list_categories');
+                        Navigator.pop(context);
+                      }
+                    },
+                    text: FFLocalizations.of(context).getText(
+                      '017' /* Add Category */,
                     ),
-                  )),
-            ],
+                    options: FFButtonOptions(
+                      width: 130.0,
+                      height: 40.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FFTheme.of(context).primaryBackground,
+                      textStyle: FFTheme.of(context).bodyText1.override(
+                            fontFamily: 'Lexend Deca',
+                            color: FFTheme.of(context).primaryColor,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.normal,
+                            useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                FFTheme.of(context).bodyText1Family),
+                          ),
+                      elevation: 1.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                    )),
+              ],
+            ),
           ),
         ),
       ),

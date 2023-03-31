@@ -107,6 +107,11 @@ Locale createLocale(String language) => language.contains('_')
 final kTranslationsMap = <Map<String, Map<String, String>>>[
   // SamplePage
   {
+    // ##### Image Card
+    '019': {'en': 'Open/Edit', 'fr': 'Ouvrir/Modifier'},
+    '020': {'en': 'Delete', 'fr': 'Supprimer'},
+    // ####
+
     // ##### Trainings Management Section
     '001': {'en': 'Title', 'fr': 'Titre'},
     '002': {'en': 'Description', 'fr': 'Déscription'},
@@ -120,6 +125,8 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '010': {'en': 'Select Image', 'fr': 'Sélectionner Image'},
     '011': {'en': 'Select Tags', 'fr': 'Sélectionner Etiquettes'},
     '012': {'en': 'Add Training', 'fr': 'Ajouter Formation'},
+
+    '021': {'en': 'Update', 'fr': 'Modifier'},
     // #####
 
     // ##### Tags Management Section

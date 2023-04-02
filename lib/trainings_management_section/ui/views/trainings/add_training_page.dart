@@ -151,6 +151,7 @@ class AddTrainingState extends State<AddTraining> {
     var trainingProvider = Provider.of<TrainingCRUDModel>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: FFTheme.of(context).primaryBackground,
         title: const Center(
           child: Text('Add Training'),
         ),

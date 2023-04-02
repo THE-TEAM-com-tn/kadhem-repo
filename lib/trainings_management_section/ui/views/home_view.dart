@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_elearny/flutter_utils/ff_util.dart';
+import 'package:team_elearny/trainings_management_section/core/viewmodels/category_crud_model.dart';
+import 'package:team_elearny/trainings_management_section/core/viewmodels/tag_crud_model.dart';
 import 'package:team_elearny/trainings_management_section/locator.dart';
 import 'package:team_elearny/trainings_management_section/core/viewmodels/training_crud_model.dart';
 
@@ -11,7 +13,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => locator<TrainingCRUDModel>())
+        ChangeNotifierProvider(create: (_) => locator<TrainingCRUDModel>()),
+        ChangeNotifierProvider(create: (_) => locator<CategoryCRUDModel>()),
+        ChangeNotifierProvider(create: (_) => locator<TagCRUDModel>())
       ],
       child: Scaffold(
         body: Center(

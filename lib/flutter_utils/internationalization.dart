@@ -113,6 +113,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     // ####
 
     // ##### Trainings Management Section
+    '022': {'en': 'Trainings Management', 'fr': 'Gestion de Formations'},
     '001': {'en': 'Title', 'fr': 'Titre'},
     '002': {'en': 'Description', 'fr': 'Déscription'},
     '003': {'en': 'Select Categories', 'fr': 'Sélectionner Catégories'},

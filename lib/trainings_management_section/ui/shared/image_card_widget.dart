@@ -19,6 +19,7 @@ class ImageCardWidget extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: FillImageCard(
+            color: FFTheme.of(context).darkCardBackground,
             width: MediaQuery.of(context).size.width * 0.3,
             height: MediaQuery.of(context).size.height * 0.5,
             heightImage: MediaQuery.of(context).size.height * 0.25,

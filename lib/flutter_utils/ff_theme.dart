@@ -44,6 +44,8 @@ abstract class FFTheme {
   late Color tertiaryColor;
   late Color alternate;
   late Color primaryBackground;
+  late Color lightCardBackground;
+  late Color darkCardBackground;
   late Color secondaryBackground;
   late Color primaryText;
   late Color secondaryText;
@@ -102,6 +104,7 @@ class LightModeTheme extends FFTheme {
   late Color tertiaryColor = const Color(0xFF0A2B42);
   late Color alternate = const Color(0xFFFF5963);
   late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color lightCardBackground = Color.fromARGB(255, 86, 135, 80);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
   late Color primaryText = const Color(0xFF0B191E);
   late Color secondaryText = const Color(0xFF384E58);
@@ -313,6 +316,7 @@ class DarkModeTheme extends FFTheme {
   late Color tertiaryColor = const Color(0xFF0A2B42);
   late Color alternate = const Color(0xFFFF5963);
   late Color primaryBackground = const Color(0xFF232C31);
+  late Color darkCardBackground = Color.fromARGB(255, 122, 211, 74);
   late Color secondaryBackground = const Color(0xFF1D2429);
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF658593);

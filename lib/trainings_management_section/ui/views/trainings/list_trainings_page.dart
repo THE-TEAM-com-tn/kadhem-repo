@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:team_elearny/flutter_utils/ff_theme.dart';
 import 'package:team_elearny/flutter_utils/ff_util.dart';
 import 'package:team_elearny/trainings_management_section/ui/shared/image_card_widget.dart';
 import '../../../core/models/training_model.dart';
@@ -22,7 +23,14 @@ class ListTrainingsState extends State<ListTrainings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Trainings Management"),
+        backgroundColor: FFTheme.of(context).primaryBackground,
+        foregroundColor: FFTheme.of(context).primaryColor,
+        title: Text(
+          FFLocalizations.of(context).getText(
+            '022' /* Trainings Management */,
+          ),
+          style: FFTheme.of(context).title3,
+        ),
       ),
       body: Center(
         child: Container(

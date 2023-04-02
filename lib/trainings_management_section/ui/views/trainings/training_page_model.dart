@@ -11,7 +11,7 @@ class TrainingPageModel extends FFModel {
   TextEditingController? trainingPriceController;
   TextEditingController? trainingTrailerVidController;
 
-  late TrainingCRUDModel crudModel;
+  // late TrainingCRUDModel crudModel;
 
   // Future<String?> trainingTitleValidator(String? value) async {
   //   if (value!.isEmpty) {

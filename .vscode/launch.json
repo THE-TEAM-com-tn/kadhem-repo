@@ -10,7 +10,8 @@
                 "lib/main.dart",
                 "-d",
                 "chrome",
-                "--web-renderer=html"
+                "--web-renderer=html",
+                "--verbose"
             ]
         }
     ]

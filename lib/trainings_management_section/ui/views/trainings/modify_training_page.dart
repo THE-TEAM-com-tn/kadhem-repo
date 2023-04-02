@@ -31,7 +31,7 @@ class ModifyTraining extends StatefulWidget {
 class ModifyTrainingState extends State<ModifyTraining> {
   late TrainingPageModel _model;
 
-  // final scaffoldKey = GlobalKey<ScaffoldState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -133,11 +133,32 @@ class ModifyTrainingState extends State<ModifyTraining> {
     }
   }
 
+  void handleSubmit(TrainingCRUDModel trainingProvider) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await trainingProvider.updateTraining(
+          Training(
+              title: _model.trainingTitleController.text,
+              description: _model.trainingDescriptionController.text,
+              category: _selectedCategories,
+              author: _model.trainingAuthorController.text,
+              duration: _model.trainingDurationController.text,
+              price: double.parse(_model.trainingPriceController.text),
+              trailerVid: _model.trainingTrailerVidController.text,
+              image: imageUrl,
+              tags: _selectedTags,
+              creationDate: Timestamp.now()),
+          widget.training.id!);
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final trainingProvider = Provider.of<TrainingCRUDModel>(context);
 
     return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: const Center(
             child: Text('Modify Training Details'),
@@ -270,27 +291,7 @@ class ModifyTrainingState extends State<ModifyTraining> {
                   ),
                   FFButtonWidget(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          await trainingProvider.updateTraining(
-                              Training(
-                                  title: _model.trainingTitleController.text,
-                                  description:
-                                      _model.trainingDescriptionController.text,
-                                  category: _selectedCategories,
-                                  author: _model.trainingAuthorController.text,
-                                  duration:
-                                      _model.trainingDurationController.text,
-                                  price: double.parse(
-                                      _model.trainingPriceController.text),
-                                  trailerVid:
-                                      _model.trainingTrailerVidController.text,
-                                  image: imageUrl,
-                                  tags: _selectedTags,
-                                  creationDate: Timestamp.now()),
-                              widget.training.id!);
-                          Navigator.pop(context);
-                        }
+                        _showMultiSelect_();
                       },
                       text: FFLocalizations.of(context).getText(
                         '011' /* Select Tags */,
@@ -317,32 +318,16 @@ class ModifyTrainingState extends State<ModifyTraining> {
                           width: 1.0,
                         ),
                       )),
+                  Wrap(
+                    children:
+                        _selectedTags.map((e) => Chip(label: Text(e))).toList(),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
                   FFButtonWidget(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          await trainingProvider.updateTraining(
-                              Training(
-                                  title: _model.trainingTitleController.text,
-                                  description:
-                                      _model.trainingDescriptionController.text,
-                                  category: _selectedCategories,
-                                  author: _model.trainingAuthorController.text,
-                                  duration:
-                                      _model.trainingDurationController.text,
-                                  price: double.parse(
-                                      _model.trainingPriceController.text),
-                                  trailerVid:
-                                      _model.trainingTrailerVidController.text,
-                                  image: imageUrl,
-                                  tags: _selectedTags,
-                                  creationDate: Timestamp.now()),
-                              widget.training.id!);
-                          Navigator.pop(context);
-                        }
+                        handleSubmit(trainingProvider);
                       },
                       text: FFLocalizations.of(context).getText(
                         '021' /* Update */,

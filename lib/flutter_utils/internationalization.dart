@@ -107,6 +107,30 @@ Locale createLocale(String language) => language.contains('_')
 final kTranslationsMap = <Map<String, Map<String, String>>>[
   // SamplePage
   {
+    // ##### New Trainings Management Section
+    '023': {'en': 'Trainings Management', 'fr': 'Géstion de Formations'},
+    '024': {
+      'en':
+          'Welcome to Trainings Management dashboard, review and edit trainings below',
+      'fr':
+          'Bienvenue dans le tableau de bord de gestion des formations, consultez et modifiez les formations ci-dessous'
+    },
+    '025': {'en': 'Trainings', 'fr': 'Formations'},
+    '026': {
+      'en': 'Below are all the available trainings',
+      'fr': 'Ci-dessous toutes les formations disponibles'
+    },
+    '027': {'en': 'Search trainings', 'fr': 'Rechercher des formations'},
+    '028': {'en': 'Create Training', 'fr': 'Créer Formation'},
+    '029': {'en': 'Title', 'fr': 'Titre'},
+    '030': {'en': 'Author', 'fr': 'Auteur'},
+    '031': {'en': 'Categories', 'fr': 'Catégories'},
+    '032': {'en': 'Duration', 'fr': 'Durée'},
+    '033': {'en': 'Price', 'fr': 'Prix'},
+    '034': {'en': 'Tags', 'fr': 'Mots Clés'},
+    '035': {'en': 'Date', 'fr': 'Date'},
+    // #####
+
     // ##### Image Card
     '019': {'en': 'Open/Edit', 'fr': 'Ouvrir/Modifier'},
     '020': {'en': 'Delete', 'fr': 'Supprimer'},
@@ -659,7 +683,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'fofz8j2o': {
       'en': 'ID',
-      'fr': 'IDENTIFIANT',
+      'fr': 'ID',
     },
     '1pct0h4e': {
       'en': 'User Information',

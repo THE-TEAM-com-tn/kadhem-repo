@@ -1,15 +1,21 @@
+import 'package:team_elearny/components/web_nav_model.dart';
 import 'package:team_elearny/trainings_management_section/core/viewmodels/training_crud_model.dart';
 
 import '/flutter_utils/ff_util.dart';
 import 'package:flutter/material.dart';
 
 class TrainingPageModel extends FFModel {
+  // Model for webNav component.
+  late WebNavModel webNavModel;
+
   TextEditingController? trainingTitleController;
   TextEditingController? trainingDescriptionController;
   TextEditingController? trainingAuthorController;
   TextEditingController? trainingDurationController;
   TextEditingController? trainingPriceController;
   TextEditingController? trainingTrailerVidController;
+
+  TextEditingController? trainingSearchController;
 
   // late TrainingCRUDModel crudModel;
 
@@ -59,14 +65,20 @@ class TrainingPageModel extends FFModel {
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    webNavModel = createModel(context, () => WebNavModel());
+  }
 
   void dispose() {
+    webNavModel.dispose();
+
     trainingTitleController?.dispose();
     trainingDescriptionController?.dispose();
     trainingAuthorController?.dispose();
     trainingDurationController?.dispose();
     trainingPriceController?.dispose();
     trainingTrailerVidController?.dispose();
+
+    trainingSearchController?.dispose();
   }
 }

@@ -108,8 +108,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                   width: 200,
                                   height: 32,
                                   decoration: BoxDecoration(
-                                    color: FFTheme.of(context)
-                                        .primaryBackground,
+                                    color:
+                                        FFTheme.of(context).primaryBackground,
                                   ),
                                 ),
                               if (responsiveVisibility(
@@ -156,8 +156,7 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                       ],
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: FFTheme.of(context)
-                                            .lineColor,
+                                        color: FFTheme.of(context).lineColor,
                                       ),
                                     ),
                                     child: Padding(
@@ -192,8 +191,7 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                           'g2sja5q6' /* Users */,
                                                         ),
                                                         style:
-                                                            FFTheme.of(
-                                                                    context)
+                                                            FFTheme.of(context)
                                                                 .title3,
                                                       ),
                                                     ),
@@ -209,8 +207,7 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                           '4q57hiuj' /* Below are the members of your ... */,
                                                         ),
                                                         style:
-                                                            FFTheme.of(
-                                                                    context)
+                                                            FFTheme.of(context)
                                                                 .bodyText2,
                                                       ),
                                                     ),
@@ -244,15 +241,14 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                           'b16ux8cr' /* Search users... */,
                                                         ),
                                                         hintStyle:
-                                                            FFTheme.of(
-                                                                    context)
+                                                            FFTheme.of(context)
                                                                 .bodyText2,
                                                         enabledBorder:
                                                             OutlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: FFTheme
-                                                                    .of(context)
+                                                            color: FFTheme.of(
+                                                                    context)
                                                                 .primaryBackground,
                                                             width: 2,
                                                           ),
@@ -298,16 +294,14 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                         ),
                                                         prefixIcon: Icon(
                                                           Icons.search_rounded,
-                                                          color: FFTheme
-                                                                  .of(context)
+                                                          color: FFTheme.of(
+                                                                  context)
                                                               .secondaryText,
                                                           size: 20,
                                                         ),
                                                       ),
-                                                      style:
-                                                          FFTheme.of(
-                                                                  context)
-                                                              .bodyText1,
+                                                      style: FFTheme.of(context)
+                                                          .bodyText1,
                                                       validator: _model
                                                           .textControllerValidator
                                                           .asValidator(context),
@@ -338,25 +332,24 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
                                                                 16, 0, 16, 0),
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .primaryColor,
-                                                    textStyle: FFTheme
-                                                            .of(context)
-                                                        .subtitle2
-                                                        .override(
-                                                          fontFamily:
-                                                              FFTheme.of(
-                                                                      context)
+                                                    textStyle:
+                                                        FFTheme.of(context)
+                                                            .subtitle2
+                                                            .override(
+                                                              fontFamily: FFTheme
+                                                                      .of(context)
                                                                   .subtitle2Family,
-                                                          color: Colors.white,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FFTheme.of(
-                                                                          context)
-                                                                      .subtitle2Family),
-                                                        ),
+                                                              color:
+                                                                  Colors.white,
+                                                              useGoogleFonts: GoogleFonts
+                                                                      .asMap()
+                                                                  .containsKey(
+                                                                      FFTheme.of(
+                                                                              context)
+                                                                          .subtitle2Family),
+                                                            ),
                                                     elevation: 3,
                                                     borderSide: BorderSide(
                                                       color: Colors.transparent,
@@ -377,9 +370,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                               width: double.infinity,
                                               height: 40,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    FFTheme.of(context)
-                                                        .primaryBackground,
+                                                color: FFTheme.of(context)
+                                                    .primaryBackground,
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
                                                       Radius.circular(0),
@@ -409,8 +401,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                               .getText(
                                                             'fofz8j2o' /* ID */,
                                                           ),
-                                                          style: FFTheme
-                                                                  .of(context)
+                                                          style: FFTheme.of(
+                                                                  context)
                                                               .bodyText2,
                                                         ),
                                                       ),
@@ -423,8 +415,7 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                           '1pct0h4e' /* User Information */,
                                                         ),
                                                         style:
-                                                            FFTheme.of(
-                                                                    context)
+                                                            FFTheme.of(context)
                                                                 .bodyText2,
                                                       ),
                                                     ),
@@ -440,8 +431,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                               .getText(
                                                             'ugngnnro' /* Next Task Due */,
                                                           ),
-                                                          style: FFTheme
-                                                                  .of(context)
+                                                          style: FFTheme.of(
+                                                                  context)
                                                               .bodyText2,
                                                         ),
                                                       ),
@@ -458,8 +449,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                               .getText(
                                                             'wtjkf5ue' /* Status */,
                                                           ),
-                                                          style: FFTheme
-                                                                  .of(context)
+                                                          style: FFTheme.of(
+                                                                  context)
                                                               .bodyText2,
                                                         ),
                                                       ),
@@ -473,8 +464,7 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                         textAlign:
                                                             TextAlign.end,
                                                         style:
-                                                            FFTheme.of(
-                                                                    context)
+                                                            FFTheme.of(context)
                                                                 .bodyText2,
                                                       ),
                                                     ),
@@ -494,14 +484,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -529,8 +518,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'hh3vfx5r' /* #2422 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -644,8 +633,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 't3jjn7s8' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -816,14 +805,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -851,8 +839,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'vajo2u8k' /* #2424 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -966,8 +954,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 '73vgtm8g' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -1113,14 +1101,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -1148,8 +1135,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 '1jefet9s' /* #2424 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -1263,8 +1250,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'z4zcbt78' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -1410,14 +1397,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -1445,8 +1431,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'f2mfg6iu' /* #2424 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -1560,8 +1546,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'vaxyl898' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -1712,14 +1698,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -1747,8 +1732,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'pkcgxur1' /* #2452 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -1862,8 +1847,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'vk5d6brg' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -2014,14 +1999,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -2049,8 +2033,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'i40kyxhh' /* #2452 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -2164,8 +2148,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'qvyno5gs' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -2316,14 +2300,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -2351,8 +2334,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 'gr529wfo' /* #2452 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -2466,8 +2449,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 '2zj97aid' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -2618,14 +2601,13 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                 child: Container(
                                                   width: 100,
                                                   decoration: BoxDecoration(
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .secondaryBackground,
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 0,
-                                                        color: FFTheme
-                                                                .of(context)
+                                                        color: FFTheme.of(
+                                                                context)
                                                             .primaryBackground,
                                                         offset: Offset(0, 1),
                                                       )
@@ -2653,8 +2635,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 '3mftt8qb' /* #2452 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),
@@ -2768,8 +2750,8 @@ class _UsersAndGroupPageWidgetState extends State<UsersAndGroupPageWidget> {
                                                                   .getText(
                                                                 '8uqg8zie' /* Jan. 30th, 2023 */,
                                                               ),
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyText1,
                                                             ),
                                                           ),

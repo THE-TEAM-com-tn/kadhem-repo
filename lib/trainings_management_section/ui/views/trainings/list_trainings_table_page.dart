@@ -1,3 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:team_elearny/trainings_management_section/core/models/training_model.dart';
+import 'package:team_elearny/trainings_management_section/core/viewmodels/training_crud_model.dart';
+import 'package:team_elearny/trainings_management_section/ui/widgets/TrainingRow.dart';
+
 import '../../../../components/user_crud_bottom_sheet_widget.dart';
 import '../../../../components/web_nav_widget.dart';
 import '../../../../flutter_utils/ff_icon_button.dart';
@@ -8,30 +14,27 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './training_page_model.dart';
 
-class ListTrainings extends StatefulWidget {
-  const ListTrainings({Key? key}) : super(key: key);
+class TrainingsListPage extends StatefulWidget {
+  const TrainingsListPage({Key? key}) : super(key: key);
 
   @override
-  _ListTrainings createState() => _ListTrainings();
+  _TrainingsListPage createState() => _TrainingsListPage();
 }
 
-class _ListTrainings extends State<ListTrainings> {
+class _TrainingsListPage extends State<TrainingsListPage> {
   late TrainingPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
+
+  late List<Training> trainings;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => TrainingPageModel());
 
-    _model.trainingTitleController ??= TextEditingController();
-    _model.trainingDescriptionController ??= TextEditingController();
-    _model.trainingAuthorController ??= TextEditingController();
-    _model.trainingDurationController ??= TextEditingController();
-    _model.trainingPriceController ??= TextEditingController();
-    _model.trainingTrailerVidController ??= TextEditingController();
+    // _model.textController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -45,6 +48,8 @@ class _ListTrainings extends State<ListTrainings> {
 
   @override
   Widget build(BuildContext context) {
+    final trainingProvider = Provider.of<TrainingCRUDModel>(context);
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FFTheme.of(context).primaryBackground,
@@ -57,7 +62,7 @@ class _ListTrainings extends State<ListTrainings> {
               automaticallyImplyLeading: false,
               title: Text(
                 FFLocalizations.of(context).getText(
-                  '023' /* Trainings Management */,
+                  'hlpm3op4' /* My Team */,
                 ),
                 style: FFTheme.of(context).title1,
               ),
@@ -123,7 +128,7 @@ class _ListTrainings extends State<ListTrainings> {
                               ))
                                 Text(
                                   FFLocalizations.of(context).getText(
-                                    '023' /* Trainings Management */,
+                                    '4yyctdin' /* My Team */,
                                   ),
                                   style: FFTheme.of(context).title2,
                                 ),
@@ -132,7 +137,7 @@ class _ListTrainings extends State<ListTrainings> {
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 44, 0),
                                 child: Text(
                                   FFLocalizations.of(context).getText(
-                                    '024' /* Welcome to your company dashbo... */,
+                                    '32qpgayo' /* Welcome to your company dashbo... */,
                                   ),
                                   style: FFTheme.of(context).bodyText2,
                                 ),
@@ -191,7 +196,7 @@ class _ListTrainings extends State<ListTrainings> {
                                                         FFLocalizations.of(
                                                                 context)
                                                             .getText(
-                                                          '025' /* Trainings */,
+                                                          'g2sja5q6' /* Users */,
                                                         ),
                                                         style:
                                                             FFTheme.of(context)
@@ -207,7 +212,7 @@ class _ListTrainings extends State<ListTrainings> {
                                                         FFLocalizations.of(
                                                                 context)
                                                             .getText(
-                                                          '026' /* Below are ... */,
+                                                          '4q57hiuj' /* Below are the members of your ... */,
                                                         ),
                                                         style:
                                                             FFTheme.of(context)
@@ -217,131 +222,152 @@ class _ListTrainings extends State<ListTrainings> {
                                                   ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 16, 0),
-                                                child: Container(
-                                                  width: 270,
-                                                  child: TextFormField(
-                                                    controller: _model
-                                                        .trainingSearchController,
-                                                    textCapitalization:
-                                                        TextCapitalization
-                                                            .sentences,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      isDense: true,
-                                                      hintText:
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                        '027' /* Search trainings... */,
-                                                      ),
-                                                      hintStyle:
-                                                          FFTheme.of(context)
-                                                              .bodyText2,
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
+                                              if (responsiveVisibility(
+                                                context: context,
+                                                phone: false,
+                                                tablet: false,
+                                              ))
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 16, 0),
+                                                  child: Container(
+                                                    width: 270,
+                                                    child: TextFormField(
+                                                      // controller:
+                                                      //     _model.textController,
+                                                      textCapitalization:
+                                                          TextCapitalization
+                                                              .sentences,
+                                                      obscureText: false,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        isDense: true,
+                                                        hintText:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .getText(
+                                                          'b16ux8cr' /* Search users... */,
+                                                        ),
+                                                        hintStyle:
+                                                            FFTheme.of(context)
+                                                                .bodyText2,
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: FFTheme.of(
+                                                                    context)
+                                                                .primaryBackground,
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Color(
+                                                                0x00000000),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        errorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Color(
+                                                                0x00000000),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        focusedErrorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Color(
+                                                                0x00000000),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        prefixIcon: Icon(
+                                                          Icons.search_rounded,
                                                           color: FFTheme.of(
                                                                   context)
-                                                              .primaryBackground,
-                                                          width: 2,
+                                                              .secondaryText,
+                                                          size: 20,
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
                                                       ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      focusedErrorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0x00000000),
-                                                          width: 2,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      prefixIcon: Icon(
-                                                        Icons.search_rounded,
-                                                        color:
-                                                            FFTheme.of(context)
-                                                                .secondaryText,
-                                                        size: 20,
-                                                      ),
+                                                      style: FFTheme.of(context)
+                                                          .bodyText1,
+                                                      // validator: _model
+                                                      //     .textControllerValidator
+                                                      //     .asValidator(context),
                                                     ),
-                                                    style: FFTheme.of(context)
-                                                        .bodyText1,
-                                                    // validator: _model
-                                                    //     .textControllerValidator
-                                                    //     .asValidator(context),
                                                   ),
                                                 ),
-                                              ),
-                                              FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text:
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                  '028' /* Create Training */,
-                                                ),
-                                                icon: Icon(
-                                                  Icons.add_rounded,
-                                                  size: 15,
-                                                ),
-                                                options: FFButtonOptions(
-                                                  height: 40,
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(16, 0, 16, 0),
-                                                  color: FFTheme.of(context)
-                                                      .primaryColor,
-                                                  textStyle: FFTheme.of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: FFTheme.of(
-                                                                context)
-                                                            .subtitle2Family,
-                                                        color: Colors.white,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(FFTheme
-                                                                    .of(context)
-                                                                .subtitle2Family),
-                                                      ),
-                                                  elevation: 3,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
+                                              if (responsiveVisibility(
+                                                context: context,
+                                                phone: false,
+                                                tablet: false,
+                                              ))
+                                                FFButtonWidget(
+                                                  onPressed: () {
+                                                    print('Button pressed ...');
+                                                  },
+                                                  text: FFLocalizations.of(
+                                                          context)
+                                                      .getText(
+                                                    '7x5iqm8q' /* Create User */,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
+                                                  icon: Icon(
+                                                    Icons.add_rounded,
+                                                    size: 15,
+                                                  ),
+                                                  options: FFButtonOptions(
+                                                    height: 40,
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                16, 0, 16, 0),
+                                                    color: FFTheme.of(context)
+                                                        .primaryColor,
+                                                    textStyle:
+                                                        FFTheme.of(context)
+                                                            .subtitle2
+                                                            .override(
+                                                              fontFamily: FFTheme
+                                                                      .of(context)
+                                                                  .subtitle2Family,
+                                                              color:
+                                                                  Colors.white,
+                                                              useGoogleFonts: GoogleFonts
+                                                                      .asMap()
+                                                                  .containsKey(
+                                                                      FFTheme.of(
+                                                                              context)
+                                                                          .subtitle2Family),
+                                                            ),
+                                                    elevation: 3,
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
                                                 ),
-                                              ),
                                             ],
                                           ),
                                           Padding(
@@ -366,75 +392,78 @@ class _ListTrainings extends State<ListTrainings> {
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(16, 0, 16, 0),
-                                                child: Table(
-                                                  columnWidths: const {
-                                                    0: FlexColumnWidth(1),
-                                                    1: FlexColumnWidth(1),
-                                                    2: FlexColumnWidth(3),
-                                                    3: FlexColumnWidth(1),
-                                                    4: FlexColumnWidth(1),
-                                                    5: FlexColumnWidth(2)
-                                                  },
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
                                                   children: [
-                                                    TableRow(children: [
-                                                      /** Column 1 */
-                                                      Text(
+                                                    if (responsiveVisibility(
+                                                      context: context,
+                                                      phone: false,
+                                                      tablet: false,
+                                                    ))
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .getText(
+                                                            'fofz8j2o' /* ID */,
+                                                          ),
+                                                          style: FFTheme.of(
+                                                                  context)
+                                                              .bodyText2,
+                                                        ),
+                                                      ),
+                                                    Expanded(
+                                                      flex: 4,
+                                                      child: Text(
                                                         FFLocalizations.of(
                                                                 context)
                                                             .getText(
-                                                          'fofz8j2o' /* ID */,
+                                                          '1pct0h4e' /* User Information */,
                                                         ),
                                                         style:
                                                             FFTheme.of(context)
                                                                 .bodyText2,
                                                       ),
-
-                                                      /** Column 2 */
-                                                      Text(
-                                                        "Title",
-                                                        style:
-                                                            FFTheme.of(context)
-                                                                .bodyText2,
-                                                      ),
-
-                                                      /** Column 3 */
-                                                      Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          '030' /* Author */,
+                                                    ),
+                                                    if (responsiveVisibility(
+                                                      context: context,
+                                                      phone: false,
+                                                    ))
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: Text(
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .getText(
+                                                            'ugngnnro' /* Next Task Due */,
+                                                          ),
+                                                          style: FFTheme.of(
+                                                                  context)
+                                                              .bodyText2,
                                                         ),
-                                                        style:
-                                                            FFTheme.of(context)
-                                                                .bodyText2,
                                                       ),
-
-                                                      /** Column 4 */
-                                                      Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          '031' /* Categories */,
+                                                    if (responsiveVisibility(
+                                                      context: context,
+                                                      phone: false,
+                                                      tablet: false,
+                                                      tabletLandscape: false,
+                                                    ))
+                                                      Expanded(
+                                                        child: Text(
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .getText(
+                                                            'wtjkf5ue' /* Status */,
+                                                          ),
+                                                          style: FFTheme.of(
+                                                                  context)
+                                                              .bodyText2,
                                                         ),
-                                                        style:
-                                                            FFTheme.of(context)
-                                                                .bodyText2,
                                                       ),
-
-                                                      /** Column 5 */
-                                                      Text(
-                                                        FFLocalizations.of(
-                                                                context)
-                                                            .getText(
-                                                          '035' /* Date */,
-                                                        ),
-                                                        style:
-                                                            FFTheme.of(context)
-                                                                .bodyText2,
-                                                      ),
-
-                                                      /** Column 6 */
-                                                      Text(
+                                                    Expanded(
+                                                      child: Text(
                                                         FFLocalizations.of(
                                                                 context)
                                                             .getText(
@@ -446,301 +475,56 @@ class _ListTrainings extends State<ListTrainings> {
                                                             FFTheme.of(context)
                                                                 .bodyText2,
                                                       ),
-                                                    ]),
-
-                                                    StreamBuilder(
-                                      stream: trainingProvider.fetchTrainingsAsStream(),
-                                      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                                        if (snapshot.hasData) {
-                                          trainings = snapshot.data!.docs
-                                              .map((doc) => Training.fromJson(
-                                                  doc.data() as Map<String, dynamic>, doc.id))
-                                              .toList();
-                                          return TableRow(children: [
-                                                      /** Column 1 */
-                                                      Container(
-                                                        child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            'hh3vfx5r' /* #2422 */,
-                                                          ),
-                                                          style: FFTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        child: Text(
-                                                          "Agile / Scrum Pro",
-                                                          style: FFTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-
-                                                      /** Column 2 */
-                                                      Container(
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      8, 12, 8),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            8,
-                                                                            0),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              40),
-                                                                  child: Image
-                                                                      .network(
-                                                                    'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnN8ZW58MHx8MHx8&auto=format&fit=crop&w=900&q=60',
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            4,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      FFLocalizations.of(
-                                                                              context)
-                                                                          .getText(
-                                                                        'in6njj36' /* Randy Peterson */,
-                                                                      ),
-                                                                      style: FFTheme.of(
-                                                                              context)
-                                                                          .bodyText1
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FFTheme.of(context).bodyText1Family,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            useGoogleFonts:
-                                                                                GoogleFonts.asMap().containsKey(FFTheme.of(context).bodyText1Family),
-                                                                          ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              0,
-                                                                              4,
-                                                                              0,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        FFLocalizations.of(context)
-                                                                            .getText(
-                                                                          't1xjeu8g' /* randy.p@domainname.com */,
-                                                                        ),
-                                                                        style: FFTheme.of(context)
-                                                                            .bodyText2
-                                                                            .override(
-                                                                              fontFamily: FFTheme.of(context).bodyText2Family,
-                                                                              color: FFTheme.of(context).primaryColor,
-                                                                              useGoogleFonts: GoogleFonts.asMap().containsKey(FFTheme.of(context).bodyText2Family),
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-
-                                                      /** Column 4 */
-                                                      Container(
-                                                        child: Text(
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .getText(
-                                                            't3jjn7s8' /* Jan. 30th, 2023 */,
-                                                          ),
-                                                          style: FFTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                        ),
-                                                      ),
-
-                                                      /** Column 5 */
-                                                      Container(
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Container(
-                                                              height: 32,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FFTheme.of(
-                                                                        context)
-                                                                    .primaryBackground,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            40),
-                                                              ),
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0, 0),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            12,
-                                                                            0,
-                                                                            12,
-                                                                            0),
-                                                                child: Text(
-                                                                  FFLocalizations.of(
-                                                                          context)
-                                                                      .getText(
-                                                                    'abe4j7f0' /* Active */,
-                                                                  ),
-                                                                  style: FFTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-
-                                                      /** Column 6 */
-                                                      Container(
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            if (responsiveVisibility(
-                                                              context: context,
-                                                              phone: false,
-                                                              tablet: false,
-                                                            ))
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            8,
-                                                                            0),
-                                                                child:
-                                                                    FFIconButton(
-                                                                  borderColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  borderRadius:
-                                                                      30,
-                                                                  borderWidth:
-                                                                      1,
-                                                                  buttonSize:
-                                                                      44,
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .edit_outlined,
-                                                                    color: FFTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                    size: 20,
-                                                                  ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    print(
-                                                                        'IconButton pressed ...');
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            FFIconButton(
-                                                              borderColor: Colors
-                                                                  .transparent,
-                                                              borderRadius: 30,
-                                                              borderWidth: 1,
-                                                              buttonSize: 44,
-                                                              icon: Icon(
-                                                                Icons.more_vert,
-                                                                color: FFTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                size: 20,
-                                                              ),
-                                                              onPressed:
-                                                                  () async {
-                                                                showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  enableDrag:
-                                                                      false,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return Padding(
-                                                                      padding: MediaQuery.of(
-                                                                              context)
-                                                                          .viewInsets,
-                                                                      child:
-                                                                          Container(
-                                                                        height: MediaQuery.of(context).size.height *
-                                                                            0.5,
-                                                                        child:
-                                                                            UserCrudBottomSheetWidget(),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                );
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ])}}),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
                                             ),
-                                          )
+                                          ),
+                                          ListView(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            children: [
+                                              /** List of Trainings */
+                                              StreamBuilder(
+                                                  stream: trainingProvider
+                                                      .fetchTrainingsAsStream(),
+                                                  builder: (context,
+                                                      AsyncSnapshot<
+                                                              QuerySnapshot>
+                                                          snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      trainings = snapshot
+                                                          .data!.docs
+                                                          .map((doc) =>
+                                                              Training.fromJson(
+                                                                  doc.data() as Map<
+                                                                      String,
+                                                                      dynamic>,
+                                                                  doc.id))
+                                                          .toList();
+                                                      return Container(
+                                                        height: 1000,
+                                                        child: ListView.builder(
+                                                          itemCount:
+                                                              trainings.length,
+                                                          itemBuilder: (buildContext,
+                                                                  index) =>
+                                                              TrainingRow(
+                                                                  training:
+                                                                      trainings[
+                                                                          index]),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return const Text(
+                                                          'fetching');
+                                                    }
+                                                  }),
+                                              /** End of list */
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),

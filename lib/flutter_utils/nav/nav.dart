@@ -83,7 +83,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ListTrainings',
               path: 'listTrainings',
-              builder: (context, params) => ListTrainings(),
+              builder: (context, params) => TrainingsListPage(),
             ),
             FFRoute(
               name: 'AddTraining',

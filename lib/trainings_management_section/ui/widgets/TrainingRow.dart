@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:team_elearny/flutter_utils/ff_icon_button.dart';
 import 'package:team_elearny/flutter_utils/ff_theme.dart';
 import 'package:team_elearny/flutter_utils/ff_util.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/trainings/modify_training_page.dart';
 import '../../core/models/training_model.dart';
 
 class TrainingRow extends StatelessWidget {
@@ -175,8 +176,12 @@ class TrainingRow extends StatelessWidget {
                               color: FFTheme.of(context).secondaryText,
                               size: 20,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          ModifyTraining(training: training)));
                             },
                           ),
                         ),

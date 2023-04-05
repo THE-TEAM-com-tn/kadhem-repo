@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:team_elearny/flutter_utils/ff_model.dart';
 import 'package:team_elearny/trainings_management_section/ui/shared/input_widget.dart';
+import 'package:team_elearny/trainings_management_section/ui/views/categories/category_page_model.dart';
 import 'package:team_elearny/trainings_management_section/ui/views/tags/tag_page_model.dart';
 import '../../../core/models/category_model.dart';
 import '../../../core/viewmodels/category_crud_model.dart';
@@ -17,7 +18,7 @@ class ModifyCategory extends StatefulWidget {
 }
 
 class ModifyCategoryState extends State<ModifyCategory> {
-  late TagPageModel _model;
+  late CategoryPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
@@ -25,9 +26,9 @@ class ModifyCategoryState extends State<ModifyCategory> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TagPageModel());
-    _model.tagLabelController ??= TextEditingController();
-    _model.tagColorController ??= TextEditingController();
+    _model = createModel(context, () => CategoryPageModel());
+    _model.categoryNameController ??= TextEditingController();
+    _model.categoryDescriptionController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -58,17 +59,19 @@ class ModifyCategoryState extends State<ModifyCategory> {
             child: Column(
               children: <Widget>[
                 InputWidget(
-                    model: _model.tagLabelController,
-                    validator: _model.tagLabelValidator,
-                    text: '013', // ### Label ###
+                    initialValue: widget.category.name,
+                    model: _model.categoryNameController,
+                    validator: _model.categoryNameValidator,
+                    text: '015', // ### Name ###
                     obscureText: false),
                 const SizedBox(
                   height: 16,
                 ),
                 InputWidget(
-                    model: _model.tagColorController,
-                    validator: _model.tagColorValidator,
-                    text: '014', // ### Color ###
+                    initialValue: widget.category.description,
+                    model: _model.categoryDescriptionController,
+                    validator: _model.categoryDescriptionValidator,
+                    text: '016', // ### Description ###
                     obscureText: false),
                 const SizedBox(
                   height: 16,

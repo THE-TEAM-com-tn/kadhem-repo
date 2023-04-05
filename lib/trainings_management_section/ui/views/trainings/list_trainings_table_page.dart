@@ -323,7 +323,8 @@ class _TrainingsListPage extends State<TrainingsListPage> {
                                               ))
                                                 FFButtonWidget(
                                                   onPressed: () {
-                                                    print('Button pressed ...');
+                                                    context.pushNamed(
+                                                        "AddTraining");
                                                   },
                                                   text: FFLocalizations.of(
                                                           context)

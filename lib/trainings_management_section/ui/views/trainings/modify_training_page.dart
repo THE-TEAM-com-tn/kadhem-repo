@@ -57,101 +57,101 @@ class ModifyTrainingState extends State<ModifyTraining> {
   List<String> _selectedTags = [];
   String imageUrl = "";
 
-  void _showMultiSelect() async {
-    final List<String>? results = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const MultiSelect();
-      },
-    );
+  // void _showMultiSelect() async {
+  //   final List<String>? results = await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return const MultiSelect();
+  //     },
+  //   );
 
-    // Update UI
-    if (results != null) {
-      setState(() {
-        _selectedCategories = results;
-      });
-    }
-  }
+  //   // Update UI
+  //   if (results != null) {
+  //     setState(() {
+  //       _selectedCategories = results;
+  //     });
+  //   }
+  // }
 
-  void _showMultiSelect_() async {
-    final List<String>? results = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const MultiSelectTags();
-      },
-    );
+  // void _showMultiSelect_() async {
+  //   final List<String>? results = await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return const MultiSelectTags();
+  //     },
+  //   );
 
-    // Update UI
-    if (results != null) {
-      setState(() {
-        _selectedTags = results;
-      });
-    }
-    print("##### $_selectedTags");
-  }
+  //   // Update UI
+  //   if (results != null) {
+  //     setState(() {
+  //       _selectedTags = results;
+  //     });
+  //   }
+  //   print("##### $_selectedTags");
+  // }
 
-  void _selectImage() async {
-    ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+  // void _selectImage() async {
+  //   ImagePicker imagePicker = ImagePicker();
+  //   XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
 
-    if (!kIsWeb) {
-      print("##### Mobile Detetcted!");
+  //   if (!kIsWeb) {
+  //     print("##### Mobile Detetcted!");
 
-      String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-      print("##### Image unique name: $uniqueFileName");
+  //     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+  //     print("##### Image unique name: $uniqueFileName");
 
-      Reference referenceRoot = FirebaseStorage.instance.ref();
-      Reference referenceDirImg = referenceRoot.child("images");
-      Reference referenceImgToUpload = referenceDirImg.child(uniqueFileName);
+  //     Reference referenceRoot = FirebaseStorage.instance.ref();
+  //     Reference referenceDirImg = referenceRoot.child("images");
+  //     Reference referenceImgToUpload = referenceDirImg.child(uniqueFileName);
 
-      try {
-        await referenceImgToUpload.putFile(File(file!.path));
-        imageUrl = await referenceImgToUpload.getDownloadURL();
-        print("##### Image URL: $imageUrl");
-      } catch (error) {
-        print("#####ERROR: $error");
-      }
-    } else if (kIsWeb) {
-      print("##### Web Detetcted!");
+  //     try {
+  //       await referenceImgToUpload.putFile(File(file!.path));
+  //       imageUrl = await referenceImgToUpload.getDownloadURL();
+  //       print("##### Image URL: $imageUrl");
+  //     } catch (error) {
+  //       print("#####ERROR: $error");
+  //     }
+  //   } else if (kIsWeb) {
+  //     print("##### Web Detetcted!");
 
-      var imageBytes = await file?.readAsBytes();
+  //     var imageBytes = await file?.readAsBytes();
 
-      String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-      print("##### Image unique name: $uniqueFileName");
+  //     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+  //     print("##### Image unique name: $uniqueFileName");
 
-      Reference referenceRoot = FirebaseStorage.instance.ref();
-      Reference referenceDirImg = referenceRoot.child("images");
-      Reference referenceImgToUpload = referenceDirImg.child(uniqueFileName);
+  //     Reference referenceRoot = FirebaseStorage.instance.ref();
+  //     Reference referenceDirImg = referenceRoot.child("images");
+  //     Reference referenceImgToUpload = referenceDirImg.child(uniqueFileName);
 
-      try {
-        await referenceImgToUpload.putData(imageBytes!);
-        imageUrl = await referenceImgToUpload.getDownloadURL();
-        print("##### Image URL: $imageUrl");
-      } catch (error) {
-        print("#####ERROR: $error");
-      }
-    }
-  }
+  //     try {
+  //       await referenceImgToUpload.putData(imageBytes!);
+  //       imageUrl = await referenceImgToUpload.getDownloadURL();
+  //       print("##### Image URL: $imageUrl");
+  //     } catch (error) {
+  //       print("#####ERROR: $error");
+  //     }
+  //   }
+  // }
 
-  void handleSubmit(TrainingCRUDModel trainingProvider) async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      await trainingProvider.updateTraining(
-          Training(
-              title: _model.trainingTitleController.text,
-              description: _model.trainingDescriptionController.text,
-              category: _selectedCategories,
-              author: _model.trainingAuthorController.text,
-              duration: _model.trainingDurationController.text,
-              price: double.parse(_model.trainingPriceController.text),
-              trailerVid: _model.trainingTrailerVidController.text,
-              image: imageUrl,
-              tags: _selectedTags,
-              creationDate: Timestamp.now()),
-          widget.training.id!);
-      Navigator.pop(context);
-    }
-  }
+  // void handleSubmit(TrainingCRUDModel trainingProvider) async {
+  //   if (_formKey.currentState!.validate()) {
+  //     _formKey.currentState!.save();
+  //     await trainingProvider.updateTraining(
+  //         Training(
+  //             title: _model.trainingTitleController.text,
+  //             description: _model.trainingDescriptionController.text,
+  //             category: _selectedCategories,
+  //             author: _model.trainingAuthorController.text,
+  //             duration: _model.trainingDurationController.text,
+  //             price: double.parse(_model.trainingPriceController.text),
+  //             trailerVid: _model.trainingTrailerVidController.text,
+  //             image: imageUrl,
+  //             tags: _selectedTags,
+  //             creationDate: Timestamp.now()),
+  //         widget.training.id!);
+  //     Navigator.pop(context);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -189,33 +189,33 @@ class ModifyTrainingState extends State<ModifyTraining> {
                   const SizedBox(
                     height: 16,
                   ),
-                  FFButtonWidget(
-                      onPressed: _showMultiSelect,
-                      text: FFLocalizations.of(context).getText(
-                        '003' /* Select Catgeory */,
-                      ),
-                      options: FFButtonOptions(
-                        width: 130.0,
-                        height: 40.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FFTheme.of(context).primaryBackground,
-                        textStyle: FFTheme.of(context).bodyText1.override(
-                              fontFamily: 'Lexend Deca',
-                              color: FFTheme.of(context).primaryColor,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FFTheme.of(context).bodyText1Family),
-                            ),
-                        elevation: 1.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                      )),
+                  // FFButtonWidget(
+                  //     onPressed: _showMultiSelect,
+                  //     text: FFLocalizations.of(context).getText(
+                  //       '003' /* Select Catgeory */,
+                  //     ),
+                  //     options: FFButtonOptions(
+                  //       width: 130.0,
+                  //       height: 40.0,
+                  //       padding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       iconPadding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       color: FFTheme.of(context).primaryBackground,
+                  //       textStyle: FFTheme.of(context).bodyText1.override(
+                  //             fontFamily: 'Lexend Deca',
+                  //             color: FFTheme.of(context).primaryColor,
+                  //             fontSize: 14.0,
+                  //             fontWeight: FontWeight.normal,
+                  //             useGoogleFonts: GoogleFonts.asMap().containsKey(
+                  //                 FFTheme.of(context).bodyText1Family),
+                  //           ),
+                  //       elevation: 1.0,
+                  //       borderSide: BorderSide(
+                  //         color: Colors.transparent,
+                  //         width: 1.0,
+                  //       ),
+                  //     )),
                   Wrap(
                     children: _selectedCategories
                         .map((e) => Chip(label: Text(e)))
@@ -256,104 +256,104 @@ class ModifyTrainingState extends State<ModifyTraining> {
                       model: _model.trainingTrailerVidController,
                       text: '007', // ### Trailer ###
                       obscureText: false),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  FFButtonWidget(
-                      onPressed: _selectImage,
-                      text: FFLocalizations.of(context).getText(
-                        '010' /* Select Image */,
-                      ),
-                      options: FFButtonOptions(
-                        width: 130.0,
-                        height: 40.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FFTheme.of(context).primaryBackground,
-                        textStyle: FFTheme.of(context).bodyText1.override(
-                              fontFamily: 'Lexend Deca',
-                              color: FFTheme.of(context).primaryColor,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FFTheme.of(context).bodyText1Family),
-                            ),
-                        elevation: 1.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                      )),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  FFButtonWidget(
-                      onPressed: () async {
-                        _showMultiSelect_();
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        '011' /* Select Tags */,
-                      ),
-                      options: FFButtonOptions(
-                        width: 130.0,
-                        height: 40.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FFTheme.of(context).primaryBackground,
-                        textStyle: FFTheme.of(context).bodyText1.override(
-                              fontFamily: 'Lexend Deca',
-                              color: FFTheme.of(context).primaryColor,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FFTheme.of(context).bodyText1Family),
-                            ),
-                        elevation: 1.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                      )),
-                  Wrap(
-                    children:
-                        _selectedTags.map((e) => Chip(label: Text(e))).toList(),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  FFButtonWidget(
-                      onPressed: () async {
-                        handleSubmit(trainingProvider);
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        '021' /* Update */,
-                      ),
-                      options: FFButtonOptions(
-                        width: 130.0,
-                        height: 40.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FFTheme.of(context).primaryBackground,
-                        textStyle: FFTheme.of(context).bodyText1.override(
-                              fontFamily: 'Lexend Deca',
-                              color: FFTheme.of(context).primaryColor,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                  FFTheme.of(context).bodyText1Family),
-                            ),
-                        elevation: 1.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                      )),
+                  // const SizedBox(
+                  //   height: 16,
+                  // ),
+                  // FFButtonWidget(
+                  //     onPressed: _selectImage,
+                  //     text: FFLocalizations.of(context).getText(
+                  //       '010' /* Select Image */,
+                  //     ),
+                  //     options: FFButtonOptions(
+                  //       width: 130.0,
+                  //       height: 40.0,
+                  //       padding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       iconPadding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       color: FFTheme.of(context).primaryBackground,
+                  //       textStyle: FFTheme.of(context).bodyText1.override(
+                  //             fontFamily: 'Lexend Deca',
+                  //             color: FFTheme.of(context).primaryColor,
+                  //             fontSize: 14.0,
+                  //             fontWeight: FontWeight.normal,
+                  //             useGoogleFonts: GoogleFonts.asMap().containsKey(
+                  //                 FFTheme.of(context).bodyText1Family),
+                  //           ),
+                  //       elevation: 1.0,
+                  //       borderSide: BorderSide(
+                  //         color: Colors.transparent,
+                  //         width: 1.0,
+                  //       ),
+                  //     )),
+                  // const SizedBox(
+                  //   height: 16,
+                  // ),
+                  // FFButtonWidget(
+                  //     onPressed: () async {
+                  //       _showMultiSelect_();
+                  //     },
+                  //     text: FFLocalizations.of(context).getText(
+                  //       '011' /* Select Tags */,
+                  //     ),
+                  //     options: FFButtonOptions(
+                  //       width: 130.0,
+                  //       height: 40.0,
+                  //       padding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       iconPadding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       color: FFTheme.of(context).primaryBackground,
+                  //       textStyle: FFTheme.of(context).bodyText1.override(
+                  //             fontFamily: 'Lexend Deca',
+                  //             color: FFTheme.of(context).primaryColor,
+                  //             fontSize: 14.0,
+                  //             fontWeight: FontWeight.normal,
+                  //             useGoogleFonts: GoogleFonts.asMap().containsKey(
+                  //                 FFTheme.of(context).bodyText1Family),
+                  //           ),
+                  //       elevation: 1.0,
+                  //       borderSide: BorderSide(
+                  //         color: Colors.transparent,
+                  //         width: 1.0,
+                  //       ),
+                  //     )),
+                  // Wrap(
+                  //   children:
+                  //       _selectedTags.map((e) => Chip(label: Text(e))).toList(),
+                  // ),
+                  // const SizedBox(
+                  //   height: 30,
+                  // ),
+                  // FFButtonWidget(
+                  //     onPressed: () async {
+                  //       handleSubmit(trainingProvider);
+                  //     },
+                  //     text: FFLocalizations.of(context).getText(
+                  //       '021' /* Update */,
+                  //     ),
+                  //     options: FFButtonOptions(
+                  //       width: 130.0,
+                  //       height: 40.0,
+                  //       padding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       iconPadding:
+                  //           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  //       color: FFTheme.of(context).primaryBackground,
+                  //       textStyle: FFTheme.of(context).bodyText1.override(
+                  //             fontFamily: 'Lexend Deca',
+                  //             color: FFTheme.of(context).primaryColor,
+                  //             fontSize: 14.0,
+                  //             fontWeight: FontWeight.normal,
+                  //             useGoogleFonts: GoogleFonts.asMap().containsKey(
+                  //                 FFTheme.of(context).bodyText1Family),
+                  //           ),
+                  //       elevation: 1.0,
+                  //       borderSide: BorderSide(
+                  //         color: Colors.transparent,
+                  //         width: 1.0,
+                  //       ),
+                  //     )),
                 ],
               ),
             ),

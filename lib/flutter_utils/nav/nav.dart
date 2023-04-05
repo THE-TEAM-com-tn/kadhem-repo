@@ -81,6 +81,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
 
             //##### My part
             FFRoute(
+              name: 'ModifyTraining',
+              path: 'modifyTraining',
+              builder: (context, params) => TrainingsListPage(),
+            ),
+            FFRoute(
               name: 'ListTrainings',
               path: 'listTrainings',
               builder: (context, params) => TrainingsListPage(),

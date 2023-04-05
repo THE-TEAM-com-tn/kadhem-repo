@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:team_elearny/flutter_utils/ff_model.dart';
 import 'package:team_elearny/flutter_utils/ff_theme.dart';
 import 'package:team_elearny/flutter_utils/ff_util.dart';
 import 'package:team_elearny/flutter_utils/ff_widgets.dart';
@@ -9,7 +8,6 @@ import 'package:team_elearny/trainings_management_section/ui/shared/input_widget
 import 'package:team_elearny/trainings_management_section/ui/views/tags/tag_page_model.dart';
 import '../../../core/models/tag_model.dart';
 import '../../../core/viewmodels/tag_crud_model.dart';
-import '../../../ui/widgets/G_text_form_field.dart';
 
 class ModifyTag extends StatefulWidget {
   final Tag tag;

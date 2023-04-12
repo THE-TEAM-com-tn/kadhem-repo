@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider_trainings/core/models/tag_model.dart';
 import 'package:provider_trainings/core/viewmodels/tag_crud_model.dart';
+import 'package:provider_trainings/ui/router/app_route_constants.dart';
 import 'package:provider_trainings/ui/widgets/tag_card.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +24,7 @@ class ListTagsState extends State<ListTags> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add_tag');
+          GoRouter.of(context).pushNamed(MyAppRouteConstants.addTagRouteName);
         },
         child: const Icon(Icons.add),
       ),
@@ -34,8 +36,9 @@ class ListTagsState extends State<ListTags> {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               tags = snapshot.data!.docs
-              .map((doc) => Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
-              .toList();
+                  .map((doc) =>
+                      Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
+                  .toList();
               return ListView.builder(
                 itemCount: tags.length,
                 itemBuilder: (buildContext, index) => TagCard(tag: tags[index]),

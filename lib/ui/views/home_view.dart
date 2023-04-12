@@ -22,14 +22,16 @@ class HomeView extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Navigator.pushNamed(context, '/list_categories');
+                GoRouter.of(context)
+                    .pushNamed(MyAppRouteConstants.listCategoriesRouteName);
               },
               child: const Text('Categories'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Navigator.pushNamed(context, '/list_tags');
+                GoRouter.of(context)
+                    .pushNamed(MyAppRouteConstants.listTagsRouteName);
               },
               child: const Text('Tags'),
             ),

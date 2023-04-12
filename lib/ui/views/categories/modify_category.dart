@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_trainings/core/models/category_model.dart';
 import 'package:provider_trainings/core/viewmodels/category_crud_model.dart';
+import 'package:provider_trainings/ui/router/app_route_constants.dart';
 import 'package:provider_trainings/ui/widgets/G_text_form_field.dart';
 
 class ModifyCategory extends StatefulWidget {
@@ -36,13 +38,18 @@ class ModifyCategoryState extends State<ModifyCategory> {
           child: Column(
             children: <Widget>[
               GTextFormField(
-                initVal: widget.category.name,
-                ifEmpty: "Category name is required",
-                onSaved: (value) => name = value!,
-                hint: "Category Name"
+                  initVal: widget.category.name,
+                  ifEmpty: "Category name is required",
+                  onSaved: (value) => name = value!,
+                  hint: "Category Name"),
+              const SizedBox(
+                height: 16,
               ),
-              const SizedBox(height: 16, ),
-              GTextFormField(initVal: widget.category.description, ifEmpty: "Category description is required", onSaved: (value) => description = value!, hint: "Category Description"),
+              GTextFormField(
+                  initVal: widget.category.description,
+                  ifEmpty: "Category description is required",
+                  onSaved: (value) => description = value!,
+                  hint: "Category Description"),
               const SizedBox(
                 height: 16,
               ),
@@ -51,8 +58,11 @@ class ModifyCategoryState extends State<ModifyCategory> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await categoryProvider.updateCategory(TrainingCategory(name: name, description: description), widget.category.id!);
-                    Navigator.pop(context);
+                    await categoryProvider.updateCategory(
+                        TrainingCategory(name: name, description: description),
+                        widget.category.id!);
+                    GoRouter.of(context)
+                        .pushNamed(MyAppRouteConstants.listCategoriesRouteName);
                   }
                 },
                 child: const Text('Update Category',

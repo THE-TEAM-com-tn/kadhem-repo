@@ -1,13 +1,11 @@
 // ignore_for_file: file_names
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_trainings/core/models/training_model.dart';
 import 'package:provider_trainings/core/viewmodels/training_crud_model.dart';
 import 'package:provider_trainings/ui/router/app_route_constants.dart';
-import 'package:provider_trainings/ui/views/modify_training.dart';
+import 'package:provider_trainings/ui/views/trainings/modify_training.dart';
 
 class TrainingCard extends StatelessWidget {
   final Training training;
@@ -46,9 +44,6 @@ class TrainingCard extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (_) => ModifyTraining(training: training)));
-              print("Title: ${training.title}");
-              print("Title: ${training.category}");
-              print("Title: ${training.tags}");
             },
             child: const Text("Open/Edit"),
           ),

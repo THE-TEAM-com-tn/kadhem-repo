@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_trainings/core/models/tag_model.dart';
 import 'package:provider_trainings/core/viewmodels/tag_crud_model.dart';
+import 'package:provider_trainings/ui/router/app_route_constants.dart';
 import 'package:provider_trainings/ui/widgets/G_text_form_field.dart';
 
 class ModifyTag extends StatefulWidget {
@@ -36,18 +38,18 @@ class ModifyTagState extends State<ModifyTag> {
           child: Column(
             children: <Widget>[
               GTextFormField(
-                initVal: widget.tag.label,
-                ifEmpty: "Tag label is required",
-                onSaved: (value) => label = value!,
-                hint: "Tag Name"
+                  initVal: widget.tag.label,
+                  ifEmpty: "Tag label is required",
+                  onSaved: (value) => label = value!,
+                  hint: "Tag Name"),
+              const SizedBox(
+                height: 16,
               ),
-              const SizedBox(height: 16, ),
               GTextFormField(
-                initVal: widget.tag.color,
-                ifEmpty: "Tag color is required",
-                onSaved: (value) => color = value!,
-                hint: "Tag Color"
-              ),
+                  initVal: widget.tag.color,
+                  ifEmpty: "Tag color is required",
+                  onSaved: (value) => color = value!,
+                  hint: "Tag Color"),
               const SizedBox(
                 height: 16,
               ),
@@ -56,8 +58,10 @@ class ModifyTagState extends State<ModifyTag> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await tagProvider.updateTag(Tag(label: label, color: color), widget.tag.id!);
-                    Navigator.pop(context);
+                    await tagProvider.updateTag(
+                        Tag(label: label, color: color), widget.tag.id!);
+                    GoRouter.of(context)
+                        .pushNamed(MyAppRouteConstants.listTagsRouteName);
                   }
                 },
                 child: const Text('Update Tag',

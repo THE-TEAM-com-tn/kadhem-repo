@@ -10,12 +10,12 @@ import 'core/viewmodels/training_crud_model.dart';
 final GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => TrainingAPI('training'));
+  locator.registerLazySingleton(() => TrainingAPI('trainings'));
   locator.registerLazySingleton(() => TrainingCRUDModel());
 
-  locator.registerLazySingleton(() => CategoryAPI('category'));
+  locator.registerLazySingleton(() => CategoryAPI('categories'));
   locator.registerLazySingleton(() => CategoryCRUDModel());
 
-  locator.registerLazySingleton(() => TagAPI('tag'));
+  locator.registerLazySingleton(() => TagAPI('tags'));
   locator.registerLazySingleton(() => TagCRUDModel());
 }

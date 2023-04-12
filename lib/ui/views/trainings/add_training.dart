@@ -14,7 +14,7 @@ import 'package:provider_trainings/ui/router/app_route_constants.dart';
 import 'package:provider_trainings/ui/widgets/G_text_form_field.dart';
 import 'package:provider_trainings/ui/widgets/multi_select_tags_tool.dart';
 import 'package:provider_trainings/ui/widgets/multi_select_tool.dart';
-import '../../core/viewmodels/training_crud_model.dart';
+import '/core/viewmodels/training_crud_model.dart';
 
 class AddTraining extends StatefulWidget {
   const AddTraining({super.key});

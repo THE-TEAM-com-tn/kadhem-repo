@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_trainings/core/models/tag_model.dart';
 import 'package:provider_trainings/core/viewmodels/tag_crud_model.dart';
-import 'package:provider_trainings/ui/views/modify_tag.dart';
+import 'package:provider_trainings/ui/views/tags/modify_tag.dart';
 
 class TagCard extends StatelessWidget {
   final Tag tag;
@@ -17,16 +17,13 @@ class TagCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => ModifyTag(tag: tag)));
+            context, MaterialPageRoute(builder: (_) => ModifyTag(tag: tag)));
       },
       child: Padding(
           padding: const EdgeInsets.all(8),
           child: Card(
-            child: Column(
-              children: [
-              AppBar(
+              child: Column(children: [
+            AppBar(
               backgroundColor: Theme.of(context).primaryColor,
               actions: <Widget>[
                 IconButton(
@@ -47,7 +44,8 @@ class TagCard extends StatelessWidget {
                 child: (Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Color: ${tag.color}", style: const TextStyle(fontSize: 14)),
+                    Text("Color: ${tag.color}",
+                        style: const TextStyle(fontSize: 14)),
                   ],
                 )),
               ),

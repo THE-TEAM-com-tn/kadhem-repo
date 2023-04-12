@@ -55,10 +55,10 @@ class _InputWidgetState extends State<InputWidget> {
       onChanged: widget.onChanged,
       enabled: widget.enabled,
       controller: _model,
-      decoration: _obscure
-          ? InputDecoration(
-              label: Text(widget.text),
-              suffixIcon: IconButton(
+      decoration: InputDecoration(
+        label: Text(widget.text),
+        suffixIcon: _obscure
+            ? IconButton(
                 icon: Icon(
                   !_passwordVisible ? Icons.visibility : Icons.visibility_off,
                 ),
@@ -67,9 +67,9 @@ class _InputWidgetState extends State<InputWidget> {
                     _passwordVisible = !_passwordVisible;
                   });
                 },
-              ),
-            )
-          : null,
+              )
+            : null,
+      ),
       obscureText: _obscure ? _passwordVisible : false,
     );
   }

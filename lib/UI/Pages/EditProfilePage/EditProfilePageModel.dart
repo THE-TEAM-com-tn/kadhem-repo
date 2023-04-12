@@ -35,7 +35,7 @@ class EditProfilePageModel {
 
   TextEditingController? phoneNumberController;
   String? phoneNumberControllerValidator(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return 'Field is required';
     }
     if (int.tryParse(value) == null) {
@@ -56,7 +56,7 @@ class EditProfilePageModel {
 
   TextEditingController? lastNameController;
   String? lastNameControllerValidator(String? value) {
-    if (value!.isEmpty) {
+    if (value!.trim().isEmpty) {
       return "Please enter a value";
     }
     return null;

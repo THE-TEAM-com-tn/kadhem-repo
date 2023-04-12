@@ -20,10 +20,7 @@ class GTextFormField extends StatelessWidget {
     return TextFormField(
       initialValue: initVal,
       decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: hint,
-        fillColor: Colors.grey[300],
-        filled: true,
+        label: Text(hint)
       ),
       validator: (value) {
         if (value!.isEmpty) {

@@ -228,7 +228,7 @@ class AddTrainingState extends State<AddTraining> {
                         tags: _selectedTags,
                         creationDate: Timestamp.now()));
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ListTrainings()));
+                        builder: (context) => ListTrainings()));
                   }
                 },
                 child: const Text('add Training',

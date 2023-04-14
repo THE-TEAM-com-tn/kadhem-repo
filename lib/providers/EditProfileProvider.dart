@@ -18,8 +18,8 @@ class EditProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  defaultImage(String doc) {
-    _api.defaultImage(doc) ; 
+  defaultImage(String? doc) {
+    _api.defaultImage(doc!) ; 
     loading = true ; 
     notifyListeners(); 
   }
@@ -47,7 +47,7 @@ class EditProfileProvider with ChangeNotifier {
     userModel.bio = doc['bio'];
     userModel.birthDate = doc['birth_date'];
     userModel.company = doc['company'];
-    userModel.role = doc['role'];
+    //userModel.role = doc['role'];
     userModel.password = doc['password'];
     loading = false ; 
     notifyListeners();

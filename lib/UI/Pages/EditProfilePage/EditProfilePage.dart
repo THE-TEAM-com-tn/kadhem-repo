@@ -49,7 +49,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Consumer<EditProfileProvider>(
             builder: (context, value, child) {
               if (value.loading == true) {
-                value.fetchData('KkaQAl8KEKXQkpacZFWp');
+                print(userModel.userId) ;
+                value.fetchData(userModel.userId);
               }
               if (value.documentSnapshot == null) {
                 return const CircularProgressIndicator();
@@ -97,7 +98,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       // Delete Image
                       IconButton(
                           onPressed: () {
-                            value.defaultImage("KkaQAl8KEKXQkpacZFWp");
+                            value.defaultImage(userModel.userId);
                           },
                           icon: const Icon(
                             Icons.delete,

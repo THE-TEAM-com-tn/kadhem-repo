@@ -1,4 +1,7 @@
 import 'package:elearning_provider/UI/Pages/SettingsPage/Settings.dart';
+import 'package:elearning_provider/auth/auth_page.dart';
+import 'package:elearning_provider/auth/home_page.dart';
+import 'package:elearning_provider/auth/login_or_register_page.dart';
 import 'package:elearning_provider/locator.dart';
 import 'package:elearning_provider/providers/EditProfileProvider.dart';
 import 'package:elearning_provider/providers/PasswordChangeProvider.dart';
@@ -9,21 +12,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-        /*   apiKey: "AIzaSyDoDl0kAnDaVGML615Ozzc4xolyWjmyqMI",
+        /*  ,*/
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+ apiKey: "AIzaSyDoDl0kAnDaVGML615Ozzc4xolyWjmyqMI",
         appId: "1:507597460669:web:1bf866062f2811191453d4",
         messagingSenderId: "507597460669",
         projectId: "firstsprint-e9731",
-        storageBucket: "gs://firstsprint-e9731.appspot.com"),*/
-
-void main() async {
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyCxonhqtYbqQLORbx_-c-n2bWN0e-4Km3g',
-        appId: '1:906403289387:web:7a1f8902ee9c78fc5a8d6e',
-        messagingSenderId: '906403289387',
-        projectId: 'fir-cruddemo-2bf79',
-       // authDomain: 'fir-cruddemo-2bf79.firebaseapp.com',
-        storageBucket: 'fir-cruddemo-2bf79.appspot.com'));
+        storageBucket: "gs://firstsprint-e9731.appspot.com"
+        ));
   runApp(const MyApp());
   setupLocator();
 }
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SettingsPage(),
+        home:  AuthPage(),
       ),
     );
   }

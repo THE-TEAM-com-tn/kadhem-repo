@@ -24,6 +24,8 @@ class AddCategoryState extends State<AddCategory> {
     var categoryProvider = Provider.of<CategoryCRUDModel>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple[200],
+        elevation: 0,
         title: const Center(
           child: Text('Add Training Category'),
         ),
@@ -32,39 +34,42 @@ class AddCategoryState extends State<AddCategory> {
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: <Widget>[
-              GTextFormField(
-                  ifEmpty: "Category name is required",
-                  onSaved: (value) => name = value!,
-                  hint: "Category Title"),
-              const SizedBox(
-                height: 16,
-              ),
-              GTextFormField(
-                  ifEmpty: "Category description is required",
-                  onSaved: (value) => description = value!,
-                  hint: "Category description"),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                // splashColor: Colors.red,
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    await categoryProvider.addCategory(TrainingCategory(
-                        name: name,
-                        description: description,));
-                    // Navigator.pushNamed(context, '/list_categories');
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Add Category',
-                    style: TextStyle(color: Colors.white)),
-                // color: Colors.blue,
-              )
-            ],
+
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                GTextFormField(
+                    ifEmpty: "Category name is required",
+                    onSaved: (value) => name = value!,
+                    hint: "Category Title"),
+                const SizedBox(
+                  height: 16,
+                ),
+                GTextFormField(
+                    ifEmpty: "Category description is required",
+                    onSaved: (value) => description = value!,
+                    hint: "Category description"),
+                const SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                  // splashColor: Colors.red,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      await categoryProvider.addCategory(TrainingCategory(
+                          name: name,
+                          description: description,));
+                      // Navigator.pushNamed(context, '/list_categories');
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Add Category',
+                      style: TextStyle(color: Colors.white)),
+                  // color: Colors.blue,
+                )
+              ],
+            ),
           ),
         ),
       ),

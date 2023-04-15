@@ -21,7 +21,7 @@ class UserModel {
       "company" : company,
       "role" : role,
       "birth_date" : birthDate
-    } ;
+    };
   }
 
 

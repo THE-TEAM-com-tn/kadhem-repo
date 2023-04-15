@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../UI/Pages/users/add_many_users_csv_xcel.dart';
 import '../UI/Pages/users/add_many_users_json.dart';
+import '../UI/Pages/users/add_user.dart';
 import 'login_or_register_page.dart';
 import 'login_page.dart';
 //import 'Mobile_screenshot_blocker.dart';
@@ -117,19 +119,37 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 15),
 
-            ElevatedButton(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
+            const Text(
+              "Add user",
+              style: TextStyle(fontSize: 14, color: CupertinoColors.activeBlue),
+            ),
+            const SizedBox(height: 10),
+            IconButton(
               onPressed: () {
-             /*   Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddUserPage(),
                   ),
-                );*/
+                );
               },
-              child: const Text('Add user page'),
+              icon: Ink.image(
+                image: const NetworkImage ("https://i.imgur.com/FRlZP2p.png"),
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             ),
+        ],
+      ),
 
-            const SizedBox(height: 15),
+            const SizedBox(height: 20),
+
+
 
 
             ElevatedButton(
@@ -192,9 +212,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-
                 const SizedBox(width: 30),
-
 
                 IconButton(
                   onPressed: () {

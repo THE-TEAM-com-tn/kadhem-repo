@@ -22,16 +22,35 @@ class ListTagsState extends State<ListTags> {
     final tagProvider = Provider.of<TagCRUDModel>(context);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddTag()));
-        },
-        child: const Icon(Icons.add),
-      ),
+
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple[200], // Set the background color to transparent
+        elevation: 0,
         title: const Text("Tags Management"),
+
+        actions: [
+
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTag()));
+            },
+
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(
+                'https://i.imgur.com/YEGyoAc.png',
+                height: 32,
+                width: 32,
+              ),
+            ),
+          ),
+
+        ],
+
       ),
+
+
+
       body: StreamBuilder(
           stream: tagProvider.fetchTagsAsStream(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -45,9 +64,20 @@ class ListTagsState extends State<ListTags> {
                 itemBuilder: (buildContext, index) => TagCard(tag: tags[index]),
               );
             } else {
-              return const Text('fetching');
+              return const Text('Fetching...');
             }
           }),
+
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const AddTag()));
+        },
+        child: const Icon(Icons.add),
+      ),
+
+
     );
   }
 }

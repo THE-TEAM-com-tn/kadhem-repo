@@ -14,7 +14,7 @@ import '../../../models/training_model.dart';
 import '../../../providers/training_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
 import '../../Widgets/multi_select_tags_tool.dart';
-import '../../Widgets/multi_select_tool.dart';
+import '../../Widgets/multi_select_tool_categroy.dart';
 
 
 class AddTraining extends StatefulWidget {

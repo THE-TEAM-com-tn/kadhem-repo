@@ -8,6 +8,7 @@ import '../../Widgets/category_card.dart';
 
 class ListCategories extends StatefulWidget {
   const ListCategories({super.key});
+  //const ListCategories();
 
   @override
   ListCategoriesState createState() => ListCategoriesState();

@@ -4,6 +4,11 @@ A new Flutter project.
 
 ## Info
 
+https://console.firebase.google.com/u/0/project/elearning-9f77b
+
+https://console.cloud.google.com/apis/library?project=elearning-9f77b
+
+
 
 Additional run args (flutter run ...): 
 

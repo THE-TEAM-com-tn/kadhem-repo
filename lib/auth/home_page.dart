@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../UI/Pages/users/add_many_users_csv_xcel.dart';
+import '../UI/Pages/users/add_many_users_json.dart';
 import 'login_or_register_page.dart';
 import 'login_page.dart';
 //import 'Mobile_screenshot_blocker.dart';
@@ -162,6 +164,62 @@ class _HomePageState extends State<HomePage> {
             ),
 
             const SizedBox(height: 15),
+
+
+
+
+
+            const SizedBox(height: 10),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddManyUsersPage(),
+                      ),
+                    );
+                  },
+                  icon: Ink.image(
+                    image: const AssetImage("lib/images/img-csv.png"),
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+
+
+                const SizedBox(width: 30),
+
+
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddUsersFromJsonPage(),
+                      ),
+                    );
+                  },
+                  icon: Ink.image(
+                    image: const AssetImage("lib/images/img-json.png"),
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 30),
+
+
+
+
 
           ],
         ),

@@ -25,7 +25,7 @@ class PasswordChangeProvider with ChangeNotifier {
     final upperCaseRegex = RegExp(r'[A-Z]');
     final lowerCaseRegex = RegExp(r'[a-z]');
     final numberRegex = RegExp(r'[0-9]');
-    final symbolRegex = RegExp(r'[!@#\$&*~]');
+    final symbolRegex = RegExp(r'[!@#\$&*~%]');
 
     if (value.length > 8) {
       length = true;

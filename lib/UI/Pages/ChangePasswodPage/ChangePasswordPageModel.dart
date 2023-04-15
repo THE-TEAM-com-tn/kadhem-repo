@@ -1,26 +1,27 @@
-
 import 'package:flutter/material.dart';
 
 
 class ChangePasswordPageModel   {
+
   ///  State fields for stateful widgets in this page.
-
   bool isMediaUploading = false;
-
-
   // State field(s) for yourName widget.
   TextEditingController? oldPasswordController;
-  String?  oldPasswordControllerValidator(String? value) {
-    if (value!.isEmpty) {return 'this field is required' ;}
-    return null ; 
-  }
   // State field(s) for emailAddress widget.
   TextEditingController? newPasswordController;
+  // State field(s) for myBio widget.
+  TextEditingController? confirmPasswordController;
+
+  String?  oldPasswordControllerValidator(String? value) {
+    if (value!.isEmpty) {return 'this field is required' ;}
+    return null ;
+  }
+
   String?  newPasswordControllerValidator(String? value) {
       final upperCaseRegex = RegExp(r'[A-Z]');
   final lowerCaseRegex = RegExp(r'[a-z]');
   final numberRegex = RegExp(r'[0-9]');
-  final symbolRegex = RegExp(r'[!@#\$&*~]');
+  final symbolRegex = RegExp(r'[!@#\$&*~%]');
 
   if (value!.isEmpty) {
     return 'Password is required';
@@ -38,12 +39,11 @@ class ChangePasswordPageModel   {
     return 'Password must contain at least 1 number';
   }
   if (!symbolRegex.hasMatch(value)) {
-    return 'Password must contain at least 1 symbol (!@#\$&*~)';
+    return 'Password must contain at least 1 symbol (!@#\$&*~%)';
   }
   return null;
   }
-  // State field(s) for myBio widget.
-  TextEditingController? confirmPasswordController;
+
   String?  confirmPasswordControllerValidator(String? value) {return null;}
 
   /// Initialization and disposal methods.
@@ -57,8 +57,6 @@ class ChangePasswordPageModel   {
     newPasswordController?.dispose();
     confirmPasswordController?.dispose();
   }
-
-
 
 
   /// Additional helper methods are added here.

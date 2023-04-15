@@ -7,7 +7,7 @@ import 'components/my_textfield.dart';
 import 'components/square_tile.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'auth_service.dart';
+import 'google_auth_service.dart';
 import 'forgot_pwd_page.dart';
 import 'package:flutter/services.dart';
 import 'anonymous_home_page.dart';

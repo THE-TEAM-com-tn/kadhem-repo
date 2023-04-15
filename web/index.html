@@ -23,7 +23,15 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<!--
+      // old_one by alaa
+<meta name="google-signin-client_id" content="846946449640-8ujoe1imn7baii4bh5adgffhb724ggkq.apps.googleusercontent.com">
+-->
+
+<!-- amine google Client ID -->
   <meta name="google-signin-client_id" content="846946449640-8ujoe1imn7baii4bh5adgffhb724ggkq.apps.googleusercontent.com">
+
   <meta name="apple-mobile-web-app-title" content="elearning_provider">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
@@ -39,8 +47,35 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+
+
+
+  <!--Screenshot blocker 01 -->
+  <style>
+  * {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+</style>
+  <!--Screenshot blocker 01 -->
+
+
 </head>
+
 <body>
+
+
+<!--Screenshot blocker 01 -->
+<script>
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+</script>
+<!--Screenshot blocker 01 -->
+
+
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -56,5 +91,33 @@
       });
     });
   </script>
+
+<!-- for the web config / hosting !! -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDZxU81inDFaqGEbVzhnMisOK6FmP-xJzk",
+    authDomain: "elearning-9f77b.firebaseapp.com",
+    projectId: "elearning-9f77b",
+    storageBucket: "elearning-9f77b.appspot.com",
+    messagingSenderId: "52081032273",
+    appId: "1:52081032273:web:8bfaf99062e445e62c4c70",
+    measurementId: "G-1C74Y6ZCKX"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+<!-- for the web config / hosting !! -->
+
+
 </body>
 </html>

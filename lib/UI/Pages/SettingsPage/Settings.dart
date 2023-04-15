@@ -11,12 +11,36 @@ import '../ChangePasswodPage/ChangePasswordPage.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings Page"),
+        title: const Center(
+          child: Text( "welcome",
+            //user.email!, // this will display the user email in the app bar
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+        backgroundColor: Colors.deepPurple[200],
+        elevation: 0,
+        actions: [
+          TextButton.icon(
+            onPressed: signUserOut,
+            icon: const Icon(Icons.logout, color: Colors.white),
+            label: const Text(
+              "Logout",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ],
       ),
+
+
       body: Row(children: [
         const SizedBox(
           height: 60,

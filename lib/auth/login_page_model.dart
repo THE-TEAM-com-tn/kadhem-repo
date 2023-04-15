@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'auth_service.dart';
+import 'google_auth_service.dart';
 
 class LoginPageModel extends ChangeNotifier {
   final _emailController = TextEditingController();

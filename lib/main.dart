@@ -12,10 +12,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-        /*  ,*/
+import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+/*
+   /// alaa firebase DB
   await Firebase.initializeApp(
       options: const FirebaseOptions(
  apiKey: "AIzaSyDoDl0kAnDaVGML615Ozzc4xolyWjmyqMI",
@@ -23,7 +27,15 @@ void main() async {
         messagingSenderId: "507597460669",
         projectId: "firstsprint-e9731",
         storageBucket: "gs://firstsprint-e9731.appspot.com"
-        ));
+        ));*/
+
+
+  // by Amine
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+
   runApp(const MyApp());
   setupLocator();
 }
@@ -34,7 +46,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    debugShowCheckedModeBanner: false;
     return MultiProvider(
+
       // add providers to make it available everywhere
       providers: [
         ChangeNotifierProvider(create: (_) => locator<EditProfileProvider>()),
@@ -49,8 +63,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        debugShowCheckedModeBanner: false,  // hethi bech tna7i debug banner on top right side
         home:  AuthPage(),
       ),
     );
+
+
   }
 }
+

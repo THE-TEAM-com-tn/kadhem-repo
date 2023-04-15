@@ -2,10 +2,8 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-
 import '../../locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../models/tag_model.dart';
 import '../services/tag_api.dart';
 

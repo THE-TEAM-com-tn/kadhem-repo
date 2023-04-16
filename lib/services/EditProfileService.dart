@@ -73,9 +73,8 @@ class EditProfileService {
 
   delteImage() async {
     await _db.collection('Users').doc(userModel.userId).update({
-      "profile_picture": "https://firebasestorage.googleapis.com/v0/b/"
-          "firstsprint-e9731.appspot.com/o/TestFolder%2Fprofile_picture%20(1).jpg?alt=media&token=8ac96436-"
-          "f8f3-4c6e-ad3b-1c7cb1113b29"
+      "profile_picture":
+          "https://firebasestorage.googleapis.com/v0/b/elearning-9f77b.appspot.com/o/TestFolder%2Fimages.png?alt=media&token=45c0e5f2-3daa-424c-b31f-750ea0d581ad"
     });
   }
 }

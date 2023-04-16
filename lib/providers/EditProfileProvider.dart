@@ -13,9 +13,10 @@ class EditProfileProvider with ChangeNotifier {
   bool imageUpdating = false ; 
 
   updateData(UserModel userModel) async {
-    await _api.updateData(userModel);
+   bool result =  await _api.updateData(userModel);
     loading  = true ;
     notifyListeners();
+    return result ; 
   }
 
   defaultImage(String? doc) {

@@ -67,8 +67,7 @@ class ModifyCategoryState extends State<ModifyCategory> {
                         await categoryProvider.updateCategory(
                             TrainingCategory(name: name, description: description),
                             widget.category.id!);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ListCategories()));
+                      Navigator.pop(context);
                       }
                     },
                     child: const Text('Update Category',

@@ -52,6 +52,11 @@ class PasswordChangeProvider with ChangeNotifier {
     } else {
       symbol = false;
     }
+    if (value.length >= 8) 
+    {length = true;} 
+    else {
+      length = false ; 
+    }
     notifyListeners();
   }
 }

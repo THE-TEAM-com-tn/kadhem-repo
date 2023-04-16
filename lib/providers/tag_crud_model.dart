@@ -15,27 +15,32 @@ class TagCRUDModel extends ChangeNotifier {
   Future<List<Tag>> fetchTags() async {
     var result = await _api.getDataCollection();
     tags = result.docs
-    .map((doc) => Tag.fromJson(doc.data as Map<String, dynamic>, doc.id))
-    .toList();
+        .map((doc) => Tag.fromJson(doc.data as Map<String, dynamic>, doc.id))
+        .toList();
+    notifyListeners();
     return tags;
   }
 
   Stream<QuerySnapshot<Object?>> fetchTagsAsStream() {
+    notifyListeners();
     return _api.streamDataCollection();
   }
 
   Future removeTag(String id) async {
     await _api.removeDocument(id);
+    notifyListeners();
     return;
   }
 
   Future updateTag(Tag data, String id) async {
     await _api.updateDocument(data.toJson(), id);
+    notifyListeners();
     return;
   }
 
   Future addTag(Tag data) async {
     var result = await _api.addDocument(data.toJson());
+    notifyListeners();
     return;
   }
 }

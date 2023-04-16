@@ -73,8 +73,7 @@ class ModifyTagState extends State<ModifyTag> {
                       _formKey.currentState!.save();
                       await tagProvider.updateTag(
                           Tag(label: label, color: color), widget.tag.id!);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ListTags()));
+                      Navigator.pop(context);
                     }
                   },
                   child: const Text('Update Tag',

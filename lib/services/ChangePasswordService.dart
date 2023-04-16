@@ -2,6 +2,7 @@ import 'package:elearning_provider/models/PasswordChangeModel.dart';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emailjs/emailjs.dart';
 
 class ChangePasswordService {
   final _db = FirebaseFirestore.instance;
@@ -20,7 +21,7 @@ class ChangePasswordService {
           userDoc.update({
             'password': passwordChangeModel.newPassword,
           });
-         // changePasswordMail();
+          changePasswordMail();
           return "Your password has been updated successfully";
         } else {
           return "Your old Password does not match";
@@ -32,5 +33,23 @@ class ChangePasswordService {
       return "there was an error updating you password" ;
     }
   }
+
+      changePasswordMail(/*String recipient , String subject , String body*/) async {
+
+    try {
+    await EmailJS.send(
+    'service_0rkl7la',
+    'template_flf8y8o',
+    {},
+    const Options(
+      publicKey: 'tSqOiRAa-ZEk1FX7u',
+      privateKey: 'MKeGCteSGuS1BB8EP_lCc',
+    ),
+  );
+    } catch (e) {
+      print(e.toString()) ;
+    }
+  
+}
 
 }

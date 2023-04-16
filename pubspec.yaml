@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^6.0.1
   google_sign_in_web: ^0.11.0+1
   flutter_windowmanager: ^0.2.0
+  emailjs: ^1.1.0
 
 
 dev_dependencies:

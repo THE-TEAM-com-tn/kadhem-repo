@@ -116,7 +116,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         model: _model.yourNameController,
                         text: 'First Name',
-                        initialValue: doc['first_name'],
+                        initialValue: doc['firstName'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -135,7 +135,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         model: _model.lastNameController,
                         text: 'Last Name',
-                        initialValue: doc['last_name'],
+                        initialValue: doc['lastName'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -154,7 +154,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         model: _model.emailAddressController,
                         text: 'Email',
-                        initialValue: doc['email'],
+                        initialValue: doc['email'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -173,7 +173,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                           model: _model.phoneNumberController,
                           text: 'Phone Number',
-                          initialValue: doc['phone_number'],
+                          initialValue: doc['phone_number'] ?? '',
                           enabled: true,
                           maxLines: 1,
                           onChanged: (value) {
@@ -191,7 +191,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         model: _model.companyController,
                         text: 'Company',
-                        initialValue: doc['company'],
+                        initialValue: doc['company'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -210,7 +210,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         model: _model.addressController,
                         text: 'Address',
-                        initialValue: doc['address'],
+                        initialValue: doc['address'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -229,7 +229,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         model: _model.myBioController,
                         text: 'bio',
-                        initialValue: doc['bio'],
+                        initialValue: doc['bio'] ?? '',
                         enabled: true,
                         maxLines: 3,
                         onChanged: (value) {

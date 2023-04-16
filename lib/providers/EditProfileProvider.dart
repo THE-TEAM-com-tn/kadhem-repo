@@ -38,17 +38,17 @@ class EditProfileProvider with ChangeNotifier {
     final Map<String, dynamic> doc =
     _documentSnapshot!.data() as Map<String, dynamic>;
     userModel.userId = docId;
-    userModel.firstname = doc['first_name'];
-    userModel.lastname = doc['last_name'];
-    userModel.email = doc['email'];
-    userModel.address = doc['address'];
-    userModel.phoneNumber = doc['phone_number'];
-    userModel.profilePicture = doc['profile_picture'];
-    userModel.bio = doc['bio'];
-    userModel.birthDate = doc['birth_date'];
-    userModel.company = doc['company'];
-    //userModel.role = doc['role'];
-    userModel.password = doc['password'];
+    userModel.firstname = doc['firstName'] ?? '';
+    userModel.lastname = doc['lastName'] ?? '';
+    userModel.email = doc['email'] ?? '';
+    userModel.address = doc['address'] ?? '';
+    userModel.phoneNumber = doc['phone_number'] ?? '';
+    userModel.profilePicture = doc['profile_picture'] ?? '';
+    userModel.bio = doc['bio'] ?? '';
+    userModel.birthDate = doc['birth_date'] ?? '';
+    userModel.company = doc['company'] ?? '';
+    userModel.role = doc['role'] ?? '';
+    userModel.password = doc['password'] ?? '';
     loading = false ; 
     notifyListeners();
   }

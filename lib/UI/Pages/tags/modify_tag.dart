@@ -6,7 +6,6 @@ import '../../../models/tag_model.dart';
 import '../../../providers/tag_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
 
-
 class ModifyTag extends StatefulWidget {
   final Tag tag;
 
@@ -24,26 +23,20 @@ class ModifyTagState extends State<ModifyTag> {
 
   @override
   Widget build(BuildContext context) {
+    color = widget.tag.color;
     final tagProvider = Provider.of<TagCRUDModel>(context);
-
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Colors.deepPurple[200],
         elevation: 0,
         title: const Center(
           child: Text('Modify Tag Details'),
         ),
       ),
-
-
-
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
-
-
           child: Center(
             child: Column(
               children: <Widget>[
@@ -55,12 +48,22 @@ class ModifyTagState extends State<ModifyTag> {
                 const SizedBox(
                   height: 16,
                 ),
-                GTextFormField(
-                    initVal: widget.tag.color,
-                    ifEmpty: "Tag color is required",
-                    onSaved: (value) => color = value!,
-                    hint: "Tag Color"),
-                const SizedBox(
+               DropdownButtonFormField<String>(
+                    value: color,
+                    items: <String>['red', 'yellow', 'green', 'blue']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      color = value!;
+                    }),
+                 const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(

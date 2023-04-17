@@ -53,7 +53,7 @@ class TrainingCard extends StatelessWidget {
             onPressed: () async {
               await trainingProvider.removeTraining(training.id!);
 
-                  Navigator.of(context).push(MaterialPageRoute(builder : (context) => const ListTrainings()));
+                  Navigator.pop(context);
             },
             child: const Text("Delete"),
           )

@@ -22,7 +22,6 @@ class TagCRUDModel extends ChangeNotifier {
   }
 
   Stream<QuerySnapshot<Object?>> fetchTagsAsStream() {
-    notifyListeners();
     return _api.streamDataCollection();
   }
 

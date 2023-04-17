@@ -106,8 +106,12 @@ class AddTrainingState extends State<AddTraining> {
 
       try {
         await referenceImgToUpload.putData(imageBytes!);
-        imageUrl = await referenceImgToUpload.getDownloadURL();
-        print("##### Image URL: $imageUrl");
+        final image = await referenceImgToUpload.getDownloadURL();
+        setState(() {
+          imageUrl = image ; 
+        
+        });
+      print("##### Image URL: $imageUrl");
       } catch (error) {
         print("#####ERROR: $error");
       }

@@ -77,7 +77,11 @@ class ModifyTrainingState extends State<ModifyTraining> {
 
       try {
         await referenceImgToUpload.putFile(File(file!.path));
-        imageUrl = await referenceImgToUpload.getDownloadURL();
+        final image = await referenceImgToUpload.getDownloadURL();
+        setState(() {
+          imageUrl = image ; 
+        
+        });
         print("##### Image URL: $imageUrl");
       } catch (error) {
         print("#####ERROR: $error");

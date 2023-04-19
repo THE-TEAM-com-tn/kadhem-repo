@@ -4,7 +4,6 @@ import 'package:elearning_provider/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'anonymous_home_page.dart' ;
-import 'home_page.dart' ;
 import 'login_or_register_page.dart' ;
 import 'dart:async';
 
@@ -18,6 +17,7 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   Timer? _emailVerificationTimer;
+  String? userId;
 
 
   @override
@@ -33,6 +33,7 @@ class _AuthPageState extends State<AuthPage> {
     _emailVerificationTimer = Timer.periodic(const Duration(seconds: 5), (timer) async {
       // Check if the current user is not null and not anonymous
       final User? currentUser = FirebaseAuth.instance.currentUser;
+
       if (currentUser != null && !currentUser.isAnonymous) {
         // Refresh user data
         await currentUser.reload();
@@ -57,10 +58,17 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void dispose() {
     _stopEmailVerificationTimer();
+    getCurrentUser();
     super.dispose();
   }
 
-
+// to get the current user !!
+  Future<void> getCurrentUser() async {
+    final User user = await FirebaseAuth.instance.currentUser!;
+    setState(() {
+      userId = user.uid;
+    });
+  }
 
 ////// Verify Email Exception (errors) Handeling //////
   void showEmailVerificationErrorSnackBar(Exception e, BuildContext context) {
@@ -112,9 +120,8 @@ class _AuthPageState extends State<AuthPage> {
               }
               // Check if email is verified
               if (user.emailVerified) {
-                userModel.userId = user.uid ;
-                
-                return const SettingsPage();
+               // user.userId = user.uid;
+                return SettingsPage(userId: userId);
               } else {
 
 

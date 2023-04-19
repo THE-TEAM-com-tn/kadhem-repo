@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:elearning_provider/models/user_model.dart';
+import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/auth/components/my_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -16,7 +16,7 @@ class AddManyUsersPage extends StatefulWidget {
 
 class _AddManyUsersPageState extends State<AddManyUsersPage> {
   final _formKey = GlobalKey<FormState>();
-  List<User> _users = [];
+  List<UserModel> _users = [];
 
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(
@@ -32,11 +32,16 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
         final row = rows[i];
         final cells = row.split(',');
         if (cells.length == 4) {
-          final user = User(
+          final user = UserModel(
             email: cells[0].trim(),
-            firstName: cells[1].trim(),
-            lastName: cells[2].trim(), // if the age will be an issue just comment it here
-            age: int.parse(cells[3].trim()),
+            firstname: cells[1].trim(),
+            lastname: cells[2].trim(),
+            role: UserRole.normalUser,
+            company: 'THETEAM',
+            profilePicture: '',
+            id: '',
+            // if the age will be an issue just comment it here
+           /* age: int.parse(cells[3].trim()),*/ // age doesnt work anymore with the new UserModel
           );
           _users.add(user);
         }
@@ -46,10 +51,10 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
   }
 
 
-  Future<void> createUser(User user) async {
+  Future<void> createUser(UserModel user) async {
     // Reference to document
     final docUser = FirebaseFirestore.instance.collection('users').doc();
-    final json = user.toMap();
+    final json = user.toJson(); // toMap();
     // Create document and write data to firebase
     await docUser.set(json);
 
@@ -116,8 +121,8 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
                     itemBuilder: (context, index) {
                       final user = _users[index];
                       return ListTile(
-                        title: Text(user.email),
-                        subtitle: Text('${user.firstName} ${user.lastName} '),
+                        title: Text(user.userEmail),
+                        subtitle: Text('${user.firstname} ${user.lastname} '),
                       );
                     },
                   ),

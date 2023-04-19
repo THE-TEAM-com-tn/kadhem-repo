@@ -29,13 +29,15 @@ class CategoryCRUDModel extends ChangeNotifier {
     return;
   }
 
+  Future addCategory(TrainingCategory data) async {
+    var result = await _api.addDocument(data.toJson());
+    return;
+  }
+
   Future updateCategory(TrainingCategory data, String id) async {
     await _api.updateDocument(data.toJson(), id);
     return;
   }
 
-  Future addCategory(TrainingCategory data) async {
-    var result = await _api.addDocument(data.toJson());
-    return;
-  }
+
 }

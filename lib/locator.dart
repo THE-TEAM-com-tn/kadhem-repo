@@ -11,11 +11,18 @@ import 'package:elearning_provider/services/tag_api.dart';
 import 'package:elearning_provider/services/training_api.dart';
 import 'package:get_it/get_it.dart';
 
+
+import 'package:elearning_provider/providers/user_crud_model.dart';
+import 'package:elearning_provider/services/user_api.dart';
+
 final GetIt locator = GetIt.instance;
 
 void setupLocator() {
+
+/*
   locator.registerLazySingleton(() => EditProfileProvider());
   locator.registerLazySingleton(() => EditProfileService());
+*/
 
   locator.registerLazySingleton(() => ChangePasswordService());
   locator.registerLazySingleton(() => PasswordChangeProvider());
@@ -25,6 +32,9 @@ void setupLocator() {
 
   locator.registerLazySingleton(() => CategoryAPI('categories'));
   locator.registerLazySingleton(() => CategoryCRUDModel());
+
+  locator.registerLazySingleton(() => UserAPI('users'));
+  locator.registerLazySingleton(() => UserCRUDModel());
 
   locator.registerLazySingleton(() => TagAPI('tags'));
   locator.registerLazySingleton(() => TagCRUDModel());

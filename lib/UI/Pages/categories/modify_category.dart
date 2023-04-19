@@ -27,8 +27,6 @@ class ModifyCategoryState extends State<ModifyCategory> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200],
-        elevation: 0,
         title: const Center(
           child: Text('Modify Category Details'),
         ),
@@ -37,46 +35,40 @@ class ModifyCategoryState extends State<ModifyCategory> {
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
-
-          child: Container(
-            padding: EdgeInsets.all(25.0),
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  GTextFormField(
-                      initVal: widget.category.name,
-                      ifEmpty: "Category name is required",
-                      onSaved: (value) => name = value!,
-                      hint: "Category Name"),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  GTextFormField(
-                      initVal: widget.category.description,
-                      ifEmpty: "Category description is required",
-                      onSaved: (value) => description = value!,
-                      hint: "Category Description"),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  ElevatedButton(
-                    // splashColor: Colors.red,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        await categoryProvider.updateCategory(
-                            TrainingCategory(name: name, description: description),
-                            widget.category.id!);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ListCategories()));
-                      }
-                    },
-                    child: const Text('Update Category',
-                        style: TextStyle(color: Colors.white)),
-                  )
-                ],
+          child: Column(
+            children: <Widget>[
+              GTextFormField(
+                  initVal: widget.category.name,
+                  ifEmpty: "Category name is required",
+                  onSaved: (value) => name = value!,
+                  hint: "Category Name"),
+              const SizedBox(
+                height: 16,
               ),
-            ),
+              GTextFormField(
+                  initVal: widget.category.description,
+                  ifEmpty: "Category description is required",
+                  onSaved: (value) => description = value!,
+                  hint: "Category Description"),
+              const SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(
+                // splashColor: Colors.red,
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    await categoryProvider.updateCategory(
+                        TrainingCategory(name: name, description: description),
+                        widget.category.id!);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ListCategories()));
+                  }
+                },
+                child: const Text('Update Category',
+                    style: TextStyle(color: Colors.white)),
+              )
+            ],
           ),
         ),
       ),

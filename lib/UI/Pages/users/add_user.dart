@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:elearning_provider/models/user_model.dart';
+import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/auth/components/my_textfield.dart';
 
 class AddUserPage extends StatefulWidget {
@@ -18,10 +18,11 @@ class _AddUserPageState extends State<AddUserPage> {
   final TextEditingController _ageController = TextEditingController();
 
 
-  Future<void> createUser(User user) async {
+  Future<void> createUser(UserModel user) async {
     // Reference to document
     final docUser = FirebaseFirestore.instance.collection('users').doc();
-    final json = user.toMap();
+    final json = user.toJson(); //toString() ?
+    // final json = user.toMap();
 
 /*    final json = {
       'firstName': firstName,
@@ -105,11 +106,15 @@ class _AddUserPageState extends State<AddUserPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Call the createUser function with the entered user data
-                      final user = User(
+                      final user = UserModel(
                         email: _emailController.text,
-                        firstName: _firstNameController.text,
-                        lastName: _lastNameController.text,
-                        age: int.parse(_ageController.text),
+                        firstname: _firstNameController.text,
+                        lastname: _lastNameController.text,
+                        company: '',
+                        profilePicture: '',
+                        id: '',
+                        role: UserRole.normalUser,
+                        //age: int.parse(_ageController.text),
                       );
 
                       // Call the createUser function with the user object

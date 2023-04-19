@@ -1,6 +1,6 @@
 import 'package:elearning_provider/UI/Pages/SettingsPage/Settings.dart';
 import 'package:elearning_provider/auth/auth_page.dart';
-import 'package:elearning_provider/auth/home_page.dart';
+//import 'package:elearning_provider/auth/home_page.dart';
 import 'package:elearning_provider/auth/login_or_register_page.dart';
 import 'package:elearning_provider/locator.dart';
 import 'package:elearning_provider/providers/EditProfileProvider.dart';
@@ -8,6 +8,7 @@ import 'package:elearning_provider/providers/PasswordChangeProvider.dart';
 import 'package:elearning_provider/providers/category_crud_model.dart';
 import 'package:elearning_provider/providers/tag_crud_model.dart';
 import 'package:elearning_provider/providers/training_crud_model.dart';
+import 'package:elearning_provider/providers/user_crud_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,11 +52,12 @@ class MyApp extends StatelessWidget {
 
       // add providers to make it available everywhere
       providers: [
-        ChangeNotifierProvider(create: (_) => locator<EditProfileProvider>()),
+       /* ChangeNotifierProvider(create: (_) => locator<EditProfileProvider>()),*/
         ChangeNotifierProvider(
             create: (_) => locator<PasswordChangeProvider>()),
         ChangeNotifierProvider(create: (_) => locator<TrainingCRUDModel>()),
         ChangeNotifierProvider(create: (_) => locator<CategoryCRUDModel>()),
+        ChangeNotifierProvider(create: (_) => locator<UserCRUDModel>()),
         ChangeNotifierProvider(create: (_) => locator<TagCRUDModel>())
       ],
       child: MaterialApp(

@@ -123,29 +123,29 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-            const Text(
-              "Add user",
-              style: TextStyle(fontSize: 14, color: CupertinoColors.activeBlue),
-            ),
-            const SizedBox(height: 10),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddUserPage(),
+                const Text(
+                  "Add user",
+                  style: TextStyle(fontSize: 14, color: CupertinoColors.activeBlue),
+                ),
+                const SizedBox(height: 10),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddUserPage(),
+                      ),
+                    );
+                  },
+                  icon: Ink.image(
+                    image: const NetworkImage ("https://i.imgur.com/FRlZP2p.png"),
+                    width: 200,
+                    height: 200,
+                    fit: BoxFit.cover,
                   ),
-                );
-              },
-              icon: Ink.image(
-                image: const NetworkImage ("https://i.imgur.com/FRlZP2p.png"),
-                width: 200,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
+                ),
+              ],
             ),
-        ],
-      ),
 
             const SizedBox(height: 20),
 
@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
 
             ElevatedButton(
               onPressed: () {
-              /*  Navigator.push(
+                /*  Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ReadUsersPage(),
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
 
             ElevatedButton(
               onPressed: () {
-          /*      Navigator.push(
+                /*      Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MobileScreenshotBlockerPage(
@@ -260,7 +260,7 @@ class MobileScreenshotBlockerPage extends StatelessWidget {
         backgroundColor: Colors.deepPurple[200],
       ),
       body: const Center(
-       // child: MobileScreenshotBlocker(onSecureModeChanged: onSecureModeChanged),
+        // child: MobileScreenshotBlocker(onSecureModeChanged: onSecureModeChanged),
       ),
     );
   }

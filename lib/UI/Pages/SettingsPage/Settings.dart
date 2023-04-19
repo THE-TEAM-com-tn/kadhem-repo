@@ -1,21 +1,24 @@
-import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart';
+//import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart';
 import 'package:elearning_provider/UI/Pages/categories/list_categories.dart';
 import 'package:elearning_provider/UI/Pages/tags/list_tags.dart';
 import 'package:elearning_provider/UI/Pages/trainings/list_trainings.dart';
 import 'package:elearning_provider/auth/home_page.dart';
-import 'package:elearning_provider/models/UserModel.dart';
+//import 'package:elearning_provider/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../ChangePasswodPage/ChangePasswordPage.dart';
+import '../users/list_users.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+  final String? userId;
+  SettingsPage({Key? key, this.userId}) : super(key: key);//required UserModel userModel
 
 
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple[200], // Set the background color to deep purple
@@ -30,7 +33,7 @@ class SettingsPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => HomePage(), // userId: userId
               ),
             );
 
@@ -75,6 +78,7 @@ class SettingsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
+              Text('User ID: $userId'),
 
           const SizedBox(height: 6),
 
@@ -87,9 +91,9 @@ class SettingsPage extends StatelessWidget {
 
           ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
+               /* Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const EditProfilePage()));
-              },
+            */  },
               child: const Text("Edit Profile Page")
           ),
 
@@ -155,6 +159,7 @@ class SettingsPage extends StatelessWidget {
 
           ElevatedButton(
               onPressed: () {
+               /* ListUsers();*/
                 print("this button does nothing");
               },
               child: const Text("Button Sample")

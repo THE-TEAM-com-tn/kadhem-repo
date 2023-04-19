@@ -1,3 +1,4 @@
+/*
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_provider/models/UserModel.dart';
@@ -19,14 +20,14 @@ class EditProfileProvider with ChangeNotifier {
   }
 
   defaultImage(String? doc) {
-    _api.defaultImage(doc!) ; 
-    loading = true ; 
-    notifyListeners(); 
+    _api.defaultImage(doc!) ;
+    loading = true ;
+    notifyListeners();
   }
 
   updateImage(String name, Uint8List bytes) async {
-    imageUpdating = true; 
-    notifyListeners(); 
+    imageUpdating = true;
+    notifyListeners();
     await _api.updateImage(name, bytes);
     loading = true;
     imageUpdating = false ;
@@ -37,7 +38,7 @@ class EditProfileProvider with ChangeNotifier {
     _documentSnapshot = await _api.fetchData(docId!);
     final Map<String, dynamic> doc =
     _documentSnapshot!.data() as Map<String, dynamic>;
-    userModel.userId = docId;
+    UserModel.userId = docId;
     userModel.firstname = doc['first_name'];
     userModel.lastname = doc['last_name'];
     userModel.email = doc['email'];
@@ -55,3 +56,4 @@ class EditProfileProvider with ChangeNotifier {
 
   DocumentSnapshot? get documentSnapshot => _documentSnapshot;
 }
+*/

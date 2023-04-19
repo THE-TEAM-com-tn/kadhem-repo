@@ -1,5 +1,6 @@
 import 'package:elearning_provider/UI/Pages/ChangePasswodPage/ChangePasswordPageModel.dart';
 import 'package:elearning_provider/models/PasswordChangeModel.dart';
+import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/providers/PasswordChangeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -136,7 +137,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                 String result =
                                     await passwordChangeProvider.updatePassword(
                                         passwordChangeModel,
-                                        "KkaQAl8KEKXQkpacZFWp");
+                                        userModel.userId!);
                                 SnackBar snackBar =
                                     SnackBar(content: Text(result));
                                 ScaffoldMessenger.of(context)

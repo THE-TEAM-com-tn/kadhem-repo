@@ -1,5 +1,5 @@
 /*
-// ignore_for_file: unnecessary_null_comparison
+
 import 'package:elearning_provider/UI/Widgets/InputWidget.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/providers/EditProfileProvider.dart';
@@ -50,7 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Consumer<EditProfileProvider>(
             builder: (context, value, child) {
               if (value.loading == true) {
-                print(userModel.userId) ;
+                print(userModel.userId);
                 value.fetchData(userModel.userId);
               }
               if (value.documentSnapshot == null) {
@@ -111,13 +111,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InputWidget(
                         obcure: false,
                         validator: (value) {
-                          if (_model.yourNameControllerValidator(value) != null )
-                          {return _model.yourNameControllerValidator(value) ;}
-                          return null ;  
+                          if (_model.yourNameControllerValidator(value) !=
+                              null) {
+                            return _model.yourNameControllerValidator(value);
+                          }
+                          return null;
                         },
                         model: _model.yourNameController,
                         text: 'First Name',
-                        initialValue: doc['first_name'],
+                        initialValue: doc['firstName'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -129,14 +131,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Expanded(
                       child: InputWidget(
                         obcure: false,
-                        validator:  (value) {
-                          if (_model.lastNameControllerValidator(value) != null )
-                          {return _model.lastNameControllerValidator(value) ;}
-                          return null ;  
+                        validator: (value) {
+                          if (_model.lastNameControllerValidator(value) !=
+                              null) {
+                            return _model.lastNameControllerValidator(value);
+                          }
+                          return null;
                         },
                         model: _model.lastNameController,
                         text: 'Last Name',
-                        initialValue: doc['last_name'],
+                        initialValue: doc['lastName'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -149,13 +153,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InputWidget(
                         obcure: false,
                         validator: (value) {
-                          if (_model.emailAddressControllerValidator(value) != null )
-                          {return _model.emailAddressControllerValidator(value) ;}
-                          return null ;  
+                          if (_model.emailAddressControllerValidator(value) !=
+                              null) {
+                            return _model
+                                .emailAddressControllerValidator(value);
+                          }
+                          return null;
                         },
                         model: _model.emailAddressController,
                         text: 'Email',
-                        initialValue: doc['email'],
+                        initialValue: doc['email'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -168,13 +175,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InputWidget(
                           obcure: false,
                           validator: (value) {
-                          if (_model.phoneNumberControllerValidator(value) != null )
-                          {return _model.phoneNumberControllerValidator(value) ;}
-                          return null ;  
-                        },
+                            if (_model.phoneNumberControllerValidator(value) !=
+                                null) {
+                              return _model
+                                  .phoneNumberControllerValidator(value);
+                            }
+                            return null;
+                          },
                           model: _model.phoneNumberController,
                           text: 'Phone Number',
-                          initialValue: doc['phone_number'],
+                          initialValue: doc['phone_number'] ?? '',
                           enabled: true,
                           maxLines: 1,
                           onChanged: (value) {
@@ -186,13 +196,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InputWidget(
                         obcure: false,
                         validator: (value) {
-                          if (_model.companyControllerValidator(value) != null )
-                          {return _model.companyControllerValidator(value) ;}
-                          return null ;  
+                          if (_model.companyControllerValidator(value) !=
+                              null) {
+                            return _model.companyControllerValidator(value);
+                          }
+                          return null;
                         },
                         model: _model.companyController,
                         text: 'Company',
-                        initialValue: doc['company'],
+                        initialValue: doc['company'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -205,13 +217,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InputWidget(
                         obcure: false,
                         validator: (value) {
-                          if (_model.addressControllerValidator(value) != null )
-                          {return _model.addressControllerValidator(value) ;}
-                          return null ;  
+                          if (_model.addressControllerValidator(value) !=
+                              null) {
+                            return _model.addressControllerValidator(value);
+                          }
+                          return null;
                         },
                         model: _model.addressController,
                         text: 'Address',
-                        initialValue: doc['address'],
+                        initialValue: doc['address'] ?? '',
                         enabled: true,
                         maxLines: 1,
                         onChanged: (value) {
@@ -224,13 +238,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: InputWidget(
                         obcure: false,
                         validator: (value) {
-                          if (_model.birthDateControllerValidator(value) != null )
-                          {return _model.birthDateControllerValidator(value) ;}
-                          return null ;  
+                          if (_model.birthDateControllerValidator(value) !=
+                              null) {
+                            return _model.birthDateControllerValidator(value);
+                          }
+                          return null;
                         },
                         model: _model.myBioController,
                         text: 'bio',
-                        initialValue: doc['bio'],
+                        initialValue: doc['bio'] ?? '',
                         enabled: true,
                         maxLines: 3,
                         onChanged: (value) {
@@ -256,14 +272,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           },
                           enabled: true,
                           readOnly: true,
+                          decoration: const InputDecoration(label: Text("BirthDate")),
                           controller: _model.birthDateController,
                           validator: _model.birthDateControllerValidator),
                     ),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           final form = _formKey.currentState;
                           if (form!.validate()) {
-                            value.updateData(userModel);
+                            if (await value.updateData(userModel)) {
+                              SnackBar snackBar = const SnackBar(
+                                  content: Text("Your data has been updated!"));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } else {
+                              SnackBar snackBar = const SnackBar(
+                                  content: Text(
+                                      "The email you wrote already exists "));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
                           }
                         },
                         child: const Text('save')),

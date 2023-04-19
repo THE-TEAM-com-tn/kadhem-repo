@@ -1,4 +1,3 @@
-/*
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_provider/models/UserModel.dart';
@@ -14,20 +13,21 @@ class EditProfileProvider with ChangeNotifier {
   bool imageUpdating = false ; 
 
   updateData(UserModel userModel) async {
-    await _api.updateData(userModel);
+   bool result =  await _api.updateData(userModel);
     loading  = true ;
     notifyListeners();
+    return result ; 
   }
 
   defaultImage(String? doc) {
-    _api.defaultImage(doc!) ;
-    loading = true ;
-    notifyListeners();
+    _api.defaultImage(doc!) ; 
+    loading = true ; 
+    notifyListeners(); 
   }
 
   updateImage(String name, Uint8List bytes) async {
-    imageUpdating = true;
-    notifyListeners();
+    imageUpdating = true; 
+    notifyListeners(); 
     await _api.updateImage(name, bytes);
     loading = true;
     imageUpdating = false ;
@@ -38,22 +38,21 @@ class EditProfileProvider with ChangeNotifier {
     _documentSnapshot = await _api.fetchData(docId!);
     final Map<String, dynamic> doc =
     _documentSnapshot!.data() as Map<String, dynamic>;
-    UserModel.userId = docId;
-    userModel.firstname = doc['first_name'];
-    userModel.lastname = doc['last_name'];
-    userModel.email = doc['email'];
-    userModel.address = doc['address'];
-    userModel.phoneNumber = doc['phone_number'];
-    userModel.profilePicture = doc['profile_picture'];
-    userModel.bio = doc['bio'];
-    userModel.birthDate = doc['birth_date'];
-    userModel.company = doc['company'];
-    //userModel.role = doc['role'];
-    userModel.password = doc['password'];
+    userModel.userId = docId;
+    userModel.firstname = doc['firstName'] ?? '';
+    userModel.lastname = doc['lastName'] ?? '';
+    userModel.email = doc['email'] ?? '';
+    userModel.address = doc['address'] ?? '';
+    userModel.phoneNumber = doc['phone_number'] ?? '';
+    userModel.profilePicture = doc['profile_picture'] ?? '';
+    userModel.bio = doc['bio'] ?? '';
+    userModel.birthDate = doc['birth_date'] ?? '';
+    userModel.company = doc['company'] ?? '';
+    userModel.role = doc['role'] ?? '';
+    userModel.password = doc['password'] ?? '';
     loading = false ; 
     notifyListeners();
   }
 
   DocumentSnapshot? get documentSnapshot => _documentSnapshot;
 }
-*/

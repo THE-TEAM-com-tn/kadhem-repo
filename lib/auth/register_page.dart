@@ -101,6 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
           _firstNameController.text.trim(),
           _lastNameController.text.trim(),
           _emailController.text.trim(),
+          _passwordController.text.trim(),
           int.parse(
             _ageController.text.trim(),
           ),
@@ -116,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   } // Move the closing brace here
 
-  Future addUserDetails(String firstName, String lastName, String email,
+  Future addUserDetails(String firstName, String lastName, String email, String password,
       int age, String id) async {
     /* await FirebaseFirestore.instance.collection('users').add({
       'firstName': firstName,
@@ -129,6 +130,8 @@ class _RegisterPageState extends State<RegisterPage> {
       'lastName': lastName,
       'email': email,
       'age': age,
+      'password' : password,
+      'role' : 'user'
     });
   }
 

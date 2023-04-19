@@ -5,7 +5,6 @@ import '../../../models/tag_model.dart';
 import '../../../providers/tag_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
 
-
 class AddTag extends StatefulWidget {
   const AddTag({super.key});
 
@@ -16,12 +15,11 @@ class AddTag extends StatefulWidget {
 class AddTagState extends State<AddTag> {
   final _formKey = GlobalKey<FormState>();
   late String label;
-  late String color;
+  String color= 'red';
 
   @override
   Widget build(BuildContext context) {
     var tagProvider = Provider.of<TagCRUDModel>(context);
-
 
     return Scaffold(
       appBar: AppBar(
@@ -31,14 +29,10 @@ class AddTagState extends State<AddTag> {
           child: Text('Add Tag'),
         ),
       ),
-
-
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
-
-
           child: Center(
             child: Column(
               children: <Widget>[
@@ -49,10 +43,21 @@ class AddTagState extends State<AddTag> {
                 const SizedBox(
                   height: 16,
                 ),
-                GTextFormField(
-                    ifEmpty: "Tag color is required",
-                    onSaved: (value) => color = value!,
-                    hint: "Tag Color"),
+                DropdownButtonFormField<String>(
+                    value: color,
+                    items: <String>['red', 'yellow', 'green', 'blue']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      color = value!;
+                    }),
                 const SizedBox(
                   height: 16,
                 ),
@@ -62,8 +67,9 @@ class AddTagState extends State<AddTag> {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       await tagProvider.addTag(Tag(
-                          label: label,
-                          color: color,));
+                        label: label,
+                        color: color,
+                      ));
                       // Navigator.pushNamed(context, '/list_categories');
                       Navigator.pop(context);
                     }

@@ -106,8 +106,12 @@ class AddTrainingState extends State<AddTraining> {
 
       try {
         await referenceImgToUpload.putData(imageBytes!);
-        imageUrl = await referenceImgToUpload.getDownloadURL();
-        print("##### Image URL: $imageUrl");
+        final image = await referenceImgToUpload.getDownloadURL();
+        setState(() {
+          imageUrl = image ; 
+        
+        });
+      print("##### Image URL: $imageUrl");
       } catch (error) {
         print("#####ERROR: $error");
       }
@@ -129,6 +133,21 @@ class AddTrainingState extends State<AddTraining> {
           key: _formKey,
           child: Column(
             children: <Widget>[
+             imageUrl != "" ? Container(
+                  width: 90.0,
+                  height: 90.0,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.network(
+                    imageUrl,
+                    fit: BoxFit.fitWidth,
+                  )) : SizedBox(),
+              ElevatedButton(
+                onPressed: _selectImage,
+                child: const Text('Select Training Image'),
+              ),
               GTextFormField(
                   ifEmpty: "Training title is required",
                   onSaved: (value) => title = value!,
@@ -186,10 +205,6 @@ class AddTrainingState extends State<AddTraining> {
               const SizedBox(
                 height: 16,
               ),
-              ElevatedButton(
-                onPressed: _selectImage,
-                child: const Text('Select Training Image'),
-              ),
               const SizedBox(
                 height: 16,
               ),
@@ -227,8 +242,7 @@ class AddTrainingState extends State<AddTraining> {
                         image: imageUrl,
                         tags: _selectedTags,
                         creationDate: Timestamp.now()));
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ListTrainings()));
+                        Navigator.pop(context) ;
                   }
                 },
                 child: const Text('add Training',

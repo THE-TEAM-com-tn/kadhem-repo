@@ -20,21 +20,16 @@ class ListTagsState extends State<ListTags> {
   @override
   Widget build(BuildContext context) {
     final tagProvider = Provider.of<TagCRUDModel>(context);
-
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.deepPurple[200], // Set the background color to transparent
         elevation: 0,
         title: const Text("Tags Management"),
-
         actions: [
-
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTag()));
             },
-
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.network(
@@ -46,11 +41,7 @@ class ListTagsState extends State<ListTags> {
           ),
 
         ],
-
       ),
-
-
-
       body: StreamBuilder(
           stream: tagProvider.fetchTagsAsStream(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -67,8 +58,6 @@ class ListTagsState extends State<ListTags> {
               return const Text('Fetching...');
             }
           }),
-
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
@@ -76,8 +65,6 @@ class ListTagsState extends State<ListTags> {
         },
         child: const Icon(Icons.add),
       ),
-
-
     );
   }
 }

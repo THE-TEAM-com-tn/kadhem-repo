@@ -56,6 +56,7 @@ class _MultiSelectStateTags extends State<MultiSelectTags> {
                         title: Text(tag.label),
                         controlAffinity: ListTileControlAffinity.leading,
                         onChanged: (isChecked) => _itemChange(tag.label, isChecked!),
+                       // tileColor: selectColor(tag.color) ,
                       ),
                     )
                     .toList(),
@@ -77,5 +78,21 @@ class _MultiSelectStateTags extends State<MultiSelectTags> {
         ),
       ],
     );
+  }
+  
+  selectColor(String color) {
+    if (color == "red") {
+      return Colors.red ;
+    } 
+    else if (color == "green") {
+      return Colors.green ;
+    } 
+    else if (color == "blue") {
+      return Colors.blue ;
+    }
+    else if (color == "yellow")
+    {
+      return Colors.yellow; 
+    } 
   }
 }

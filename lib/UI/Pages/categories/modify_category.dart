@@ -35,6 +35,7 @@ class ModifyCategoryState extends State<ModifyCategory> {
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
+/*<<<<<<< HEAD*/
           child: Column(
             children: <Widget>[
               GTextFormField(
@@ -44,6 +45,50 @@ class ModifyCategoryState extends State<ModifyCategory> {
                   hint: "Category Name"),
               const SizedBox(
                 height: 16,
+
+                /// CONFLICT HERE !!!
+
+                /*  =======
+                                DON'T DELETE THIS UNTILL WE SOLVE THE CONFLICTS !
+
+              child: Container(
+              padding: EdgeInsets.all(25.0),
+          child: Center(
+            child: Column(
+                children: <Widget>[
+                  GTextFormField(
+                      initVal: widget.category.name,
+                      ifEmpty: "Category name is required",
+                      onSaved: (value) => name = value!,
+                      hint: "Category Name"),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  GTextFormField(
+                      initVal: widget.category.description,
+                      ifEmpty: "Category description is required",
+                      onSaved: (value) => description = value!,
+                      hint: "Category Description"),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    // splashColor: Colors.red,
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        await categoryProvider.updateCategory(
+                            TrainingCategory(name: name, description: description),
+                            widget.category.id!);
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text('Update Category',
+                        style: TextStyle(color: Colors.white)),
+                  )
+                ],
+                >>>>>>> 3f0208f6a22b6ef32aba132f723c6772afe5023f*/
+
               ),
               GTextFormField(
                   initVal: widget.category.description,

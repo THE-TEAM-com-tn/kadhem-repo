@@ -1,23 +1,23 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../locator.dart';
-import '../models/UserModel.dart';
+import '../models/user_model.dart';
 import '../services/user_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserCRUDModel extends ChangeNotifier {
   final UserAPI _api = locator<UserAPI>();
 
-  List<UserModel> users = [];
+  List<User> users = [];
 
   Future<void> fetchUsers() async {
     try {
       var result = await _api.getDataCollection();
       users = result.docs
-          .map((doc) => UserModel.fromJson({
+          .map((doc) => User.fromJson({
         ...(doc.data() as Map<String, dynamic>? ?? {}),
         'id': doc.id,
-      }, doc.id!)) // pass the id as the second argument to UserModel.fromJson
+      }, doc.id)) // pass the id as the second argument to UserModel.fromJson
           .toList();
       notifyListeners();
     } catch (e) {
@@ -40,7 +40,7 @@ class UserCRUDModel extends ChangeNotifier {
     }
   }
 
-  Future<void> addUser(UserModel data) async {
+  Future<void> addUser(User data) async {
     try {
       await _api.addDocument(data.toJson());
     } catch (e) {
@@ -48,7 +48,7 @@ class UserCRUDModel extends ChangeNotifier {
     }
   }
 
-  Future<void> updateUser(UserModel data, String firstname, String lastname, String company, UserRole role) async {
+  Future<void> updateUser(User data, String firstname, String lastname, String company, UserRole role) async {
     try {
       await _api.updateDocument(
         {
@@ -58,7 +58,7 @@ class UserCRUDModel extends ChangeNotifier {
           'company': company,
           'role': role.toString(),
         },
-        data.id!,
+        data.userId,
       );
     } catch (e) {
       print(e);

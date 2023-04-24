@@ -15,6 +15,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  bool lower = false,
+      upper = false,
+      symbol = false,
+      length = false,
+      number = false;
   // text editing controllers
 
   final _emailController = TextEditingController();
@@ -117,8 +122,8 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   } // Move the closing brace here
 
-  Future addUserDetails(String firstName, String lastName, String email, String password,
-      int age, String id) async {
+  Future addUserDetails(String firstName, String lastName, String email,
+      String password, int age, String id) async {
     /* await FirebaseFirestore.instance.collection('users').add({
       'firstName': firstName,
       'lastName': lastName,
@@ -130,8 +135,8 @@ class _RegisterPageState extends State<RegisterPage> {
       'lastName': lastName,
       'email': email,
       'age': age,
-      'password' : password,
-      'role' : 'user'
+      'password': password,
+      'role': 'user'
     });
   }
 
@@ -278,6 +283,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               // password textfield
                               MyTextField(
+                               onchanged: (value) {
+                                  verifyRequirements(value);
+                                },
                                 validator: passwordValidator,
                                 controller: _passwordController,
                                 hintText: 'Password',
@@ -301,6 +309,105 @@ class _RegisterPageState extends State<RegisterPage> {
                                 controller: _confirmPasswordController,
                                 hintText: 'Confirm Password',
                                 obscureText: true,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: const [
+                                      Text(
+                                        "The new password should have :",
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      lower
+                                          ? const Icon(
+                                              Icons.verified_user_outlined,
+                                              color: Colors.green,
+                                            )
+                                          : const Text(""),
+                                      Text(
+                                        "At least 1 LowerCase characters",
+                                        style: TextStyle(
+                                            color: lower
+                                                ? Colors.green
+                                                : Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      upper
+                                          ? const Icon(
+                                              Icons.verified_user_outlined,
+                                              color: Colors.green,
+                                            )
+                                          : const Text(""),
+                                      Text(
+                                        "At least 1 UpperCase characters",
+                                        style: TextStyle(
+                                            color: upper
+                                                ? Colors.green
+                                                : Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      symbol
+                                          ? const Icon(
+                                              Icons.verified_user_outlined,
+                                              color: Colors.green,
+                                            )
+                                          : const Text(""),
+                                      Text(
+                                        "At least 1 Symbol characters",
+                                        style: TextStyle(
+                                            color: symbol
+                                                ? Colors.green
+                                                : Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      number
+                                          ? const Icon(
+                                              Icons.verified_user_outlined,
+                                              color: Colors.green,
+                                            )
+                                          : const Text(""),
+                                      Text(
+                                        "At least 1 number characters",
+                                        style: TextStyle(
+                                            color: number
+                                                ? Colors.green
+                                                : Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      length
+                                          ? const Icon(
+                                              Icons.verified_user_outlined,
+                                              color: Colors.green,
+                                            )
+                                          : const Text(""),
+                                      Text(
+                                        "At least 8 characters",
+                                        style: TextStyle(
+                                            color: length
+                                                ? Colors.green
+                                                : Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
 
                               const SizedBox(height: 25),
@@ -351,5 +458,50 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  verifyRequirements(String value) {
+    final upperCaseRegex = RegExp(r'[A-Z]');
+    final lowerCaseRegex = RegExp(r'[a-z]');
+    final numberRegex = RegExp(r'[0-9]');
+    final symbolRegex = RegExp(r'[!@#\$&*~%]');
+    value.length > 8
+        ? setState(() {
+            length = true;
+          })
+        : setState(() {
+            length = false;
+          });
+
+    upperCaseRegex.hasMatch(value)
+        ? setState(() {
+            upper = true;
+          })
+        : setState(() {
+            upper = false;
+          });
+
+    lowerCaseRegex.hasMatch(value)
+        ? setState(() {
+            lower = true;
+          })
+        : setState(() {
+            lower = false;
+          });
+
+    numberRegex.hasMatch(value)
+        ? setState(() {
+            number = true;
+          })
+        : setState(() {
+            number = false;
+          });
+    symbolRegex.hasMatch(value)
+        ? setState(() {
+            symbol = true;
+          })
+        : setState(() {
+            symbol = false;
+          });
   }
 }

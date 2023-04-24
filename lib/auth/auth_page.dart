@@ -120,7 +120,7 @@ class _AuthPageState extends State<AuthPage> {
               }
               // Check if email is verified
               if (user.emailVerified) {
-               // user.userId = user.uid;
+                userModel.userId = user.uid;
                 return SettingsPage(userId: userId);
               } else {
 

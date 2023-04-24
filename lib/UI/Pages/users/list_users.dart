@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_provider/UI/Pages/users/add_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/UserModel.dart';
+import '../../../models/user_model.dart';
 import '../../../providers/user_crud_model.dart';
 import '../../Widgets/user_card.dart';
 
@@ -14,7 +14,7 @@ class ListUsers extends StatefulWidget {
 }
 
 class _ListUsersState extends State<ListUsers> {
-  late List<UserModel> users = [];
+  late List<User> users = [];
 
 
   @override
@@ -44,7 +44,7 @@ class _ListUsersState extends State<ListUsers> {
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
               users = snapshot.data!.docs
-                  .map((doc) => UserModel.fromJson(
+                  .map((doc) => User.fromJson(
                   doc.data() as Map<String, dynamic>, doc.id)) //
                   .toList();
               return ListView.builder(

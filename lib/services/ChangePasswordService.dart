@@ -2,6 +2,8 @@ import 'package:elearning_provider/models/PasswordChangeModel.dart';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emailjs/emailjs.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:emailjs/emailjs.dart';
 
 class ChangePasswordService {
@@ -21,7 +23,15 @@ class ChangePasswordService {
           userDoc.update({
             'password': passwordChangeModel.newPassword,
           });
-        /*  changePasswordMail();*/
+           final currentUser = await FirebaseAuth.instance.currentUser;
+          final cred = EmailAuthProvider.credential(
+              email: user.data()!['email'],
+              password: passwordChangeModel.oldPassword);
+
+          currentUser!.reauthenticateWithCredential(cred).then((value) {
+            currentUser.updatePassword(passwordChangeModel.newPassword);
+          });
+         changePasswordMail();
           return "Your password has been updated successfully";
         } else {
           return "Your old Password does not match";
@@ -34,8 +44,8 @@ class ChangePasswordService {
     }
   }
 
-              /// CONFLICT HERE !!!
-  /*
+
+  
       changePasswordMail(/*String recipient , String subject , String body*/) async {
 
   try {
@@ -54,7 +64,7 @@ class ChangePasswordService {
       print(e.toString()) ;
     }
 
-    }*/
+    }
 
   
 

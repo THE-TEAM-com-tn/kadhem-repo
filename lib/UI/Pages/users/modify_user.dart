@@ -2,12 +2,11 @@ import 'package:elearning_provider/UI/Pages/users/list_users.dart';
 import 'package:elearning_provider/providers/user_crud_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../models/UserModel.dart';
+import '../../../models/user_model.dart';
 import '../../Widgets/G_text_form_field.dart';
 
 class ModifyUser extends StatefulWidget {
-  final UserModel user;
+  final User user;
 
   const ModifyUser({required this.user});
 
@@ -147,7 +146,7 @@ class _ModifyUserState extends State<ModifyUser> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        UserModel updatedUser = UserModel(
+                        User updatedUser = User(
                           id: widget.user.id,
                           firstname: firstname,
                           lastname: lastname,

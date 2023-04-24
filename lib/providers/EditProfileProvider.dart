@@ -1,4 +1,4 @@
-/*
+
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_provider/models/UserModel.dart';
@@ -57,4 +57,4 @@ class EditProfileProvider with ChangeNotifier {
 
   DocumentSnapshot? get documentSnapshot => _documentSnapshot;
 }
-*/
+

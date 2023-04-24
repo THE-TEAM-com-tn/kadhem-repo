@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/auth/components/my_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../models/user_model.dart';
 
 
 
@@ -16,7 +17,7 @@ class AddManyUsersPage extends StatefulWidget {
 
 class _AddManyUsersPageState extends State<AddManyUsersPage> {
   final _formKey = GlobalKey<FormState>();
-  List<UserModel> _users = [];
+  List<User> _users = [];
 
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(
@@ -32,7 +33,7 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
         final row = rows[i];
         final cells = row.split(',');
         if (cells.length == 4) {
-          final user = UserModel(
+          final user = User(
             email: cells[0].trim(),
             firstname: cells[1].trim(),
             lastname: cells[2].trim(),
@@ -51,7 +52,7 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
   }
 
 
-  Future<void> createUser(UserModel user) async {
+  Future<void> createUser(User user) async {
     // Reference to document
     final docUser = FirebaseFirestore.instance.collection('users').doc();
     final json = user.toJson(); // toMap();

@@ -1,79 +1,39 @@
-import 'package:flutter/cupertino.dart';
-
-enum UserRole {
-  admin,
-  trainer,
-  contentManager,
-  normalUser
-}
-
 class UserModel {
-  String? _id;
-  String? firstname;
-  String? lastname;
-  String? profilePicture;
-  String? company;
-  UserRole? role;
-  String? email;
+  late  String firstname , lastname  , email , address,phoneNumber, profilePicture,
+      bio,company,role,birthDate, password ;
+      String? userId ; 
 
-  UserModel({
-    String? id,
-    required this.firstname,
-    required this.lastname,
-    required this.profilePicture,
-    required this.company,
-    required this.role,
-    required this.email,
+  UserModel({  this.userId, required this.firstname, required this.lastname,
+    required this.email, required this.address, required this.phoneNumber, required this.profilePicture,
+    required this.bio, required this.company, required this.role, required this.birthDate,
+  required this.password}) ;
 
-  });
-
-  // Define the getter method for id
-  String? get id => _id;
-
-  // Define the setter method for id
-  set id(String? value) => _id = value;
-
-  String get fullName => "$firstname $lastname";
-
-  String get userEmail => email!;
-
-  String get userId => id!;
-
-  // Define the fromJson method
-  factory UserModel.fromJson(Map<String, dynamic> json, String id) {
-    var roleValue = json['role'];
-    if (roleValue == null) {
-      throw FormatException('Invalid value for UserRole: $roleValue');
-    }
-    if (roleValue is String) {
-      roleValue = int.tryParse(roleValue);
-      if (roleValue == null) {
-        throw FormatException('Invalid value for UserRole: $roleValue');
-      }
-    }
-    var user = UserModel(
-      firstname: json['firstname'],
-      lastname: json['lastname'],
-      profilePicture: json['profilePicture'],
-      company: json['company'],
-      role: UserRole.values[roleValue],
-      email: json['email'],
-    );
-    user.id = id;
-    return user;
-  }
-
-
-  // Define the toJson method
-  Map<String, dynamic> toJson() {
+  toJson() {
     return {
-      'id': id,
-      'firstname': firstname,
-      'lastname': lastname,
-      'profilePicture': profilePicture,
-      'company': company,
-      'role': role!.index,
-      'email': email,
+      "firstName" : firstname,
+      "lastName" : lastname,
+      "email" : email,
+      "password" : password,
+      "address" : address,
+      "phonenumber": phoneNumber,
+      "profile_picture": profilePicture,
+      "bio" : bio,
+      "company" : company,
+      "role" : role,
+      "birth_date" : birthDate
     };
   }
+
+  
+factory UserModel.fromMap(Map<dynamic,dynamic> map, String id) {
+  return UserModel(userId: id,firstname: map['firstName'] ?? '', lastname: map['lastName'] ?? '', email: map['email'] ?? '',
+  address: map ['address'] ?? '', bio: map['bio'] ?? '', birthDate: map['birth_date'] ?? '', password: map['password'] ?? '',
+  phoneNumber: map['phone_number'] ?? '', profilePicture: map['profile_picture'] ?? '', company: map['company'] ?? '',
+  role: map['role'] ?? '') ;
 }
+
+
+}
+UserModel userModel = UserModel(userId: "", firstname: " ", lastname: " ", password : "",
+    email: " ", address: " ",
+    phoneNumber: " ", profilePicture: "", bio: " ", company: " " , role: " ", birthDate: "") ;

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/auth/components/my_textfield.dart';
+
+import '../../../models/user_model.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _AddUserPageState extends State<AddUserPage> {
   final TextEditingController _ageController = TextEditingController();
 
 
-  Future<void> createUser(UserModel user) async {
+  Future<void> createUser(User user) async {
     // Reference to document
     final docUser = FirebaseFirestore.instance.collection('users').doc();
     final json = user.toJson(); //toString() ?
@@ -106,7 +107,7 @@ class _AddUserPageState extends State<AddUserPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Call the createUser function with the entered user data
-                      final user = UserModel(
+                      final user = User(
                         email: _emailController.text,
                         firstname: _firstNameController.text,
                         lastname: _lastNameController.text,

@@ -1,0 +1,227 @@
+import 'package:elearning_provider/UI/Widgets/edit_user_popup.dart';
+import 'package:elearning_provider/models/UserModel.dart';
+import 'package:elearning_provider/providers/users_list_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:provider/provider.dart';
+
+class UsersList extends StatefulWidget {
+  const UsersList({super.key});
+
+  @override
+  State<UsersList> createState() => _UsersListState();
+}
+
+class _UsersListState extends State<UsersList> {
+  bool _nameSortAsc = true, asc = true, _idAsc = true;
+  int sortedColumn = 0;
+  bool status = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Consumer<UsersListProvider>(
+                builder: (context, value, child) {
+                  if (value.loading) {
+                    value.getUsers();
+                  }
+                  return !value.loading
+                      ? Column(
+                          children: [
+                           
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Card(
+                                elevation: 10.0,
+                                child: DataTable(
+                                  border: TableBorder.all(
+                                    width: 2.0,
+                                    color: Colors.grey,
+                                  ),
+                                  sortColumnIndex: sortedColumn,
+                                  sortAscending: asc,
+                                  dividerThickness: 2.0,
+                                  columns: [
+                                    DataColumn(
+                                        onSort: (columnIndex, ascending) {
+                                          setState(() {
+                                            _idAsc = !_idAsc;
+                                            asc = _idAsc;
+                                            sortedColumn = columnIndex;
+                                            value.users.sort((a, b) {
+                                              if (_idAsc) {
+                                                return a.firstname
+                                                    .compareTo(b.firstname);
+                                              } else {
+                                                return b.firstname
+                                                    .compareTo(a.firstname);
+                                              }
+                                            });
+                                          });
+                                        },
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.15,
+                                            child: Text('First Name'))),
+                                    DataColumn(
+                                        onSort: (columnIndex, ascending) {
+                                          setState(() {
+                                            _nameSortAsc = !_nameSortAsc;
+                                            asc = _nameSortAsc;
+                                            sortedColumn = columnIndex;
+                                            value.users.sort((a, b) {
+                                              if (_nameSortAsc) {
+                                                return a.lastname
+                                                    .compareTo(b.lastname);
+                                              } else {
+                                                return b.lastname
+                                                    .compareTo(a.lastname);
+                                              }
+                                            });
+                                          });
+                                        },
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child: Text('Last Name'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.15)),
+                                    DataColumn(
+                                        onSort: (columnIndex, ascending) {
+                                          setState(() {
+                                            _nameSortAsc = !_nameSortAsc;
+                                            asc = _nameSortAsc;
+                                            sortedColumn = columnIndex;
+                                            value.users.sort((a, b) {
+                                              if (_nameSortAsc) {
+                                                return a.email
+                                                    .compareTo(b.email);
+                                              } else {
+                                                return b.email
+                                                    .compareTo(a.email);
+                                              }
+                                            });
+                                          });
+                                        },
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child: Text('Email'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.20)),
+                                    DataColumn(
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child: Text('Role'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1)),
+                                    DataColumn(
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child: Text('Edit User'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05)),
+                                    DataColumn(
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child: Text('Assign Trainings'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1))
+                                  ],
+                                  rows: List.generate(value.users.length,
+                                      (index) {
+                                    return DataRow(
+                                      cells: getRows(
+                                          value.users[index], context, value),
+                                      color: MaterialStateProperty.resolveWith<
+                                          Color>((Set<MaterialState> states) {
+                                        if (index % 2 == 0)
+                                          return Colors.grey.withOpacity(0.1);
+                                        return Colors.white;
+                                      }),
+                                    );
+                                  }),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(
+                          child: Text('fetching'),
+                        );
+                },
+              ),
+            ),
+          )),
+    );
+  }
+
+  List<DataCell> getRows(
+      UserModel user, BuildContext cont, UsersListProvider provider) {
+    String role = user.role;
+    return [
+      DataCell(
+          Container(alignment: Alignment.center, child: Text(user.firstname))),
+      DataCell(
+          Container(alignment: Alignment.center, child: Text(user.lastname))),
+      DataCell(Container(alignment: Alignment.center, child: Text(user.email))),
+      DataCell(Container(
+        child: DropdownButtonFormField<String>(
+            value: role,
+            items: <String>['user', 'admin', 'contentCreator', 'instructor']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              );
+            }).toList(),
+            onChanged: (value) {
+              role = value!;
+              user.role = value ;
+              provider.updateRole(value, user.userId!);
+            }),
+      )),
+      DataCell(Container(
+          alignment: Alignment.center,
+          child: IconButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return MyPopup(userModel: user);
+                  },
+                ).then((value) {
+                  setState(() {
+                    provider.users = [];
+                    provider.loading = true;
+                  });
+                });
+              },
+              icon: const Icon(Icons.edit)))),
+      DataCell(Container(
+          alignment: Alignment.center,
+          child: IconButton(
+              onPressed: () {}, icon: const Icon(Icons.assignment_add))))
+    ];
+  }
+}

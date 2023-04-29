@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/tag_model.dart';
 import '../../../providers/tag_crud_model.dart';
+import '../../Widgets/nav_bar.dart';
 import '../../Widgets/tag_card.dart';
 
 class ListTags extends StatefulWidget {
@@ -21,11 +22,11 @@ class ListTagsState extends State<ListTags> {
   Widget build(BuildContext context) {
     final tagProvider = Provider.of<TagCRUDModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200], // Set the background color to transparent
-        elevation: 0,
-        title: const Text("Tags Management"),
-        actions: [
+      appBar: const PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: CustomNavBar(),
+      ),
+      /* actions: [
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTag()));
@@ -40,24 +41,41 @@ class ListTagsState extends State<ListTags> {
             ),
           ),
 
+        ],*/
+
+      body: Row(
+        children: [
+           GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTag()));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(
+                'https://i.imgur.com/YEGyoAc.png',
+                height: 32,
+                width: 32,
+              ),
+            ),
+          ),
+          StreamBuilder(
+              stream: tagProvider.fetchTagsAsStream(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  tags = snapshot.data!.docs
+                      .map((doc) =>
+                          Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
+                      .toList();
+                  return ListView.builder(
+                    itemCount: tags.length,
+                    itemBuilder: (buildContext, index) => TagCard(tag: tags[index]),
+                  );
+                } else {
+                  return const Text('Fetching...');
+                }
+              }),
         ],
       ),
-      body: StreamBuilder(
-          stream: tagProvider.fetchTagsAsStream(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasData) {
-              tags = snapshot.data!.docs
-                  .map((doc) =>
-                      Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
-                  .toList();
-              return ListView.builder(
-                itemCount: tags.length,
-                itemBuilder: (buildContext, index) => TagCard(tag: tags[index]),
-              );
-            } else {
-              return const Text('Fetching...');
-            }
-          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)

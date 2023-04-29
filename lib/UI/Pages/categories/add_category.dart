@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../models/category_model.dart';
 import '../../../providers/category_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
+import '../../Widgets/nav_bar.dart';
 
 
 class AddCategory extends StatefulWidget {
@@ -23,13 +24,9 @@ class AddCategoryState extends State<AddCategory> {
   Widget build(BuildContext context) {
     var categoryProvider = Provider.of<CategoryCRUDModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200],
-        elevation: 0,
-        title: const Center(
-          child: Text('Add Training Category'),
-        ),
-      ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(60)
+        ,child: CustomNavBar()),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(

@@ -1,6 +1,7 @@
 
 
 import 'package:elearning_provider/UI/Widgets/InputWidget.dart';
+import 'package:elearning_provider/UI/Widgets/nav_bar.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/providers/EditProfileProvider.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +40,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("EditProfilePage"),
-      ),
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
+      ) ,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SizedBox(

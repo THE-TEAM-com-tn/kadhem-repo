@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart';
 import 'package:elearning_provider/UI/Pages/SettingsPage/Settings.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../providers/EditProfileProvider.dart';
 import 'anonymous_home_page.dart' ;
 import 'login_or_register_page.dart' ;
 import 'dart:async';
@@ -120,7 +122,10 @@ class _AuthPageState extends State<AuthPage> {
               }
               // Check if email is verified
               if (user.emailVerified) {
-                userModel.userId = user.uid;
+                EditProfileProvider provider= EditProfileProvider() ; 
+                provider.fetchData(user.uid) ;
+                
+
                 return SettingsPage(userId: userId);
               } else {
 

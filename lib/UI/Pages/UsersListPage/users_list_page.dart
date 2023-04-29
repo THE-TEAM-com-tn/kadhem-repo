@@ -1,3 +1,5 @@
+import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_model.dart';
+import 'package:elearning_provider/UI/Widgets/assign_training_popup.dart';
 import 'package:elearning_provider/UI/Widgets/edit_user_popup.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/providers/users_list_provider.dart';
@@ -5,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
+
+import '../../Widgets/InputWidget.dart';
+import '../../Widgets/nav_bar.dart';
 
 class UsersList extends StatefulWidget {
   const UsersList({super.key});
@@ -17,9 +22,22 @@ class _UsersListState extends State<UsersList> {
   bool _nameSortAsc = true, asc = true, _idAsc = true;
   int sortedColumn = 0;
   bool status = false;
+  late UsersListModel _model;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _model = UsersListModel();
+    _model.searchController = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
+      ),
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: SingleChildScrollView(
@@ -34,7 +52,22 @@ class _UsersListState extends State<UsersList> {
                   return !value.loading
                       ? Column(
                           children: [
-                           
+                            SizedBox(
+                              height: 100,
+                              width: MediaQuery.of(context).size.width,
+                              child: InputWidget(
+                                obcure: false,
+                                validator: _model.SearchValidator,
+                                model: _model.searchController,
+                                text: 'Search for users by name',
+                                initialValue: '',
+                                enabled: true,
+                                maxLines: 1,
+                                onChanged: (query) {
+                                 value.filterData(query);
+                                },
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.all(8),
                               child: Card(
@@ -145,11 +178,11 @@ class _UsersListState extends State<UsersList> {
                                                     .width *
                                                 0.1))
                                   ],
-                                  rows: List.generate(value.users.length,
-                                      (index) {
+                                  rows: List.generate(
+                                      value.searchedUsers.length, (index) {
                                     return DataRow(
                                       cells: getRows(
-                                          value.users[index], context, value),
+                                          value.searchedUsers[index], context, value),
                                       color: MaterialStateProperty.resolveWith<
                                           Color>((Set<MaterialState> states) {
                                         if (index % 2 == 0)
@@ -197,7 +230,7 @@ class _UsersListState extends State<UsersList> {
             }).toList(),
             onChanged: (value) {
               role = value!;
-              user.role = value ;
+              user.role = value;
               provider.updateRole(value, user.userId!);
             }),
       )),
@@ -221,7 +254,14 @@ class _UsersListState extends State<UsersList> {
       DataCell(Container(
           alignment: Alignment.center,
           child: IconButton(
-              onPressed: () {}, icon: const Icon(Icons.assignment_add))))
+              onPressed: () async {
+                             await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AssignTrainingPopup(uid: user.userId!,);
+                  },
+                );
+              }, icon: const Icon(Icons.assignment_add))))
     ];
   }
 }

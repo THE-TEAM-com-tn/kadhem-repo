@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../models/category_model.dart';
 import '../../../providers/category_crud_model.dart';
 import '../../Widgets/category_card.dart';
+import '../../Widgets/nav_bar.dart';
 
 class ListCategories extends StatefulWidget {
   const ListCategories({super.key});
@@ -23,13 +24,12 @@ class ListCategoriesState extends State<ListCategories> {
 
     return Scaffold(
 
-      appBar: AppBar(
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
+      ),
 
-        backgroundColor: Colors.deepPurple[200], // Set the background color to transparent
-        elevation: 0,
-        title: const Text("Categories Management"),
-
-        actions: [
+        /*actions: [
 
           GestureDetector(
             onTap: () {
@@ -46,9 +46,8 @@ class ListCategoriesState extends State<ListCategories> {
             ),
           ),
 
-        ],
+        ],*/
 
-      ),
 
 
       body: StreamBuilder(

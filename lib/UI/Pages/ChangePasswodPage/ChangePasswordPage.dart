@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 import '../../Widgets/InputWidget.dart';
+import '../../Widgets/nav_bar.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -19,7 +20,6 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   late ChangePasswordPageModel _model;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     _model = ChangePasswordPageModel();
@@ -34,20 +34,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     final PasswordChangeProvider passwordChangeProvider =
         Provider.of<PasswordChangeProvider>(context, listen: true);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Change Password"),
-          backgroundColor: Colors.deepPurple[200],
-          elevation: 0,
-        ),
-
-
+        appBar:const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
+      ),
         body: Center(
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-
               child: SizedBox(child: Consumer<PasswordChangeProvider>(
                   builder: (context, value, child) {
-
                 return SizedBox(
                   /*width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height/2,*/
@@ -55,27 +50,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: Form(
                       key: _formKey,
-                      child: Column(
-                          children: [
-                            const SizedBox(height: 5),
-                            Image.network(
-                              'https://cdn-icons-png.flaticon.com/512/9710/9710280.png',
-                              height: 80,
-                              width: 80,
-                            ),
+                      child: Column(children: [
+                        const SizedBox(height: 5),
+                        Image.network(
+                          'https://cdn-icons-png.flaticon.com/512/9710/9710280.png',
+                          height: 80,
+                          width: 80,
+                        ),
 
-                            const SizedBox(height: 5),
+                        const SizedBox(height: 5),
 
-                            const Text(
-                              'Change your password',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-
-
+                        const Text(
+                          'Change your password',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
 
                         // old password
                         Expanded(
@@ -93,9 +85,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           ),
                         ),
 
-                            const SizedBox(height: 8),
+                        const SizedBox(height: 8),
 
-                            // new password
+                        // new password
                         Expanded(
                           child: InputWidget(
                             obcure: true,
@@ -112,12 +104,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           ),
                         ),
                         // confirm password
-
-                            const SizedBox(height: 8),
+                       
+                        const SizedBox(height: 8),
                         Expanded(
                           child: InputWidget(
                             obcure: true,
-                            validator: _model.confirmPasswordControllerValidator,
+                            validator:
+                                _model.confirmPasswordControllerValidator,
                             model: _model.confirmPasswordController,
                             text: 'Confirm Password',
                             initialValue: '',
@@ -128,35 +121,32 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             },
                           ),
                         ),
-                      const SizedBox(height: 8),
+                        const SizedBox(height: 8),
 
+                        /// CONFLICT HERE !!!
 
-                            /// CONFLICT HERE !!!
-
-                            // Save Button
+                        // Save Button
                         ElevatedButton(
                             onPressed: () async {
- /*                             if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 String result =
                                     await passwordChangeProvider.updatePassword(
                                         passwordChangeModel,
-                                        UserModel.userId!); // how this was : userModel.userId!);
+                                        userModel
+                                            .userId!); // how this was : userModel.userId!);
                                 SnackBar snackBar =
                                     SnackBar(content: Text(result));
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
-                              }*/
+                              }
                             },
                             child: const Text('Save Changes')),
 
+                        /// CONFLICT HERE - end !!!
 
-                            /// CONFLICT HERE - end !!!
+                        const SizedBox(height: 15),
 
-
-
-
-                            const SizedBox(height: 15),
-                            // Requirements
+                        // Requirements
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -258,10 +248,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         ),
                       ])),
                 );
-              })
-              )
-          ),
-        )
-    );
+              }))),
+        ));
   }
 }

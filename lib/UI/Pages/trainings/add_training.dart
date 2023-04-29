@@ -15,6 +15,7 @@ import '../../../providers/training_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
 import '../../Widgets/multi_select_tags_tool.dart';
 import '../../Widgets/multi_select_tool_categroy.dart';
+import '../../Widgets/nav_bar.dart';
 
 
 class AddTraining extends StatefulWidget {
@@ -122,10 +123,9 @@ class AddTrainingState extends State<AddTraining> {
   Widget build(BuildContext context) {
     var trainingProvider = Provider.of<TrainingCRUDModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Add Training'),
-        ),
+      appBar:const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),

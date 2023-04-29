@@ -1,31 +1,37 @@
-
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/services/UsersListService.dart';
 import 'package:flutter/material.dart';
 
 class UsersListProvider with ChangeNotifier {
-
-   List<UserModel> users = [] ; 
-  UsersListService _api = UsersListService() ;
-  bool loading = true ; 
+  List<UserModel> users = [];
+  List<UserModel> searchedUsers = [];
+  UsersListService _api = UsersListService();
+  bool loading = true;
 
   getUsers() async {
-    users= [] ;
-    users = await _api.getUsers() ;
-    loading = false ; 
+    users = [];
+    users = await _api.getUsers();
+    searchedUsers = users;
+    loading = false;
     notifyListeners();
-    return users ; 
+    return users;
   }
 
   updateRole(String role, String doc) {
-
-    _api.updateRole(role, doc) ;
+    _api.updateRole(role, doc);
   }
 
-
-  updateData(UserModel userModel) async {
-     await _api.updateData(userModel);
+  filterData(String value) {
+    searchedUsers = [];
+    searchedUsers = users
+        .where((item) =>
+            item.firstname.toLowerCase().contains(value.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 
+  updateData(UserModel userModel) async {
+    await _api.updateData(userModel);
+    notifyListeners();
+  }
 }

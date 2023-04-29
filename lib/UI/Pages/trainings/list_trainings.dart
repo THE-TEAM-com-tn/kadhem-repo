@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/training_model.dart';
 import '../../../providers/training_crud_model.dart';
+import '../../Widgets/nav_bar.dart';
 import '../../Widgets/training_card.dart';
 
 class ListTrainings extends StatefulWidget {
@@ -29,8 +30,9 @@ class ListTrainingsState extends State<ListTrainings> {
         },
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-        title: const Text("Trainings Management"),
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
       ),
       body: StreamBuilder(
           stream: trainingProvider.fetchTrainingsAsStream(),

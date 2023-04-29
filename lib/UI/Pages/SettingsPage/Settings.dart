@@ -71,9 +71,8 @@ class SettingsPage extends StatelessWidget {
           const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const EditProfilePage()));
-            
               },
               child: const Text("Edit Profile Page")),
           const SizedBox(height: 15),
@@ -127,10 +126,17 @@ class SettingsPage extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const UsersList()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const UsersList()));
               },
               child: const Text("Users List")),
+              SizedBox(height: 15,),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => HomePage()));
+              },
+              child: const Text("Add Users")),
         ]),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../models/category_model.dart';
 import '../../../providers/category_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
+import '../../Widgets/nav_bar.dart';
 
 class ModifyCategory extends StatefulWidget {
   final TrainingCategory category;
@@ -26,10 +27,9 @@ class ModifyCategoryState extends State<ModifyCategory> {
     final categoryProvider = Provider.of<CategoryCRUDModel>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Modify Category Details'),
-        ),
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),

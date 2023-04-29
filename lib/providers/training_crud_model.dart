@@ -9,9 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrainingCRUDModel extends ChangeNotifier {
   final TrainingAPI _api = locator<TrainingAPI>();
-
+  bool loadingTraining = true  ;
   late List<Training> trainings;
-
+  List<Training> allTrainings = [] ;
   // Future<List<Training>> fetchTrainings() async {
   //   var result = await _api.getDataCollection();
   //   trainings = result.docs
@@ -19,6 +19,8 @@ class TrainingCRUDModel extends ChangeNotifier {
   //   .toList();
   //   return trainings;
   // }
+
+
 
   Stream<QuerySnapshot<Object?>> fetchTrainingsAsStream() {
     return _api.streamDataCollection();
@@ -37,5 +39,15 @@ class TrainingCRUDModel extends ChangeNotifier {
   Future addTraining(Training data) async {
     var result = await _api.addDocument(data.toJson());
     return;
+  }
+
+  getTrainings(String uid) async {
+    allTrainings = await _api.getUnasignedTrainings(uid);
+    loadingTraining = false ; 
+    notifyListeners();
+  }
+
+  assignTrainingToUser(List<Training> trainings, String uid) async{
+    await _api.assignTrainingToUser(trainings, uid);
   }
 }

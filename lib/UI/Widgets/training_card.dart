@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:elearning_provider/UI/Pages/TrainingDetails/training_deails_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -48,7 +49,17 @@ class TrainingCard extends StatelessWidget {
                       builder: (_) => ModifyTraining(training: training)));
             },
             child: const Text("Open/Edit"),
-          ),
+          ),  
+                    TextButton(
+            onPressed: () async {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => TrainingDetails(training: training)));
+            },
+            child: const Text("view Details"),
+          ), 
+          
           TextButton(
             onPressed: () async {
               await trainingProvider.removeTraining(training.id!);

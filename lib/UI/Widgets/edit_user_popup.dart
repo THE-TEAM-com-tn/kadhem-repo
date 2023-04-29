@@ -15,10 +15,7 @@ class MyPopup extends StatefulWidget {
 
 class _MyPopupState extends State<MyPopup> {
 
-  void _saveData() {
-    // Perform save operation with the entered data
-    // You can access the entered data using the text controllers
-  }
+
 
   @override
   Widget build(BuildContext context) {

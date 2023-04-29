@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../models/tag_model.dart';
 import '../../../providers/tag_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
+import '../../Widgets/nav_bar.dart';
 
 class AddTag extends StatefulWidget {
   const AddTag({super.key});
@@ -22,13 +23,11 @@ class AddTagState extends State<AddTag> {
     var tagProvider = Provider.of<TagCRUDModel>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200],
-        elevation: 0,
-        title: const Center(
-          child: Text('Add Tag'),
-        ),
-      ),
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(),
+      )
+      ,
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(

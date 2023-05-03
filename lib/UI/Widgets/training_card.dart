@@ -1,9 +1,6 @@
-// ignore_for_file: file_names
 import 'package:elearning_provider/UI/Pages/TrainingDetails/training_deails_page.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
-
 import '../../models/training_model.dart';
 import '../../providers/training_crud_model.dart';
 import '../Pages/trainings/list_trainings.dart';

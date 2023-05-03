@@ -3,6 +3,8 @@ import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart
 import 'package:elearning_provider/UI/Pages/SettingsPage/Settings.dart';
 import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_page.dart';
 import 'package:elearning_provider/UI/Pages/trainings/list_trainings.dart';
+import 'package:elearning_provider/auth/login_or_register_page.dart';
+import 'package:elearning_provider/auth/login_page.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +30,14 @@ class _CustomNavBarState extends State<CustomNavBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(width: 20),
+                SizedBox(width: 35),
                 Expanded(
                   flex: 1,
                   child: userModel.userId != ""
                       ? Image.asset(
                           "lib/images/theteam_light_logo.png",
                           height: 50,
-                          width: 100,
+                          width: 50,
                         )
                       : CircularProgressIndicator(),
                 ),
@@ -237,8 +239,11 @@ class _CustomNavBarState extends State<CustomNavBar> {
                                       },
                                     ),
                                   ),
-                                  onPressed: () {
-                                    FirebaseAuth.instance.signOut();
+                                  onPressed: () async {
+
+                                    await FirebaseAuth.instance.signOut();
+                                    Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) =>  LoginOrRegisterPage()));
                                   },
                                   child: const Text(
                                     'SignOut',

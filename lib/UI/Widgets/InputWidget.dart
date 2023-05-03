@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class InputWidget extends StatefulWidget {
   final model;
 
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
 
   final text;
 
@@ -21,8 +21,8 @@ class InputWidget extends StatefulWidget {
 
   const InputWidget(
       {super.key,
-      required this.validator,
-      required this.model,
+      this.validator,
+      this.model,
       required this.text,
       required this.initialValue,
       required this.enabled,
@@ -41,8 +41,14 @@ class _InputWidgetState extends State<InputWidget> {
 
   @override
   void initState() {
-    _model = widget.model;
-    _model.text = widget.initialValue;
+    if (widget.model != null) {
+      _model = widget.model;
+      _model.text = widget.initialValue;
+    }
+    else {
+      _model = TextEditingController() ; 
+    }
+
     _obscure = widget.obcure;
     super.initState();
   }
@@ -51,7 +57,7 @@ class _InputWidgetState extends State<InputWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: widget.maxLines,
-      validator: widget.validator,
+      validator: widget.validator ?? (value) {},
       onChanged: widget.onChanged,
       enabled: widget.enabled,
       controller: _model,

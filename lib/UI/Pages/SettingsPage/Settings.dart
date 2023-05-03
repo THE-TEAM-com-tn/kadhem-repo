@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 
 import '../ChangePasswodPage/ChangePasswordPage.dart';
 import '../EditProfilePage/EditProfilePage.dart';
+import '../lessons/all_lessons_admin_side.dart';
+import '../lessons/user_side_of_all_lessons.dart';
 import '../users/list_users.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -137,6 +139,41 @@ class SettingsPage extends StatelessWidget {
                     .push(MaterialPageRoute(builder: (context) => HomePage()));
               },
               child: const Text("Add Users")),
+
+          const SizedBox(height: 30),
+
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AllLessons(),
+                ),
+              );
+            },
+            child: const Text('View All Lessons Admin side'),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.deepOrangeAccent,),
+          ),
+
+          const SizedBox(height: 30),
+
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyLessonsPage(),
+                ),
+              );
+            },
+            child: const Text('View All Lessons User side'),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.deepOrangeAccent,),
+          ),
+
+
+
         ]),
       ),
     );

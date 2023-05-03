@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../UI/Pages/lessons/all_lessons_admin_side.dart';
+import '../UI/Pages/lessons/user_side_of_all_lessons.dart';
 import '../UI/Pages/users/add_many_users_csv_xcel.dart';
 import '../UI/Pages/users/add_many_users_json.dart';
 import '../UI/Pages/users/add_user.dart';
@@ -222,6 +224,38 @@ class _HomePageState extends State<HomePage> {
             ),
 
             const SizedBox(height: 30),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AllLessons(),
+                  ),
+                );
+              },
+              child: const Text('View All Lessons Admin side'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepOrangeAccent,),
+            ),
+
+            const SizedBox(height: 30),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyLessonsPage(),
+                  ),
+                );
+              },
+              child: const Text('View All Lessons User side'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepOrangeAccent,),
+            ),
+
+
           ],
         ),
       ),

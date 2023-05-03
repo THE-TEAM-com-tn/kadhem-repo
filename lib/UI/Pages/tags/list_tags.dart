@@ -43,39 +43,28 @@ class ListTagsState extends State<ListTags> {
 
         ],*/
 
-      body: Row(
-        children: [
-           GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddTag()));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.network(
-                'https://i.imgur.com/YEGyoAc.png',
-                height: 32,
-                width: 32,
-              ),
-            ),
-          ),
-          StreamBuilder(
+      body: StreamBuilder(
               stream: tagProvider.fetchTagsAsStream(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   tags = snapshot.data!.docs
-                      .map((doc) =>
-                          Tag.fromJson(doc.data() as Map<String, dynamic>, doc.id))
+                      .map((doc) => Tag.fromJson(
+                          doc.data() as Map<String, dynamic>, doc.id))
                       .toList();
-                  return ListView.builder(
-                    itemCount: tags.length,
-                    itemBuilder: (buildContext, index) => TagCard(tag: tags[index]),
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: ListView.builder(
+                      itemCount: tags.length,
+                      shrinkWrap: true,
+                      itemBuilder: (buildContext, index) =>
+                          TagCard(tag: tags[index]),
+                    ),
                   );
                 } else {
                   return const Text('Fetching...');
                 }
               }),
-        ],
-      ),
+     
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)

@@ -26,14 +26,14 @@ class _MyPopupState extends State<MyPopup> {
   final TextEditingController company = TextEditingController(text: widget.userModel.company);
   final TextEditingController address = TextEditingController(text: widget.userModel.address);
     return AlertDialog(
-      title: Text('Enter Details'),
+      title: const Text('Enter Details'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TextField(
               controller: firstname,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'firstname',
               ),
               onChanged: (value) {
@@ -42,7 +42,7 @@ class _MyPopupState extends State<MyPopup> {
             ),
             TextField(
               controller: lastname,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'lastname',
               ),
               onChanged: (value) {
@@ -51,7 +51,7 @@ class _MyPopupState extends State<MyPopup> {
             ),
             TextField(
               controller: email,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'email',
               ),
               onChanged: (value) {
@@ -60,7 +60,7 @@ class _MyPopupState extends State<MyPopup> {
             ),
             TextField(
               controller: company,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'company',
               ),
               onChanged: (value) {
@@ -69,7 +69,7 @@ class _MyPopupState extends State<MyPopup> {
             ),
             TextField(
               controller: address,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'address',
               ),
               onChanged: (value) {
@@ -84,7 +84,7 @@ class _MyPopupState extends State<MyPopup> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
@@ -92,7 +92,7 @@ class _MyPopupState extends State<MyPopup> {
             provider.updateData(widget.userModel);
             Navigator.of(context).pop();
           },
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );

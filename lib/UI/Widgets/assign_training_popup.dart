@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/training_model.dart';
+import 'InputWidget.dart';
 
 class AssignTrainingPopup extends StatefulWidget {
   const AssignTrainingPopup({super.key, required this.uid});
@@ -15,7 +16,9 @@ class AssignTrainingPopup extends StatefulWidget {
 
 class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
   List<bool> isChecked = [];
+  bool filter =false; 
   List<Training> toAdd = [];
+  List<Training> searchedTrainings = [];
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -27,12 +30,29 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
           child: Consumer<TrainingCRUDModel>(builder: (context, value, child) {
             if (value.loadingTraining) {
               value.getTrainings(widget.uid);
+              isChecked = [];
+              filter = false ; 
+            } else if (!value.loadingTraining && !filter){
+              searchedTrainings = value.allTrainings;
             }
             return !value.loadingTraining
                 ? Column(children: [
+                    Text("List of Trainings"),
+                    InputWidget(
+                      obcure: false,
+                      text: 'Search Trainings by name',
+                      initialValue: '',
+                      enabled: true,
+                      maxLines: 1,
+                      onChanged: (query) {
+                        setState(() {
+                          filterData(query, value.allTrainings);
+                        });
+                      },
+                    ),
                     ListView.builder(
                       itemBuilder: (context, index) {
-                        value.allTrainings
+                        searchedTrainings
                             .forEach((element) => isChecked.add(false));
                         return Column(children: [
                           Card(
@@ -45,34 +65,33 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
                                       onChanged: (val) {
                                         setState(() {
                                           if (val == true) {
-                                            toAdd
-                                                .add(value.allTrainings[index]);
+                                            toAdd.add(searchedTrainings[index]);
                                           } else {
                                             toAdd.remove(
-                                                value.allTrainings[index]);
+                                                searchedTrainings[index]);
                                           }
                                           isChecked[index] = val!;
                                         });
                                       }),
                                   Image.network(
-                                    value.allTrainings[index].image,
+                                    searchedTrainings[index].image,
                                     height: 100,
                                     width: 100,
                                   ),
-                                  Text(value.allTrainings[index].title)
+                                  Text(searchedTrainings[index].title)
                                 ],
                               ),
                             ),
                           ),
                         ]);
                       },
-                      itemCount: value.allTrainings.length,
+                      itemCount: searchedTrainings.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          value.assignTrainingToUser(toAdd, widget.uid);
+                        onPressed: () async {
+                          await value.assignTrainingToUser(toAdd, widget.uid);
                           setState(() {
                             value.loadingTraining = true;
                           });
@@ -80,8 +99,7 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
                         child: Text('save')),
                     ElevatedButton(
                         onPressed: () {
-   
-                            value.loadingTraining = true;
+                          value.loadingTraining = true;
                           Navigator.pop(context);
                         },
                         child: Text('cancel')),
@@ -91,5 +109,16 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
         ),
       ),
     );
+  }
+
+  filterData(String value, List<Training> trainings) {
+    searchedTrainings = [];
+    setState(() {
+          searchedTrainings = trainings
+        .where((item) => item.title.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+        filter = true;
+    });
+
   }
 }

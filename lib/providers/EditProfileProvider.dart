@@ -13,6 +13,8 @@ class EditProfileProvider with ChangeNotifier {
   bool loading = true ; 
   bool imageUpdating = false ; 
 
+  
+
   updateData(UserModel userModel) async {
    bool result =  await _api.updateData(userModel);
     loading  = true ;

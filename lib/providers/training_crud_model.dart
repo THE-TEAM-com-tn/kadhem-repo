@@ -21,7 +21,6 @@ class TrainingCRUDModel extends ChangeNotifier {
   // }
 
 
-
   Stream<QuerySnapshot<Object?>> fetchTrainingsAsStream() {
     return _api.streamDataCollection();
   }
@@ -39,6 +38,12 @@ class TrainingCRUDModel extends ChangeNotifier {
   Future addTraining(Training data) async {
     var result = await _api.addDocument(data.toJson());
     return;
+  }
+
+  getAllTraining() async {
+    allTrainings = await _api.getAllTraining();
+    loadingTraining = false ; 
+    notifyListeners();
   }
 
   getTrainings(String uid) async {

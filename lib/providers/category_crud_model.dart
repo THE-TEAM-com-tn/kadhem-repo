@@ -11,7 +11,8 @@ class CategoryCRUDModel extends ChangeNotifier {
   final CategoryAPI _api = locator<CategoryAPI>();
 
   late List<TrainingCategory> categories;
-
+  List<TrainingCategory> allCategories = [] ;
+  bool loadingCategories = true ; 
   Future<List<TrainingCategory>> fetchcategories() async {
     var result = await _api.getDataCollection();
     categories = result.docs
@@ -37,6 +38,12 @@ class CategoryCRUDModel extends ChangeNotifier {
   Future updateCategory(TrainingCategory data, String id) async {
     await _api.updateDocument(data.toJson(), id);
     return;
+  }
+
+  getAllCategories() async {
+    allCategories = await _api.getAllCategories();
+    loadingCategories = false ; 
+    notifyListeners();
   }
 
 

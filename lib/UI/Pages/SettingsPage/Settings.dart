@@ -3,11 +3,13 @@ import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_page.dart';
 import 'package:elearning_provider/UI/Pages/categories/list_categories.dart';
 import 'package:elearning_provider/UI/Pages/tags/list_tags.dart';
 import 'package:elearning_provider/UI/Pages/trainings/list_trainings.dart';
+import 'package:elearning_provider/UI/Widgets/trainings_navigation_rail.dart';
 import 'package:elearning_provider/auth/home_page.dart';
 //import 'package:elearning_provider/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../Widgets/nav_bar.dart';
 import '../ChangePasswodPage/ChangePasswordPage.dart';
 import '../EditProfilePage/EditProfilePage.dart';
 import '../lessons/all_lessons_admin_side.dart';
@@ -22,7 +24,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*vappBar: AppBar(
         backgroundColor:
             Colors.deepPurple[200], // Set the background color to deep purple
         elevation: 0,
@@ -61,6 +63,10 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ],
+      ),*/ 
+      appBar: const PreferredSize(
+        preferredSize:const Size.fromHeight(60.0) ,
+        child: CustomNavBar(selectedIndex: 0,),
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -71,7 +77,7 @@ class SettingsPage extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
+        /*  ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const EditProfilePage()));
@@ -141,7 +147,7 @@ class SettingsPage extends StatelessWidget {
               child: const Text("Add Users")),
 
           const SizedBox(height: 30),
-
+*/
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -171,6 +177,11 @@ class SettingsPage extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               primary: Colors.deepOrangeAccent,),
           ),
+
+          
+          const SizedBox(height: 30),
+
+         
 
 
 

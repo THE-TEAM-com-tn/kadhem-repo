@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
-        child: CustomNavBar(),
+        child: CustomNavBar(selectedIndex: 3,),
       ),
 
       /*AppBar(
@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+              const Text(
                   "Add user",
                   style: TextStyle(
                       fontSize: 14, color: CupertinoColors.activeBlue),
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
 
             const SizedBox(height: 20),
 
-            ElevatedButton(
+           /* ElevatedButton(
               onPressed: () {
                 /*  Navigator.push(
                   context,
@@ -160,13 +160,13 @@ class _HomePageState extends State<HomePage> {
                 );*/
               },
               child: const Text('View All users page'),
-            ),
+            ),*/
 
             // const SizedBox(height: 15),
 
-            const SizedBox(height: 30),
+          //  const SizedBox(height: 30),
 
-            ElevatedButton(
+           /* ElevatedButton(
               onPressed: () {
                 /*      Navigator.push(
                   context,
@@ -178,9 +178,9 @@ class _HomePageState extends State<HomePage> {
                 );*/
               },
               child: const Text('Go to Mobile Screenshot Blocker Page'),
-            ),
+            ),*/
 
-            const SizedBox(height: 15),
+           // const SizedBox(height: 15),
 
             const SizedBox(height: 10),
 
@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
 
-            const SizedBox(height: 30),
+        /*    const SizedBox(height: 30),
 
             ElevatedButton(
               onPressed: () {
@@ -253,7 +253,7 @@ class _HomePageState extends State<HomePage> {
               child: const Text('View All Lessons User side'),
               style: ElevatedButton.styleFrom(
                 primary: Colors.deepOrangeAccent,),
-            ),
+            ),*/
 
 
           ],

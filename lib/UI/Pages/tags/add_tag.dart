@@ -23,11 +23,6 @@ class AddTagState extends State<AddTag> {
     var tagProvider = Provider.of<TagCRUDModel>(context);
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      )
-      ,
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(

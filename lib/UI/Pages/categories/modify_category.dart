@@ -27,10 +27,6 @@ class ModifyCategoryState extends State<ModifyCategory> {
     final categoryProvider = Provider.of<CategoryCRUDModel>(context);
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(

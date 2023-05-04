@@ -11,6 +11,8 @@ class TagCRUDModel extends ChangeNotifier {
   final TagAPI _api = locator<TagAPI>();
 
   late List<Tag> tags;
+  List<Tag> allTags = [] ;
+  bool loadingTags = true ; 
 
   Future<List<Tag>> fetchTags() async {
     var result = await _api.getDataCollection();
@@ -41,5 +43,10 @@ class TagCRUDModel extends ChangeNotifier {
     var result = await _api.addDocument(data.toJson());
     notifyListeners();
     return;
+  }
+    getAllCTags() async {
+    allTags = await _api.getAllTags();
+    loadingTags = false ; 
+    notifyListeners();
   }
 }

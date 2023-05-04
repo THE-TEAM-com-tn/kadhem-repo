@@ -36,7 +36,7 @@ class _UsersListState extends State<UsersList> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
+        child: CustomNavBar(selectedIndex: 2,),
       ),
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,

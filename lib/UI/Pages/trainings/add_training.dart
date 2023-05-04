@@ -123,10 +123,6 @@ class AddTrainingState extends State<AddTraining> {
   Widget build(BuildContext context) {
     var trainingProvider = Provider.of<TrainingCRUDModel>(context);
     return Scaffold(
-      appBar:const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Form(

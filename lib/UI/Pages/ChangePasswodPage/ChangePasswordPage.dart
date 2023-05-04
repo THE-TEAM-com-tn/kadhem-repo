@@ -34,10 +34,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     final PasswordChangeProvider passwordChangeProvider =
         Provider.of<PasswordChangeProvider>(context, listen: true);
     return Scaffold(
-        appBar:const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ),
         body: Center(
           child: SingleChildScrollView(
               scrollDirection: Axis.vertical,

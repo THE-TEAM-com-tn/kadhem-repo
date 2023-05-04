@@ -24,11 +24,6 @@ class ListCategoriesState extends State<ListCategories> {
 
     return Scaffold(
 
-      appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ),
-
         /*actions: [
 
           GestureDetector(
@@ -50,7 +45,29 @@ class ListCategoriesState extends State<ListCategories> {
 
 
 
-      body: StreamBuilder(
+      body: Consumer<CategoryCRUDModel>(builder:(context, value, child) {
+        
+        if (value.loadingCategories)
+        {value.getAllCategories(); }
+        return !value.loadingCategories ? ListView.builder(
+                itemCount: value.allCategories.length,
+                itemBuilder: (buildContext, index) =>
+                    CategoryCard(category: value.allCategories[index]),
+              ) : CircularProgressIndicator();
+      }, ),
+
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const  AddCategory() ));
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+/* StreamBuilder(
           stream: categoryProvider.fetchCategoriesAsStream(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
@@ -67,15 +84,4 @@ class ListCategoriesState extends State<ListCategories> {
               return const Text('Fetching...');
             }
 
-          }),
-
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const  AddCategory() ));
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
+          }),*/

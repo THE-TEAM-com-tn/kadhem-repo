@@ -22,10 +22,6 @@ class ListTagsState extends State<ListTags> {
   Widget build(BuildContext context) {
     final tagProvider = Provider.of<TagCRUDModel>(context);
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: CustomNavBar(),
-      ),
       /* actions: [
           GestureDetector(
             onTap: () {
@@ -43,7 +39,30 @@ class ListTagsState extends State<ListTags> {
 
         ],*/
 
-      body: StreamBuilder(
+      body: Consumer<TagCRUDModel>(builder:(context, value, child) {
+        
+        if (value.loadingTags)
+        {value.getAllCTags(); }
+        return !value.loadingTags ? ListView.builder(
+                itemCount: value.allTags.length,
+                itemBuilder: (buildContext, index) =>
+                    TagCard(tag: value.allTags[index]),
+              ) : CircularProgressIndicator();
+      }, ),
+     
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const AddTag()));
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+/* StreamBuilder(
               stream: tagProvider.fetchTagsAsStream(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
@@ -63,15 +82,4 @@ class ListTagsState extends State<ListTags> {
                 } else {
                   return const Text('Fetching...');
                 }
-              }),
-     
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddTag()));
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
+              }),*/

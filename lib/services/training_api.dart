@@ -49,6 +49,15 @@ class TrainingAPI {
     return trainings;
   }
 
+  getAllTraining() async {
+    trainings = [];
+    final data = await _db.collection('trainings').get();
+    for (var element in data.docs) {
+      trainings.add(Training.fromJson(element.data(), element.id));
+    }
+    return trainings ; 
+  }
+
   assignTrainingToUser(List<Training> trainings, String uid) async {
     CollectionReference trainingsRef = FirebaseFirestore.instance
         .collection('Users')

@@ -131,10 +131,6 @@ class ModifyTrainingState extends State<ModifyTraining> {
     final trainingProvider = Provider.of<TrainingCRUDModel>(context);
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(

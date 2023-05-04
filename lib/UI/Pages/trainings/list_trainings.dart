@@ -16,12 +16,12 @@ class ListTrainings extends StatefulWidget {
 }
 
 class ListTrainingsState extends State<ListTrainings> {
-  late List<Training> trainings;
+   List<Training> trainings = [];
+  
 
   @override
   Widget build(BuildContext context) {
     final trainingProvider = Provider.of<TrainingCRUDModel>(context);
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -30,11 +30,23 @@ class ListTrainingsState extends State<ListTrainings> {
         },
         child: const Icon(Icons.add),
       ),
-      appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ),
-      body: StreamBuilder(
+      body: Consumer<TrainingCRUDModel>(builder:(context, value, child) {
+        
+        if (value.loadingTraining)
+        {value.getAllTraining(); }
+        return !value.loadingTraining ? ListView.builder(
+                itemCount: value.allTrainings.length,
+                itemBuilder: (buildContext, index) =>
+                    TrainingCard(training: value.allTrainings[index]),
+              ) : CircularProgressIndicator();
+      }, )
+    );
+  }
+  
+}
+
+
+/* StreamBuilder(
           stream: trainingProvider.fetchTrainingsAsStream(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasData) {
@@ -47,10 +59,10 @@ class ListTrainingsState extends State<ListTrainings> {
                 itemBuilder: (buildContext, index) =>
                     TrainingCard(training: trainings[index]),
               );
+            } else if (snapshot.connectionState != ConnectionState.active) {
+              trainingProvider.fetchTrainingsAsStream() ;
+              return  Text(snapshot.connectionState.name);
             } else {
-              return const Text('fetching');
+              return Text('fetching');
             }
-          }),
-    );
-  }
-}
+          }),*/

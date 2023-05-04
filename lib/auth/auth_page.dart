@@ -124,8 +124,6 @@ class _AuthPageState extends State<AuthPage> {
               if (user.emailVerified) {
                 EditProfileProvider provider= EditProfileProvider() ; 
                 provider.fetchData(user.uid) ;
-                
-
                 return SettingsPage(userId: userId);
               } else {
 

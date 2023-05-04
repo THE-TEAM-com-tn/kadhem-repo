@@ -40,10 +40,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(),
-      ) ,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SizedBox(
@@ -61,248 +57,253 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 _model.birthDateController!.text = userModel.birthDate;
                 final Map<String, dynamic> doc =
                     value.documentSnapshot!.data() as Map<String, dynamic>;
-                return Form(
-                  key: _formKey,
-                  child: Column(children: [
-                    Container(
-                      width: 90.0,
-                      height: 90.0,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(children: [
+                      Container(
+                        width: 90.0,
+                        height: 90.0,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: !value.imageUpdating
+                            ? Image.network(
+                                userModel.profilePicture,
+                                fit: BoxFit.fitWidth,
+                              )
+                            : const CircularProgressIndicator(),
                       ),
-                      child: !value.imageUpdating
-                          ? Image.network(
-                              userModel.profilePicture,
-                              fit: BoxFit.fitWidth,
-                            )
-                          : const CircularProgressIndicator(),
-                    ),
-                    Row(children: [
-                      // Update Image
-                      IconButton(
-                          onPressed: () async {
-                            final ImagePicker picker = ImagePicker();
-                            XFile? image = await picker.pickImage(
-                                source: ImageSource.camera);
-                            if (image != null) {
-                              final bytes = await image.readAsBytes();
-                              final name = image.path.split('/').last;
-                              value.updateImage(name, bytes);
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.edit,
-                            color: Colors.green,
-                          )),
-                      const SizedBox(
-                        width: 50,
+                      Center(
+                        child: Row(children: [
+                          // Update Image
+                          IconButton(
+                              onPressed: () async {
+                                final ImagePicker picker = ImagePicker();
+                                XFile? image = await picker.pickImage(
+                                    source: ImageSource.camera);
+                                if (image != null) {
+                                  final bytes = await image.readAsBytes();
+                                  final name = image.path.split('/').last;
+                                  value.updateImage(name, bytes);
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.green,
+                              )),
+                          const SizedBox(
+                            width: 50,
+                          ),
+                          // Delete Image
+                          IconButton(
+                              onPressed: () {
+                                value.defaultImage(userModel.userId);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              )),
+                        ]),
                       ),
-                      // Delete Image
-                      IconButton(
-                          onPressed: () {
-                            value.defaultImage(userModel.userId);
-                          },
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          )),
-                    ]),
-                    // FIrst Name
-                    Expanded(
-                      child: InputWidget(
-                        obcure: false,
-                        validator: (value) {
-                          if (_model.yourNameControllerValidator(value) !=
-                              null) {
-                            return _model.yourNameControllerValidator(value);
-                          }
-                          return null;
-                        },
-                        model: _model.yourNameController,
-                        text: 'First Name',
-                        initialValue: doc['firstName'] ?? '',
-                        enabled: true,
-                        maxLines: 1,
-                        onChanged: (value) {
-                          userModel.firstname = value;
-                        },
-                      ),
-                    ),
-                    // LastName
-                    Expanded(
-                      child: InputWidget(
-                        obcure: false,
-                        validator: (value) {
-                          if (_model.lastNameControllerValidator(value) !=
-                              null) {
-                            return _model.lastNameControllerValidator(value);
-                          }
-                          return null;
-                        },
-                        model: _model.lastNameController,
-                        text: 'Last Name',
-                        initialValue: doc['lastName'] ?? '',
-                        enabled: true,
-                        maxLines: 1,
-                        onChanged: (value) {
-                          userModel.lastname = value;
-                        },
-                      ),
-                    ),
-                    //email
-                    Expanded(
-                      child: InputWidget(
-                        obcure: false,
-                        validator: (value) {
-                          if (_model.emailAddressControllerValidator(value) !=
-                              null) {
-                            return _model
-                                .emailAddressControllerValidator(value);
-                          }
-                          return null;
-                        },
-                        model: _model.emailAddressController,
-                        text: 'Email',
-                        initialValue: doc['email'] ?? '',
-                        enabled: true,
-                        maxLines: 1,
-                        onChanged: (value) {
-                          userModel.email = value;
-                        },
-                      ),
-                    ),
-                    //phone_number
-                    Expanded(
-                      child: InputWidget(
+                      // FIrst Name
+                      Expanded(
+                        child: InputWidget(
                           obcure: false,
                           validator: (value) {
-                            if (_model.phoneNumberControllerValidator(value) !=
+                            if (_model.yourNameControllerValidator(value) !=
                                 null) {
-                              return _model
-                                  .phoneNumberControllerValidator(value);
+                              return _model.yourNameControllerValidator(value);
                             }
                             return null;
                           },
-                          model: _model.phoneNumberController,
-                          text: 'Phone Number',
-                          initialValue: doc['phone_number'] ?? '',
+                          model: _model.yourNameController,
+                          text: 'First Name',
+                          initialValue: doc['firstName'] ?? '',
                           enabled: true,
                           maxLines: 1,
                           onChanged: (value) {
-                            userModel.phoneNumber = value;
-                          }),
-                    ),
-                    //company
-                    Expanded(
-                      child: InputWidget(
-                        obcure: false,
-                        validator: (value) {
-                          if (_model.companyControllerValidator(value) !=
-                              null) {
-                            return _model.companyControllerValidator(value);
-                          }
-                          return null;
-                        },
-                        model: _model.companyController,
-                        text: 'Company',
-                        initialValue: doc['company'] ?? '',
-                        enabled: true,
-                        maxLines: 1,
-                        onChanged: (value) {
-                          userModel.company = value;
-                        },
+                            userModel.firstname = value;
+                          },
+                        ),
                       ),
-                    ),
-                    //address
-                    Expanded(
-                      child: InputWidget(
-                        obcure: false,
-                        validator: (value) {
-                          if (_model.addressControllerValidator(value) !=
-                              null) {
-                            return _model.addressControllerValidator(value);
-                          }
-                          return null;
-                        },
-                        model: _model.addressController,
-                        text: 'Address',
-                        initialValue: doc['address'] ?? '',
-                        enabled: true,
-                        maxLines: 1,
-                        onChanged: (value) {
-                          userModel.address = value;
-                        },
+                      // LastName
+                      Expanded(
+                        child: InputWidget(
+                          obcure: false,
+                          validator: (value) {
+                            if (_model.lastNameControllerValidator(value) !=
+                                null) {
+                              return _model.lastNameControllerValidator(value);
+                            }
+                            return null;
+                          },
+                          model: _model.lastNameController,
+                          text: 'Last Name',
+                          initialValue: doc['lastName'] ?? '',
+                          enabled: true,
+                          maxLines: 1,
+                          onChanged: (value) {
+                            userModel.lastname = value;
+                          },
+                        ),
                       ),
-                    ),
-                    //bio
-                    Expanded(
-                      child: InputWidget(
-                        obcure: false,
-                        validator: (value) {
-                          if (_model.birthDateControllerValidator(value) !=
-                              null) {
-                            return _model.birthDateControllerValidator(value);
-                          }
-                          return null;
-                        },
-                        model: _model.myBioController,
-                        text: 'bio',
-                        initialValue: doc['bio'] ?? '',
-                        enabled: true,
-                        maxLines: 3,
-                        onChanged: (value) {
-                          userModel.bio = value;
-                        },
+                      //email
+                      Expanded(
+                        child: InputWidget(
+                          obcure: false,
+                          validator: (value) {
+                            if (_model.emailAddressControllerValidator(value) !=
+                                null) {
+                              return _model
+                                  .emailAddressControllerValidator(value);
+                            }
+                            return null;
+                          },
+                          model: _model.emailAddressController,
+                          text: 'Email',
+                          initialValue: doc['email'] ?? '',
+                          enabled: true,
+                          maxLines: 1,
+                          onChanged: (value) {
+                            userModel.email = value;
+                          },
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                          onTap: () async {
-                            //  DateTime now = new DateTime.now();
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime.now());
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              userModel.birthDate = formattedDate;
-                              _model.birthDateController!.text = formattedDate;
+                      //phone_number
+                      Expanded(
+                        child: InputWidget(
+                            obcure: false,
+                            validator: (value) {
+                              if (_model.phoneNumberControllerValidator(value) !=
+                                  null) {
+                                return _model
+                                    .phoneNumberControllerValidator(value);
+                              }
+                              return null;
+                            },
+                            model: _model.phoneNumberController,
+                            text: 'Phone Number',
+                            initialValue: doc['phone_number'] ?? '',
+                            enabled: true,
+                            maxLines: 1,
+                            onChanged: (value) {
+                              userModel.phoneNumber = value;
+                            }),
+                      ),
+                      //company
+                      Expanded(
+                        child: InputWidget(
+                          obcure: false,
+                          validator: (value) {
+                            if (_model.companyControllerValidator(value) !=
+                                null) {
+                              return _model.companyControllerValidator(value);
+                            }
+                            return null;
+                          },
+                          model: _model.companyController,
+                          text: 'Company',
+                          initialValue: doc['company'] ?? '',
+                          enabled: true,
+                          maxLines: 1,
+                          onChanged: (value) {
+                            userModel.company = value;
+                          },
+                        ),
+                      ),
+                      //address
+                      Expanded(
+                        child: InputWidget(
+                          obcure: false,
+                          validator: (value) {
+                            if (_model.addressControllerValidator(value) !=
+                                null) {
+                              return _model.addressControllerValidator(value);
+                            }
+                            return null;
+                          },
+                          model: _model.addressController,
+                          text: 'Address',
+                          initialValue: doc['address'] ?? '',
+                          enabled: true,
+                          maxLines: 1,
+                          onChanged: (value) {
+                            userModel.address = value;
+                          },
+                        ),
+                      ),
+                      //bio
+                      Expanded(
+                        child: InputWidget(
+                          obcure: false,
+                          validator: (value) {
+                            if (_model.birthDateControllerValidator(value) !=
+                                null) {
+                              return _model.birthDateControllerValidator(value);
+                            }
+                            return null;
+                          },
+                          model: _model.myBioController,
+                          text: 'bio',
+                          initialValue: doc['bio'] ?? '',
+                          enabled: true,
+                          maxLines: 3,
+                          onChanged: (value) {
+                            userModel.bio = value;
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                            onTap: () async {
+                              //  DateTime now = new DateTime.now();
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime.now());
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                userModel.birthDate = formattedDate;
+                                _model.birthDateController!.text = formattedDate;
+                              }
+                            },
+                            enabled: true,
+                            readOnly: true,
+                            decoration: const InputDecoration(label: Text("BirthDate")),
+                            controller: _model.birthDateController,
+                            validator: _model.birthDateControllerValidator),
+                      ),
+                      ElevatedButton(
+                          onPressed: () async {
+                            final form = _formKey.currentState;
+                            if (form!.validate()) {
+                              if (await value.updateData(userModel)) {
+                                SnackBar snackBar = const SnackBar(
+                                    content: Text("Your data has been updated!"));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              } else {
+                                SnackBar snackBar = const SnackBar(
+                                    content: Text(
+                                        "The email you wrote already exists "));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             }
                           },
-                          enabled: true,
-                          readOnly: true,
-                          decoration: const InputDecoration(label: Text("BirthDate")),
-                          controller: _model.birthDateController,
-                          validator: _model.birthDateControllerValidator),
-                    ),
-                    ElevatedButton(
-                        onPressed: () async {
-                          final form = _formKey.currentState;
-                          if (form!.validate()) {
-                            if (await value.updateData(userModel)) {
-                              SnackBar snackBar = const SnackBar(
-                                  content: Text("Your data has been updated!"));
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            } else {
-                              SnackBar snackBar = const SnackBar(
-                                  content: Text(
-                                      "The email you wrote already exists "));
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
-                          }
-                        },
-                        child: const Text('save')),
-                    ElevatedButton(
-                        onPressed: () async {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('cancel'))
-                  ]),
+                          child: const Text('save')),
+                      ElevatedButton(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('cancel'))
+                    ]),
+                  ),
                 );
               }
             },

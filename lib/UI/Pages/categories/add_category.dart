@@ -24,9 +24,6 @@ class AddCategoryState extends State<AddCategory> {
   Widget build(BuildContext context) {
     var categoryProvider = Provider.of<CategoryCRUDModel>(context);
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60)
-        ,child: CustomNavBar()),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Form(

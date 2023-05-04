@@ -1,5 +1,6 @@
 import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_model.dart';
 import 'package:elearning_provider/UI/Widgets/assign_training_popup.dart';
+import 'package:elearning_provider/UI/Widgets/delete_training_popup.dart';
 import 'package:elearning_provider/UI/Widgets/edit_user_popup.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/providers/users_list_provider.dart';
@@ -35,8 +36,10 @@ class _UsersListState extends State<UsersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(selectedIndex: 2,),
+        preferredSize: const Size.fromHeight(60.0),
+        child: CustomNavBar(
+          selectedIndex: 2,
+        ),
       ),
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -64,12 +67,12 @@ class _UsersListState extends State<UsersList> {
                                 enabled: true,
                                 maxLines: 1,
                                 onChanged: (query) {
-                                 value.filterData(query);
+                                  value.filterData(query);
                                 },
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Card(
                                 elevation: 10.0,
                                 child: DataTable(
@@ -103,8 +106,8 @@ class _UsersListState extends State<UsersList> {
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.15,
-                                            child: Text('First Name'))),
+                                                0.05,
+                                            child: const Text('First Name'))),
                                     DataColumn(
                                         onSort: (columnIndex, ascending) {
                                           setState(() {
@@ -124,11 +127,11 @@ class _UsersListState extends State<UsersList> {
                                         },
                                         label: Container(
                                             alignment: Alignment.center,
-                                            child: Text('Last Name'),
+                                            child: const Text('Last Name'),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.15)),
+                                                0.05)),
                                     DataColumn(
                                         onSort: (columnIndex, ascending) {
                                           setState(() {
@@ -148,15 +151,15 @@ class _UsersListState extends State<UsersList> {
                                         },
                                         label: Container(
                                             alignment: Alignment.center,
-                                            child: Text('Email'),
+                                            child: const Text('Email'),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.20)),
+                                                0.15)),
                                     DataColumn(
                                         label: Container(
                                             alignment: Alignment.center,
-                                            child: Text('Role'),
+                                            child: const Text('Role'),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -164,7 +167,7 @@ class _UsersListState extends State<UsersList> {
                                     DataColumn(
                                         label: Container(
                                             alignment: Alignment.center,
-                                            child: Text('Edit User'),
+                                            child: const Text('Edit User'),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -172,17 +175,35 @@ class _UsersListState extends State<UsersList> {
                                     DataColumn(
                                         label: Container(
                                             alignment: Alignment.center,
-                                            child: Text('Assign Trainings'),
+                                            child:
+                                                const Text('Assign Trainings'),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.1))
+                                                0.1)),
+                                    DataColumn(
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child:
+                                                const Text('Delete Trainings'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1)),
+                                    DataColumn(
+                                        label: Container(
+                                            alignment: Alignment.center,
+                                            child: const Text('Delete User'),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05)),
                                   ],
                                   rows: List.generate(
                                       value.searchedUsers.length, (index) {
                                     return DataRow(
-                                      cells: getRows(
-                                          value.searchedUsers[index], context, value),
+                                      cells: getRows(value.searchedUsers[index],
+                                          context, value),
                                       color: MaterialStateProperty.resolveWith<
                                           Color>((Set<MaterialState> states) {
                                         if (index % 2 == 0)
@@ -196,9 +217,7 @@ class _UsersListState extends State<UsersList> {
                             ),
                           ],
                         )
-                      : Container(
-                          child: Text('fetching'),
-                        );
+                      : const Text('fetching');
                 },
               ),
             ),
@@ -255,13 +274,60 @@ class _UsersListState extends State<UsersList> {
           alignment: Alignment.center,
           child: IconButton(
               onPressed: () async {
-                             await showDialog(
+                await showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AssignTrainingPopup(uid: user.userId!,);
+                    return AssignTrainingPopup(
+                      uid: user.userId!,
+                    );
                   },
                 );
-              }, icon: const Icon(Icons.assignment_add))))
+              },
+              icon: const Icon(Icons.assignment_add)))),
+      DataCell(Container(
+          alignment: Alignment.center,
+          child: IconButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DeleteTrainingsPopUp(uid: user.userId!);
+                  },
+                );
+              },
+              icon: const Icon(Icons.backspace)))),
+      DataCell(Container(
+          alignment: Alignment.center,
+          child: IconButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                        const Text("Would you like to delete the user?"),
+                        ElevatedButton(
+                            onPressed: () async {
+                              await provider.deleteUser(user);
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Yes')),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Yes')),
+                      ]),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.person_remove_alt_1_rounded,
+                color: Colors.red,
+              ))))
     ];
   }
 }

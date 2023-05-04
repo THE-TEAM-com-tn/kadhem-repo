@@ -75,4 +75,27 @@ class TrainingAPI {
       await trainingsRef.doc(element.id).set(element.toJson());
     });
   }
+
+  getUserTrainings(String uid) async{
+        List<Training> userTrainings = [];
+    final usersData =
+        await _db.collection("Users").doc(uid).collection("trainings").get();
+
+    for (var element in usersData.docs) {
+      userTrainings.add(Training.fromJson(element.data(), element.id));
+    }
+    return userTrainings ;
+  }
+
+    deleteTrainingFromUser(List<Training> trainings, String uid) async {
+    CollectionReference trainingsRef = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .collection('trainings');
+   
+    trainings.forEach((element) async {
+      await trainingsRef.doc(element.id).delete();
+    });
+  }
+
 }

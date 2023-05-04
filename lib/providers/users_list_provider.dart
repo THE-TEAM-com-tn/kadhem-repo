@@ -10,6 +10,7 @@ class UsersListProvider with ChangeNotifier {
 
   getUsers() async {
     users = [];
+    searchedUsers = [] ;
     users = await _api.getUsers();
     searchedUsers = users;
     loading = false;
@@ -32,6 +33,12 @@ class UsersListProvider with ChangeNotifier {
 
   updateData(UserModel userModel) async {
     await _api.updateData(userModel);
+    notifyListeners();
+  }
+
+  deleteUser(UserModel userModel) async {
+    await _api.deleteUser(userModel);
+    loading = true ; 
     notifyListeners();
   }
 }

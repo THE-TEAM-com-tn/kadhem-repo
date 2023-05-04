@@ -12,6 +12,7 @@ class TrainingCRUDModel extends ChangeNotifier {
   bool loadingTraining = true  ;
   late List<Training> trainings;
   List<Training> allTrainings = [] ;
+  List<Training> userTrainings = [] ;
   // Future<List<Training>> fetchTrainings() async {
   //   var result = await _api.getDataCollection();
   //   trainings = result.docs
@@ -54,5 +55,15 @@ class TrainingCRUDModel extends ChangeNotifier {
 
   assignTrainingToUser(List<Training> trainings, String uid) async{
     await _api.assignTrainingToUser(trainings, uid);
+  }
+
+  getUserTrainings(String uid) async {
+    userTrainings = await _api.getUserTrainings(uid);
+    loadingTraining = false ; 
+    notifyListeners();
+  }
+
+  deleteTrainingsToUser(List<Training> trainings, String uid) async {
+    await _api.deleteTrainingFromUser(trainings, uid);
   }
 }

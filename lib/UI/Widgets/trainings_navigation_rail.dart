@@ -25,13 +25,13 @@ class _TrainingsNavigationRailState extends State<TrainingsNavigationRail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
+      appBar:  const PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: CustomNavBar(selectedIndex: 1,),
       ),
       body: Row(
         children: <Widget>[
-          NavigationRail(
+        MediaQuery.of(context).size.height > 660 ?  NavigationRail(
             backgroundColor: const Color(0xFF17282E) ,
             selectedIndex: _selectedIndex,
             onDestinationSelected: (int index) {
@@ -62,7 +62,7 @@ class _TrainingsNavigationRailState extends State<TrainingsNavigationRail> {
             groupAlignment: 0.0,
             selectedIconTheme: const IconThemeData(color: Color.fromARGB(77, 50, 216, 122)),
             unselectedIconTheme: const IconThemeData(color: Colors.white),
-          ),
+          ) : Container(),
           VerticalDivider(thickness: 1, width: 1),
           // This is the main content.
           Expanded(child: destinations[_selectedIndex])

@@ -23,8 +23,7 @@ class ListCategoriesState extends State<ListCategories> {
     final categoryProvider = Provider.of<CategoryCRUDModel>(context);
 
     return Scaffold(
-
-        /*actions: [
+      /*actions: [
 
           GestureDetector(
             onTap: () {
@@ -43,23 +42,57 @@ class ListCategoriesState extends State<ListCategories> {
 
         ],*/
 
+      body: Consumer<CategoryCRUDModel>(
+        builder: (context, value, child) {
+          var size = MediaQuery.of(context).size;
+          final double itemHeight = (size.height - kToolbarHeight - 24) / 4;
+          final double itemWidth = size.width / 2;
+          if (value.loadingCategories) {
+            value.getAllCategories();
+          }
+          return !value.loadingCategories
+              ? Column(
+                  children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) => AddCategory()).then((val) {
+                                setState(() {
+                                  value.loadingCategories = true ; 
+                                });
+                              });
+                          setState(() {
+                            value.loadingCategories;
+                          });
+                        },
+                        child: Text('Add Category')),
+                     Expanded(
+                          child: MediaQuery.of(context).size.width > 600
+                        ? GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      childAspectRatio: itemWidth / itemHeight,
+                                      crossAxisCount: 2),
+                              itemCount: value.allCategories.length,
+                              itemBuilder: (buildContext, index) => CategoryCard(
+                                  category: value.allCategories[index], provider: value,),
+                            )                         : ListView.builder(
+                            itemCount: value.allCategories.length,
+                            itemBuilder: (buildContext, index) => CategoryCard(
+                                category: value.allCategories[index], provider: value,),
+                          ),
+                        )
 
-
-      body: Consumer<CategoryCRUDModel>(builder:(context, value, child) {
-        
-        if (value.loadingCategories)
-        {value.getAllCategories(); }
-        return !value.loadingCategories ? ListView.builder(
-                itemCount: value.allCategories.length,
-                itemBuilder: (buildContext, index) =>
-                    CategoryCard(category: value.allCategories[index]),
-              ) : CircularProgressIndicator();
-      }, ),
-
-
+                  ],
+                )
+              : CircularProgressIndicator();
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const  AddCategory() ));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AddCategory()));
         },
         child: const Icon(Icons.add),
       ),

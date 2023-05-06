@@ -22,8 +22,8 @@ class AddTagState extends State<AddTag> {
   Widget build(BuildContext context) {
     var tagProvider = Provider.of<TagCRUDModel>(context);
 
-    return Scaffold(
-      body: Padding(
+    return SimpleDialog(
+      children :[ Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
@@ -77,7 +77,7 @@ class AddTagState extends State<AddTag> {
             ),
           ),
         ),
-      ),
+      )],
     );
   }
 }

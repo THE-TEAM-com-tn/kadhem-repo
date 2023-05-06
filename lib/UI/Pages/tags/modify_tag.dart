@@ -1,7 +1,6 @@
 import 'package:elearning_provider/UI/Pages/tags/list_tags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../models/tag_model.dart';
 import '../../../providers/tag_crud_model.dart';
 import '../../Widgets/G_text_form_field.dart';
@@ -26,8 +25,8 @@ class ModifyTagState extends State<ModifyTag> {
   Widget build(BuildContext context) {
     color = widget.tag.color;
     final tagProvider = Provider.of<TagCRUDModel>(context);
-    return Scaffold(
-      body: Padding(
+    return SimpleDialog(
+      children: [ Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
@@ -77,7 +76,7 @@ class ModifyTagState extends State<ModifyTag> {
             ),
           ),
         ),
-      ),
+      )],
     );
   }
 }

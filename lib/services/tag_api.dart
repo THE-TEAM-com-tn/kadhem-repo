@@ -34,10 +34,11 @@ class TagAPI {
 
    getAllTags() async {
     List<Tag> tags = [];
-    final data = await _db.collection('categories').get();
+    final data = await _db.collection('tags').get();
     for (var element in data.docs) {
       tags.add(Tag.fromJson(element.data(), element.id));
     }
+    print(tags.length);
     return tags ; 
   }
 }

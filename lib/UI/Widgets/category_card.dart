@@ -1,3 +1,4 @@
+import 'package:elearning_provider/UI/Pages/categories/list_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/category_model.dart';
@@ -5,8 +6,10 @@ import '../../providers/category_crud_model.dart';
 import '../Pages/categories/modify_category.dart';
 
 class CategoryCard extends StatelessWidget {
+  final CategoryCRUDModel provider;
   final TrainingCategory category;
-  const CategoryCard({Key? key, required this.category}) : super(key: key);
+  const CategoryCard({Key? key, required this.category, required this.provider})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +24,14 @@ class CategoryCard extends StatelessWidget {
         );
       },
 
-
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Card(
           child: ListTile(
-
             leading: Image.network(
               'https://i.imgur.com/z9wpXpa.png',
               height: 200,
             ),
-
             title: Text("Category Title: ${category.name}"),
             subtitle: Container(
               child: (Column(
@@ -44,66 +44,70 @@ class CategoryCard extends StatelessWidget {
                 ],
               )),
             ),
-
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-
                 IconButton(
                   icon: const Icon(
                     Icons.edit,
                     color: Colors.blue,
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ModifyCategory(category: category),
-                      ),
-                    );
+                  onPressed: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (context) =>
+                            ModifyCategory(category: category));
+                    final state =
+                        context.findAncestorStateOfType<ListCategoriesState>();
+                    state!.setState(() {
+                      provider.loadingCategories = true;
+                    });
                   },
                 ),
-
-
                 IconButton(
                   icon: const Icon(
                     Icons.delete_forever,
                     color: Colors.red,
                   ),
-
-                  onPressed: () {
-                    showDialog(
+                  onPressed: () async {
+                    await showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Confirm'),
-                          content: const Text('Are you sure you want to delete this category?'),
-                          actions: <Widget>[
+                        return SimpleDialog(
+                          children: <Widget>[
+                            const Text(
+                                'Are you sure you want to delete this category?'),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text('No'),
+                              child: const Text('No',
+                                  style: TextStyle(color: Colors.red)),
                             ),
                             TextButton(
                               onPressed: () async {
-                                await categoryProvider.removeCategory(category.id!);
+                                await categoryProvider
+                                    .removeCategory(category.id!);
+
                                 Navigator.pop(context);
-                              //  Navigator.pop(context);
                               },
-                              child: const Text('Yes'),
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(color: Colors.green),
+                              ),
                             ),
                           ],
                         );
                       },
-                    );
+                    ).then((value) {
+                      final state = context
+                          .findAncestorStateOfType<ListCategoriesState>();
+                      state!.setState(() {
+                        provider.loadingCategories = true;
+                      });
+                    });
                   },
-
-
                 ),
-
-
-
               ],
             ),
           ),

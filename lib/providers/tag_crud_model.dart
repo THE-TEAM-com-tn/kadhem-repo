@@ -35,6 +35,7 @@ class TagCRUDModel extends ChangeNotifier {
 
   Future updateTag(Tag data, String id) async {
     await _api.updateDocument(data.toJson(), id);
+    loadingTags = true ; 
     notifyListeners();
     return;
   }

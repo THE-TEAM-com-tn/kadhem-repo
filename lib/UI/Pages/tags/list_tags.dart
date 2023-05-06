@@ -39,25 +39,60 @@ class ListTagsState extends State<ListTags> {
 
         ],*/
 
-      body: Consumer<TagCRUDModel>(builder:(context, value, child) {
-        
-        if (value.loadingTags)
-        {value.getAllCTags(); }
-        return !value.loadingTags ? ListView.builder(
-                itemCount: value.allTags.length,
-                itemBuilder: (buildContext, index) =>
-                    TagCard(tag: value.allTags[index]),
-              ) : CircularProgressIndicator();
-      }, ),
-     
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddTag()));
+      body: Consumer<TagCRUDModel>(
+        builder: (context, value, child) {
+          var size = MediaQuery.of(context).size;
+          final double itemHeight = (size.height - kToolbarHeight - 24) / 4;
+          final double itemWidth = size.width / 2;
+          if (value.loadingTags) {
+            value.getAllCTags();
+          }
+          return !value.loadingTags
+              ? Column(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) => AddTag()).then((val) {
+                                setState(() {
+                                  value.loadingTags = true ; 
+                                });
+                              });
+                          setState(() {
+                            value.loadingTags;
+                          });
+                        },
+                        child: Text('Add Tag')),
+                    Expanded(
+                      child: MediaQuery.of(context).size.width > 600 ? GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: itemWidth/itemHeight ,
+                            crossAxisCount: 2 ),
+                        itemCount: value.allTags.length,
+                        itemBuilder: (buildContext, index) =>
+                            TagCard(tag: value.allTags[index], refresh: value),
+                      ) : 
+                      ListView.builder(
+                        itemCount: value.allTags.length,
+                        itemBuilder: (buildContext, index) =>
+                            TagCard(tag: value.allTags[index], refresh: value),
+                      ),
+                    ),
+                  ],
+                )
+              : CircularProgressIndicator();
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {},
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  refresh () {
+    setState() {}
   }
 }
 

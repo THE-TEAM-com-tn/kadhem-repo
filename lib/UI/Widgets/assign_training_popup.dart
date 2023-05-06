@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/training_model.dart';
 import 'InputWidget.dart';
+import 'confirmation_popup.dart';
 
 class AssignTrainingPopup extends StatefulWidget {
   const AssignTrainingPopup({super.key, required this.uid});
@@ -16,7 +17,7 @@ class AssignTrainingPopup extends StatefulWidget {
 
 class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
   List<bool> isChecked = [];
-  bool filter =false; 
+  bool filter = false;
   List<Training> toAdd = [];
   List<Training> searchedTrainings = [];
   @override
@@ -31,8 +32,8 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
             if (value.loadingTraining) {
               value.getTrainings(widget.uid);
               isChecked = [];
-              filter = false ; 
-            } else if (!value.loadingTraining && !filter){
+              filter = false;
+            } else if (!value.loadingTraining && !filter) {
               searchedTrainings = value.allTrainings;
             }
             return !value.loadingTraining
@@ -95,6 +96,13 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
                           setState(() {
                             value.loadingTraining = true;
                           });
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const ConfirmationPopUp(
+                                    text: "Trainings has been added succesfuly",
+                                  ));
                         },
                         child: Text('save')),
                     ElevatedButton(
@@ -114,11 +122,11 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
   filterData(String value, List<Training> trainings) {
     searchedTrainings = [];
     setState(() {
-          searchedTrainings = trainings
-        .where((item) => item.title.toLowerCase().contains(value.toLowerCase()))
-        .toList();
-        filter = true;
+      searchedTrainings = trainings
+          .where(
+              (item) => item.title.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+      filter = true;
     });
-
   }
 }

@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 import '../../Widgets/InputWidget.dart';
+import '../../Widgets/confirmation_popup.dart';
 import '../../Widgets/nav_bar.dart';
 
 class UsersList extends StatefulWidget {
@@ -202,15 +203,14 @@ class _UsersListState extends State<UsersList> {
                                   rows: List.generate(
                                       value.searchedUsers.length, (index) {
                                     return DataRow(
-                                      cells: getRows(value.searchedUsers[index],
-                                          context, value),
-                                      color: MaterialStateProperty.resolveWith<
+      color: MaterialStateProperty.resolveWith<
                                           Color>((Set<MaterialState> states) {
                                         if (index % 2 == 0)
                                           return Colors.grey.withOpacity(0.1);
                                         return Colors.white;
-                                      }),
-                                    );
+                                      }) ,
+                                      cells : getRows(value.searchedUsers[index],
+                                        context, value, index));
                                   }),
                                 ),
                               ),
@@ -226,9 +226,9 @@ class _UsersListState extends State<UsersList> {
   }
 
   List<DataCell> getRows(
-      UserModel user, BuildContext cont, UsersListProvider provider) {
+      UserModel user, BuildContext cont, UsersListProvider provider,int index) {
     String role = user.role;
-    return [
+    return  [
       DataCell(
           Container(alignment: Alignment.center, child: Text(user.firstname))),
       DataCell(
@@ -304,9 +304,8 @@ class _UsersListState extends State<UsersList> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      content : Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
+                      content:
+                          Column(mainAxisSize: MainAxisSize.min, children: [
                         const Text("Would you like to delete the user?"),
                         ElevatedButton(
                             onPressed: () async {

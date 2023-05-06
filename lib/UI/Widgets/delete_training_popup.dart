@@ -6,22 +6,23 @@ import 'package:provider/provider.dart';
 import '../../models/training_model.dart';
 import '../../providers/training_crud_model.dart';
 import 'InputWidget.dart';
+import 'confirmation_popup.dart';
 
 class DeleteTrainingsPopUp extends StatefulWidget {
-  const DeleteTrainingsPopUp({super.key,required this.uid});
-  final String uid ; 
+  const DeleteTrainingsPopUp({super.key, required this.uid});
+  final String uid;
   @override
   State<DeleteTrainingsPopUp> createState() => _DeleteTrainingsPopUpState();
 }
 
 class _DeleteTrainingsPopUpState extends State<DeleteTrainingsPopUp> {
-    List<bool> isChecked = [];
-  bool filter =false; 
+  List<bool> isChecked = [];
+  bool filter = false;
   List<Training> toDelete = [];
   List<Training> searchedTrainings = [];
   @override
   Widget build(BuildContext context) {
-    return  AlertDialog(
+    return AlertDialog(
       content: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SizedBox(
@@ -29,10 +30,10 @@ class _DeleteTrainingsPopUpState extends State<DeleteTrainingsPopUp> {
           width: MediaQuery.of(context).size.width / 2,
           child: Consumer<TrainingCRUDModel>(builder: (context, value, child) {
             if (value.loadingTraining) {
-              value.getUserTrainings(widget.uid);
+              value.getUserTrainings(widget.uid,"delete");
               isChecked = [];
-              filter = false ; 
-            } else if (!value.loadingTraining && !filter){
+              filter = false;
+            } else if (!value.loadingTraining && !filter) {
               searchedTrainings = value.userTrainings;
             }
             return !value.loadingTraining
@@ -65,7 +66,8 @@ class _DeleteTrainingsPopUpState extends State<DeleteTrainingsPopUp> {
                                       onChanged: (val) {
                                         setState(() {
                                           if (val == false) {
-                                            toDelete.add(searchedTrainings[index]);
+                                            toDelete
+                                                .add(searchedTrainings[index]);
                                           } else {
                                             toDelete.remove(
                                                 searchedTrainings[index]);
@@ -91,10 +93,19 @@ class _DeleteTrainingsPopUpState extends State<DeleteTrainingsPopUp> {
                     ),
                     ElevatedButton(
                         onPressed: () async {
-                          await value.deleteTrainingsToUser(toDelete, widget.uid);
+                          await value.deleteTrainingsToUser(
+                              toDelete, widget.uid);
                           setState(() {
                             value.loadingTraining = true;
                           });
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const ConfirmationPopUp(
+                                    text:
+                                        "Trainings Has Been Removed succesfuly",
+                                  ));
                         },
                         child: Text('save')),
                     ElevatedButton(
@@ -111,14 +122,14 @@ class _DeleteTrainingsPopUpState extends State<DeleteTrainingsPopUp> {
     );
   }
 
-    filterData(String value, List<Training> trainings) {
+  filterData(String value, List<Training> trainings) {
     searchedTrainings = [];
     setState(() {
-          searchedTrainings = trainings
-        .where((item) => item.title.toLowerCase().contains(value.toLowerCase()))
-        .toList();
-        filter = true;
+      searchedTrainings = trainings
+          .where(
+              (item) => item.title.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+      filter = true;
     });
-
   }
 }

@@ -23,8 +23,8 @@ class AddCategoryState extends State<AddCategory> {
   @override
   Widget build(BuildContext context) {
     var categoryProvider = Provider.of<CategoryCRUDModel>(context);
-    return Scaffold(
-      body: Padding(
+    return SimpleDialog(
+      children : [ Padding(
         padding: const EdgeInsets.all(12),
         child: Form(
           key: _formKey,
@@ -66,7 +66,7 @@ class AddCategoryState extends State<AddCategory> {
             ),
           ),
         ),
-      ),
+      )],
     );
   }
 }

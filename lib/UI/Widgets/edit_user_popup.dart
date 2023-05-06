@@ -1,4 +1,5 @@
 import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart';
+import 'package:elearning_provider/UI/Widgets/confirmation_popup.dart';
 import 'package:elearning_provider/providers/EditProfileProvider.dart';
 import 'package:elearning_provider/providers/users_list_provider.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../models/UserModel.dart';
 
 class MyPopup extends StatefulWidget {
-  final UserModel userModel ;
+  final UserModel userModel;
   const MyPopup({Key? key, required this.userModel}) : super(key: key);
 
   @override
@@ -14,17 +15,18 @@ class MyPopup extends StatefulWidget {
 }
 
 class _MyPopupState extends State<MyPopup> {
-
-
-
   @override
   Widget build(BuildContext context) {
-    
-  final TextEditingController firstname = TextEditingController(text: widget.userModel.firstname);
-  final TextEditingController lastname= TextEditingController(text: widget.userModel.lastname);
-  final TextEditingController email = TextEditingController(text: widget.userModel.email);
-  final TextEditingController company = TextEditingController(text: widget.userModel.company);
-  final TextEditingController address = TextEditingController(text: widget.userModel.address);
+    final TextEditingController firstname =
+        TextEditingController(text: widget.userModel.firstname);
+    final TextEditingController lastname =
+        TextEditingController(text: widget.userModel.lastname);
+    final TextEditingController email =
+        TextEditingController(text: widget.userModel.email);
+    final TextEditingController company =
+        TextEditingController(text: widget.userModel.company);
+    final TextEditingController address =
+        TextEditingController(text: widget.userModel.address);
     return AlertDialog(
       title: const Text('Enter Details'),
       content: SingleChildScrollView(
@@ -37,7 +39,7 @@ class _MyPopupState extends State<MyPopup> {
                 labelText: 'firstname',
               ),
               onChanged: (value) {
-                widget.userModel.firstname = value ;
+                widget.userModel.firstname = value;
               },
             ),
             TextField(
@@ -46,7 +48,7 @@ class _MyPopupState extends State<MyPopup> {
                 labelText: 'lastname',
               ),
               onChanged: (value) {
-                widget.userModel.lastname = value ;
+                widget.userModel.lastname = value;
               },
             ),
             TextField(
@@ -55,7 +57,7 @@ class _MyPopupState extends State<MyPopup> {
                 labelText: 'email',
               ),
               onChanged: (value) {
-                widget.userModel.email = value ;
+                widget.userModel.email = value;
               },
             ),
             TextField(
@@ -64,7 +66,7 @@ class _MyPopupState extends State<MyPopup> {
                 labelText: 'company',
               ),
               onChanged: (value) {
-                widget.userModel.company = value ;
+                widget.userModel.company = value;
               },
             ),
             TextField(
@@ -73,7 +75,7 @@ class _MyPopupState extends State<MyPopup> {
                 labelText: 'address',
               ),
               onChanged: (value) {
-                widget.userModel.address = value ;
+                widget.userModel.address = value;
               },
             ),
           ],
@@ -88,9 +90,15 @@ class _MyPopupState extends State<MyPopup> {
         ),
         TextButton(
           onPressed: () {
-            UsersListProvider provider = UsersListProvider() ; 
+            UsersListProvider provider = UsersListProvider();
             provider.updateData(widget.userModel);
             Navigator.of(context).pop();
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          const ConfirmationPopUp(
+                            text: "User has been updated succesfuly",
+                          ));
           },
           child: const Text('Save'),
         ),

@@ -3,6 +3,7 @@ import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_page.dart';
 import 'package:elearning_provider/UI/Pages/categories/list_categories.dart';
 import 'package:elearning_provider/UI/Pages/tags/list_tags.dart';
 import 'package:elearning_provider/UI/Pages/trainings/list_trainings.dart';
+import 'package:elearning_provider/UI/Pages/user_list_training/user_list_training.dart';
 import 'package:elearning_provider/UI/Widgets/trainings_navigation_rail.dart';
 import 'package:elearning_provider/auth/home_page.dart';
 //import 'package:elearning_provider/models/UserModel.dart';
@@ -182,7 +183,19 @@ class SettingsPage extends StatelessWidget {
           const SizedBox(height: 30),
 
          
-
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UsersTrainings(),
+                ),
+              );
+            },
+            child: const Text('View Users Trainings'),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.deepOrangeAccent,),
+          ),
 
 
         ]),

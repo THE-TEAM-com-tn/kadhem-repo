@@ -1,4 +1,5 @@
 //import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/dashboard_screen.dart';
 import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_page.dart';
 import 'package:elearning_provider/UI/Pages/categories/list_categories.dart';
 import 'package:elearning_provider/UI/Pages/tags/list_tags.dart';
@@ -64,10 +65,12 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ],
-      ),*/ 
+      ),*/
       appBar: const PreferredSize(
-        preferredSize:const Size.fromHeight(60.0) ,
-        child: CustomNavBar(selectedIndex: 0,),
+        preferredSize: const Size.fromHeight(60.0),
+        child: CustomNavBar(
+          selectedIndex: 0,
+        ),
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -78,7 +81,7 @@ class SettingsPage extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 16),
-        /*  ElevatedButton(
+          /*  ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const EditProfilePage()));
@@ -160,11 +163,10 @@ class SettingsPage extends StatelessWidget {
             },
             child: const Text('View All Lessons Admin side'),
             style: ElevatedButton.styleFrom(
-              primary: Colors.deepOrangeAccent,),
+              primary: Colors.deepOrangeAccent,
+            ),
           ),
-
           const SizedBox(height: 30),
-
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -176,13 +178,10 @@ class SettingsPage extends StatelessWidget {
             },
             child: const Text('View All Lessons User side'),
             style: ElevatedButton.styleFrom(
-              primary: Colors.deepOrangeAccent,),
+              primary: Colors.deepOrangeAccent,
+            ),
           ),
-
-          
           const SizedBox(height: 30),
-
-         
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -194,10 +193,24 @@ class SettingsPage extends StatelessWidget {
             },
             child: const Text('View Users Trainings'),
             style: ElevatedButton.styleFrom(
-              primary: Colors.deepOrangeAccent,),
+              primary: Colors.deepOrangeAccent,
+            ),
           ),
-
-
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardScreen(),
+                ),
+              );
+            },
+            child: const Text('View Shopping Cart'),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.deepOrangeAccent,
+            ),
+          ),
         ]),
       ),
     );

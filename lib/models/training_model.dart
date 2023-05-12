@@ -29,16 +29,16 @@ class Training {
   factory Training.fromJson(Map<String, dynamic> map, String id) {
     return Training(
         id: id,
-        title: map['title'] ?? '',
-        description: map['description'] ?? '',
-        category: List<String>.from(map['category'] ?? ''),
-        author: map['author'] ?? '',
-        duration: map['duration'] ?? '',
-        price: map['price'] ?? '',
-        trailerVid: map['trailerVid'] ?? '',
-        image: map['image'] ?? '',
-        tags: List<String>.from(map['tags'] ?? ''),
-        creationDate: map['creationDate'] ?? '');
+        title: map['title'],
+        description: map['description'],
+        category: List<String>.from(map['category']),
+        author: map['author'],
+        duration: map['duration'],
+        price: map['price'],
+        trailerVid: map['trailerVid'],
+        image: map['image'],
+        tags: List<String>.from(map['tags']),
+        creationDate: map['creationDate']);
   }
 
   toJson() {

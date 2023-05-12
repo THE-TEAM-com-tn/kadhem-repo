@@ -5,10 +5,9 @@ import 'package:elearning_provider/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../providers/EditProfileProvider.dart';
-import 'anonymous_home_page.dart' ;
-import 'login_or_register_page.dart' ;
+import 'anonymous_home_page.dart';
+import 'login_or_register_page.dart';
 import 'dart:async';
-
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -21,18 +20,15 @@ class _AuthPageState extends State<AuthPage> {
   Timer? _emailVerificationTimer;
   String? userId;
 
-
   @override
   void initState() {
     super.initState();
     _startEmailVerificationTimer();
   }
 
-
-
-
   void _startEmailVerificationTimer() {
-    _emailVerificationTimer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+    _emailVerificationTimer =
+        Timer.periodic(const Duration(seconds: 5), (timer) async {
       // Check if the current user is not null and not anonymous
       final User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -74,7 +70,8 @@ class _AuthPageState extends State<AuthPage> {
 
 ////// Verify Email Exception (errors) Handeling //////
   void showEmailVerificationErrorSnackBar(Exception e, BuildContext context) {
-    String errorMessage = 'Error sending verification email. Please try again later.';
+    String errorMessage =
+        'Error sending verification email. Please try again later.';
 
     if (e is FirebaseAuthException) {
       switch (e.code) {
@@ -82,9 +79,10 @@ class _AuthPageState extends State<AuthPage> {
           errorMessage = 'User not found. Please check your email address.';
           break;
         case 'invalid-email':
-          errorMessage = 'Invalid email address. Please check your email address.';
+          errorMessage =
+              'Invalid email address. Please check your email address.';
           break;
-      // Add other FirebaseAuthException cases if needed
+        // Add other FirebaseAuthException cases if needed
         default:
           errorMessage = 'Error sending verification email: ${e.message}';
           break;
@@ -105,7 +103,6 @@ class _AuthPageState extends State<AuthPage> {
 
 //////////////
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,12 +119,10 @@ class _AuthPageState extends State<AuthPage> {
               }
               // Check if email is verified
               if (user.emailVerified) {
-                EditProfileProvider provider= EditProfileProvider() ; 
-                provider.fetchData(user.uid) ;
+                EditProfileProvider provider = EditProfileProvider();
+                provider.fetchData(user.uid);
                 return SettingsPage(userId: userId);
               } else {
-
-
                 // If email is not verified, show a message to the user
                 return Scaffold(
                   appBar: AppBar(title: const Text("Email Verification")),
@@ -135,8 +130,10 @@ class _AuthPageState extends State<AuthPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Provide you email and we will send you a link to rest your password."),
-                        const Text("Please verify your email before proceeding."),
+                        const Text(
+                            "Provide you email and we will send you a link to rest your password."),
+                        const Text(
+                            "Please verify your email before proceeding."),
                         TextButton(
                           onPressed: () async {
                             try {
@@ -158,20 +155,19 @@ class _AuthPageState extends State<AuthPage> {
                               } else {
                                 /* If the error is not an exception, you can handle it differently or ignore it
                                 If the error is not an exception, display a generic error message */
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                     content: Text('An unknown error occurred. ${e.toString()}'),
-                                      duration: const Duration(seconds: 3),
-                                      backgroundColor: Colors.redAccent,
-                                    ),
-                                  );
-                                }
-
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'An unknown error occurred. ${e.toString()}'),
+                                    duration: const Duration(seconds: 3),
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                );
+                              }
                             }
                           },
                           child: const Text("Resend Verification Email"),
                         ),
-
                         TextButton(
                           onPressed: () async {
                             // Sign out the user
@@ -188,8 +184,6 @@ class _AuthPageState extends State<AuthPage> {
               // If the user is anonymous
               return AnonymousHomePage();
             }
-
-
           } else {
             return const LoginOrRegisterPage();
           }

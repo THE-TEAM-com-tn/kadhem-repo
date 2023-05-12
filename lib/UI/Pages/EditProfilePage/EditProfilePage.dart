@@ -1,12 +1,8 @@
-
-
 import 'package:elearning_provider/UI/Widgets/InputWidget.dart';
-import 'package:elearning_provider/UI/Widgets/nav_bar.dart';
 import 'package:elearning_provider/models/UserModel.dart';
 import 'package:elearning_provider/providers/EditProfileProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:dob_input_field/dob_input_field.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -177,7 +173,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: InputWidget(
                             obcure: false,
                             validator: (value) {
-                              if (_model.phoneNumberControllerValidator(value) !=
+                              if (_model
+                                      .phoneNumberControllerValidator(value) !=
                                   null) {
                                 return _model
                                     .phoneNumberControllerValidator(value);
@@ -269,12 +266,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 String formattedDate =
                                     DateFormat('yyyy-MM-dd').format(pickedDate);
                                 userModel.birthDate = formattedDate;
-                                _model.birthDateController!.text = formattedDate;
+                                _model.birthDateController!.text =
+                                    formattedDate;
                               }
                             },
                             enabled: true,
                             readOnly: true,
-                            decoration: const InputDecoration(label: Text("BirthDate")),
+                            decoration:
+                                const InputDecoration(label: Text("BirthDate")),
                             controller: _model.birthDateController,
                             validator: _model.birthDateControllerValidator),
                       ),
@@ -284,7 +283,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (form!.validate()) {
                               if (await value.updateData(userModel)) {
                                 SnackBar snackBar = const SnackBar(
-                                    content: Text("Your data has been updated!"));
+                                    content:
+                                        Text("Your data has been updated!"));
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               } else {
@@ -313,4 +313,3 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 }
-

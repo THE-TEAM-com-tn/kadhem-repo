@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class UsersListProvider with ChangeNotifier {
   List<UserModel> users = [];
   List<UserModel> searchedUsers = [];
-  UsersListService _api = UsersListService();
+  final UsersListService _api = UsersListService();
   bool loading = true;
 
   getUsers() async {
     users = [];
-    searchedUsers = [] ;
+    searchedUsers = [];
     users = await _api.getUsers();
     searchedUsers = users;
     loading = false;
@@ -38,7 +38,7 @@ class UsersListProvider with ChangeNotifier {
 
   deleteUser(UserModel userModel) async {
     await _api.deleteUser(userModel);
-    loading = true ; 
+    loading = true;
     notifyListeners();
   }
 }

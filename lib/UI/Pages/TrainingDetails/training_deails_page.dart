@@ -21,7 +21,6 @@ class _TrainingDetailsState extends State<TrainingDetails> {
   String _videoId = "";
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final String _videoUrl = widget.training.trailerVid;
     checkLink(widget.training.trailerVid);
@@ -51,7 +50,9 @@ class _TrainingDetailsState extends State<TrainingDetails> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
-        child: CustomNavBar(selectedIndex: 1,),
+        child: CustomNavBar(
+          selectedIndex: 1,
+        ),
       ),
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,

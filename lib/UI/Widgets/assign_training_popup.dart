@@ -1,7 +1,5 @@
 import 'package:elearning_provider/providers/training_crud_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/training_model.dart';
@@ -38,7 +36,7 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
             }
             return !value.loadingTraining
                 ? Column(children: [
-                    Text("List of Trainings"),
+                    const Text("List of Trainings"),
                     InputWidget(
                       obcure: false,
                       text: 'Search Trainings by name',
@@ -104,15 +102,15 @@ class _AssignTrainingPopupState extends State<AssignTrainingPopup> {
                                     text: "Trainings has been added succesfuly",
                                   ));
                         },
-                        child: Text('save')),
+                        child: const Text('save')),
                     ElevatedButton(
                         onPressed: () {
                           value.loadingTraining = true;
                           Navigator.pop(context);
                         },
-                        child: Text('cancel')),
+                        child: const Text('cancel')),
                   ])
-                : CircularProgressIndicator();
+                : const CircularProgressIndicator();
           }),
         ),
       ),

@@ -1,34 +1,34 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:elearning_provider/UI/Pages/ShoppingCart/components/search_field.dart';
+// import 'package:elearning_provider/UI/Pages/ShoppingCart/components/search_field.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import '../../../models/training_model.dart';
+import '../../../../models/training_model.dart';
 // import 'package:project_management/app/shared_components/chatting_card.dart';
-import './components/responsive_builder.dart';
+import '../components/responsive_builder.dart';
 // import 'package:project_management/app/shared_components/project_card.dart';
-import './components/search_field.dart';
-import './components/selection_button.dart';
-import './components/training_card.dart';
+// import './components/search_field.dart';
+// import './components/selection_button.dart';
+import '../components/training_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import './components/profile_tile.dart';
+import '../components/profile_tile.dart';
 
 // models
-import '../../../models/profile_model.dart';
+import '../../../../models/profile_model.dart';
 
 // controller
-import './dashboard_controller.dart';
+import '../controllers/dashboard_controller.dart';
 
 // component
-import './components/active_project_card.dart';
-import './components/header.dart';
+// import './components/active_project_card.dart';
+import '../components/header.dart';
 // import './components/overview_header.dart';
 
-import './components/recent_messages.dart';
-import './components/sidebar.dart';
-import './components/team_member.dart';
+// import './components/recent_messages.dart';
+// import './components/sidebar.dart';
+// import './components/team_member.dart';
 
 class DashboardScreen extends StatelessWidget {
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -45,6 +45,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(60, 10, 10, 10),
       key: scaffoldKey,
       drawer: (ResponsiveBuilder.isDesktop(context))
           ? null
@@ -246,8 +247,10 @@ class DashboardScreen extends StatelessWidget {
 
           for (var doc in snapshot.data!.docs) {
             // Access the fields of the document
-            var name = (doc.data()! as Map)['name'];
+            // My User/Profile and the common one are diffrent
+            var name = (doc.data()! as Map)['lastName'];
             var email = (doc.data()! as Map)['email'];
+            var photo = (doc.data()! as Map)['profile_picture'];
             var trainings = (doc.data()! as Map)['inBasket']['trainings'];
             var totalPrice = (doc.data()! as Map)['inBasket']['totalPrice'];
 
@@ -255,6 +258,7 @@ class DashboardScreen extends StatelessWidget {
             var profileModel = ProfileModel(
               name: name,
               email: email,
+              photo: photo,
               trainings: trainings,
               totalPrice: totalPrice,
             );

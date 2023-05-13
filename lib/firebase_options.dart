@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,40 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDZxU81inDFaqGEbVzhnMisOK6FmP-xJzk',
-    appId: '1:52081032273:web:8bfaf99062e445e62c4c70',
-    messagingSenderId: '52081032273',
-    projectId: 'elearning-9f77b',
-    authDomain: 'elearning-9f77b.firebaseapp.com',
-    storageBucket: 'elearning-9f77b.appspot.com',
-    measurementId: 'G-1C74Y6ZCKX',
+    apiKey: 'AIzaSyCxonhqtYbqQLORbx_-c-n2bWN0e-4Km3g',
+    appId: '1:906403289387:web:7a1f8902ee9c78fc5a8d6e',
+    messagingSenderId: '906403289387',
+    projectId: 'fir-cruddemo-2bf79',
+    authDomain: 'fir-cruddemo-2bf79.firebaseapp.com',
+    storageBucket: 'fir-cruddemo-2bf79.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBIqdDUEDpI2gyJdDiNFjcjYa3eVaFPOGE',
-    appId: '1:52081032273:android:c695bd226f6e2e932c4c70',
-    messagingSenderId: '52081032273',
-    projectId: 'elearning-9f77b',
-    storageBucket: 'elearning-9f77b.appspot.com',
+    apiKey: 'AIzaSyA_2yPvrfXjqqqVLLhnHqfysm5sGbep9p8',
+    appId: '1:906403289387:android:505f3f5da1350bd15a8d6e',
+    messagingSenderId: '906403289387',
+    projectId: 'fir-cruddemo-2bf79',
+    storageBucket: 'fir-cruddemo-2bf79.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBPyfCbUX5CJdvkjQv4e8j6jAM8gxZj4IQ',
-    appId: '1:52081032273:ios:fde9d16004e2a47b2c4c70',
-    messagingSenderId: '52081032273',
-    projectId: 'elearning-9f77b',
-    storageBucket: 'elearning-9f77b.appspot.com',
-    iosClientId: '52081032273-j3hh37rvr4o06k95m27hg9ilih5se2mq.apps.googleusercontent.com',
-    iosBundleId: 'com.example.elearningProvider',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBPyfCbUX5CJdvkjQv4e8j6jAM8gxZj4IQ',
-    appId: '1:52081032273:ios:fde9d16004e2a47b2c4c70',
-    messagingSenderId: '52081032273',
-    projectId: 'elearning-9f77b',
-    storageBucket: 'elearning-9f77b.appspot.com',
-    iosClientId: '52081032273-j3hh37rvr4o06k95m27hg9ilih5se2mq.apps.googleusercontent.com',
-    iosBundleId: 'com.example.elearningProvider',
+    apiKey: 'AIzaSyBHLJZc90HbbSd-80yOjpBNKbkRCWrAkNc',
+    appId: '1:906403289387:ios:2969c4144f1934315a8d6e',
+    messagingSenderId: '906403289387',
+    projectId: 'fir-cruddemo-2bf79',
+    storageBucket: 'fir-cruddemo-2bf79.appspot.com',
+    iosClientId:
+        '906403289387-1peu3m0eu39umkfsrq0p47evs4e6m1u1.apps.googleusercontent.com',
+    iosBundleId: 'com.example.version',
   );
 }

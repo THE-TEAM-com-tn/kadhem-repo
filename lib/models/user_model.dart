@@ -1,11 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-enum UserRole {
-  admin,
-  trainer,
-  contentManager,
-  normalUser
-}
+enum UserRole { admin, trainer, contentManager, normalUser }
 
 class User {
   String? _id;
@@ -24,7 +19,6 @@ class User {
     required this.company,
     required this.role,
     required this.email,
-
   });
 
   // Define the getter method for id
@@ -62,7 +56,6 @@ class User {
     user.id = id;
     return user;
   }
-
 
   // Define the toJson method
   Map<String, dynamic> toJson() {

@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -31,12 +30,10 @@ void main() async {
         storageBucket: "gs://firstsprint-e9731.appspot.com"
         ));*/
 
-
   // by Amine
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(const MyApp());
   setupLocator();
@@ -48,12 +45,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    debugShowCheckedModeBanner: false;
+    debugShowCheckedModeBanner:
+    false;
     return MultiProvider(
-
       // add providers to make it available everywhere
       providers: [
-       ChangeNotifierProvider(create: (_) => locator<EditProfileProvider>()),
+        ChangeNotifierProvider(create: (_) => locator<EditProfileProvider>()),
         ChangeNotifierProvider(
             create: (_) => locator<PasswordChangeProvider>()),
         ChangeNotifierProvider(create: (_) => locator<TrainingCRUDModel>()),
@@ -67,12 +64,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        debugShowCheckedModeBanner: false,  // hethi bech tna7i debug banner on top right side
-        home:  AuthPage(),
+        debugShowCheckedModeBanner:
+            false, // hethi bech tna7i debug banner on top right side
+        home: AuthPage(),
       ),
     );
-
-
   }
 }
-

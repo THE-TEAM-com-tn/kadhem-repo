@@ -14,7 +14,7 @@ class DashboardController {
 
   Stream<QuerySnapshot<Object?>> getProfile() {
     // Get a reference to the profiles collection
-    CollectionReference profiles = _firestore.collection('profiles');
+    CollectionReference profiles = _firestore.collection('Users');
 
     // Retrieve the profile document
     Stream<QuerySnapshot> snapshot = profiles.snapshots();

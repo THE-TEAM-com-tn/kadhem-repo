@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import '../../providers/EditProfileProvider.dart';
 
 class CustomNavBar extends StatefulWidget {
-  final int selectedIndex ;
+  final int selectedIndex;
   const CustomNavBar({super.key, required this.selectedIndex});
 
   @override
@@ -24,8 +24,6 @@ class CustomNavBar extends StatefulWidget {
 }
 
 class _CustomNavBarState extends State<CustomNavBar> {
-  
-
   @override
   Widget build(BuildContext context) {
     int _selectedIndex = widget.selectedIndex;
@@ -38,7 +36,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(width: 35),
+                const SizedBox(width: 35),
                 Expanded(
                   flex: 1,
                   child: Image.asset(
@@ -58,7 +56,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                             (Set<MaterialState> states) {
                               if (states.contains(MaterialState.hovered)) {
                                 // return the color when the button is hovered
-                                return Color(0x4D4B986C);
+                                return const Color(0x4D4B986C);
                               }
                               // return the default color when the button is not hovered
                               return Colors.transparent;
@@ -121,7 +119,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                             (Set<MaterialState> states) {
                               if (states.contains(MaterialState.hovered)) {
                                 // return the color when the button is hovered
-                                return Color(0x4D4B986C);
+                                return const Color(0x4D4B986C);
                               }
                               // return the default color when the button is not hovered
                               return Colors.transparent;
@@ -152,6 +150,8 @@ class _CustomNavBarState extends State<CustomNavBar> {
                           value.fetchData(
                               FirebaseAuth.instance.currentUser!.uid);
                         }
+                        print(
+                            "##### nav_bar155 ::: uid: ${FirebaseAuth.instance.currentUser!.uid}");
                         return !value.loading
                             ? GestureDetector(
                                 child: CircleAvatar(
@@ -185,7 +185,8 @@ class _CustomNavBarState extends State<CustomNavBar> {
                                                         MaterialState
                                                             .hovered)) {
                                                       // return the color when the button is hovered
-                                                      return Color(0x4D4B986C);
+                                                      return const Color(
+                                                          0x4D4B986C);
                                                     }
                                                     // return the default color when the button is not hovered
                                                     return Colors.transparent;
@@ -272,7 +273,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            LoginOrRegisterPage()));
+                                                            const LoginOrRegisterPage()));
                                               },
                                               child: const Text(
                                                 'SignOut',
@@ -289,7 +290,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                                 child: Container(
                                     height: 40,
                                     width: 40,
-                                    child: CircularProgressIndicator()),
+                                    child: const CircularProgressIndicator()),
                               );
                       },
                     )),

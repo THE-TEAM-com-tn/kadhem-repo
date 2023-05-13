@@ -15,18 +15,15 @@ class UserCRUDModel extends ChangeNotifier {
       var result = await _api.getDataCollection();
       users = result.docs
           .map((doc) => User.fromJson({
-        ...(doc.data() as Map<String, dynamic>? ?? {}),
-        'id': doc.id,
-      }, doc.id)) // pass the id as the second argument to UserModel.fromJson
+                ...(doc.data() as Map<String, dynamic>? ?? {}),
+                'id': doc.id,
+              }, doc.id)) // pass the id as the second argument to UserModel.fromJson
           .toList();
       notifyListeners();
     } catch (e) {
       print(e);
     }
   }
-
-
-
 
   Stream<QuerySnapshot<Object?>> fetchUsersAsStream() {
     return _api.streamDataCollection();
@@ -48,7 +45,8 @@ class UserCRUDModel extends ChangeNotifier {
     }
   }
 
-  Future<void> updateUser(User data, String firstname, String lastname, String company, UserRole role) async {
+  Future<void> updateUser(User data, String firstname, String lastname,
+      String company, UserRole role) async {
     try {
       await _api.updateDocument(
         {

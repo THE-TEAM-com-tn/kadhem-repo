@@ -79,7 +79,6 @@ class _ModifyUserState extends State<ModifyUser> {
                     ifEmpty: "Email is required",
                     onSaved: (value) => email = value!,
                     hint: "Email",
-
                   ),
                   const SizedBox(
                     height: 16,
@@ -135,13 +134,9 @@ class _ModifyUserState extends State<ModifyUser> {
                       ),
                     ),
                   ),
-
-
-
                   const SizedBox(
                     height: 16,
                   ),
-
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -155,7 +150,8 @@ class _ModifyUserState extends State<ModifyUser> {
                           company: company,
                           role: role as UserRole,
                         );
-                        await userProvider.updateUser(updatedUser, firstname, lastname, company, role as UserRole);
+                        await userProvider.updateUser(updatedUser, firstname,
+                            lastname, company, role as UserRole);
                         Navigator.pop(context);
                       }
                     },
@@ -164,9 +160,6 @@ class _ModifyUserState extends State<ModifyUser> {
                       style: TextStyle(color: Colors.white),
                     ),
                   )
-
-
-
                 ],
               ),
             ),

@@ -95,7 +95,7 @@ class _AuthPageState extends State<AuthPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(errorMessage),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
         backgroundColor: Colors.redAccent,
       ),
     );
@@ -115,7 +115,7 @@ class _AuthPageState extends State<AuthPage> {
             if (user != null) {
               // If the user is anonymous, navigate to AnonymousHomePage
               if (user.isAnonymous) {
-                return AnonymousHomePage();
+                return const AnonymousHomePage();
               }
               // Check if email is verified
               if (user.emailVerified) {
@@ -182,7 +182,7 @@ class _AuthPageState extends State<AuthPage> {
               }
             } else {
               // If the user is anonymous
-              return AnonymousHomePage();
+              return const AnonymousHomePage();
             }
           } else {
             return const LoginOrRegisterPage();

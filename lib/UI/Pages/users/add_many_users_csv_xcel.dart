@@ -6,8 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../models/user_model.dart';
 
-
-
 class AddManyUsersPage extends StatefulWidget {
   const AddManyUsersPage({Key? key}) : super(key: key);
 
@@ -29,7 +27,8 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
       final file = result.files.first;
       final contents = utf8.decode(file.bytes!);
       final rows = contents.split('\n');
-      for (int i = 1; i < rows.length; i++) {  // Start from the second row
+      for (int i = 1; i < rows.length; i++) {
+        // Start from the second row
         final row = rows[i];
         final cells = row.split(',');
         if (cells.length == 4) {
@@ -42,7 +41,7 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
             profilePicture: '',
             id: '',
             // if the age will be an issue just comment it here
-           /* age: int.parse(cells[3].trim()),*/ // age doesnt work anymore with the new UserModel
+            /* age: int.parse(cells[3].trim()),*/ // age doesnt work anymore with the new UserModel
           );
           _users.add(user);
         }
@@ -51,16 +50,13 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
     }
   }
 
-
   Future<void> createUser(User user) async {
     // Reference to document
     final docUser = FirebaseFirestore.instance.collection('users').doc();
     final json = user.toJson(); // toMap();
     // Create document and write data to firebase
     await docUser.set(json);
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +73,6 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -96,23 +91,14 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
                     ],
                   ),
                 ),
-
-
-
-
                 const SizedBox(height: 15),
-
                 const Text(
                   "Import your .csv or .xls file here then click save ! ",
                   style: TextStyle(fontSize: 20),
                 ),
-
                 const SizedBox(height: 20),
-
-
                 ElevatedButton(
                   onPressed: _pickFile,
-
                   child: const Text('Pick File'),
                 ),
                 const SizedBox(height: 16.0),
@@ -128,7 +114,6 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
                     },
                   ),
                 ),
-
                 ElevatedButton(
                   onPressed: () async {
                     for (final user in _users) {
@@ -139,7 +124,6 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
                   },
                   child: const Text('Add Users'),
                 ),
-
               ],
             ),
           ),
@@ -148,4 +132,3 @@ class _AddManyUsersPageState extends State<AddManyUsersPage> {
     );
   }
 }
-

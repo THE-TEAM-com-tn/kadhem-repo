@@ -16,21 +16,21 @@ class ListUsers extends StatefulWidget {
 class _ListUsersState extends State<ListUsers> {
   late List<User> users = [];
 
-
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserCRUDModel>(context);
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200], // Set the background color to transparent
+        backgroundColor:
+            Colors.deepPurple[200], // Set the background color to transparent
         elevation: 0,
         title: const Text("Users Management"),
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const AddUserPage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const AddUserPage()));
             },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
@@ -45,7 +45,7 @@ class _ListUsersState extends State<ListUsers> {
             if (snapshot.hasData) {
               users = snapshot.data!.docs
                   .map((doc) => User.fromJson(
-                  doc.data() as Map<String, dynamic>, doc.id)) //
+                      doc.data() as Map<String, dynamic>, doc.id)) //
                   .toList();
               return ListView.builder(
                 itemCount: users.length,
@@ -58,8 +58,8 @@ class _ListUsersState extends State<ListUsers> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddUserPage()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AddUserPage()));
         },
         child: const Icon(Icons.add),
       ),

@@ -18,7 +18,6 @@ class _AddUserPageState extends State<AddUserPage> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
 
-
   Future<void> createUser(User user) async {
     // Reference to document
     final docUser = FirebaseFirestore.instance.collection('users').doc();
@@ -120,7 +119,6 @@ class _AddUserPageState extends State<AddUserPage> {
 
                       // Call the createUser function with the user object
                       createUser(user);
-
 
                       // Navigate back to previous screen
                       Navigator.pop(context);

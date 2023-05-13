@@ -1,5 +1,5 @@
 //import 'package:elearning_provider/UI/Pages/EditProfilePage/EditProfilePage.dart';
-import 'package:elearning_provider/UI/Pages/ShoppingCart/dashboard_screen.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/screens/dashboard_screen.dart';
 import 'package:elearning_provider/UI/Pages/UsersListPage/users_list_page.dart';
 import 'package:elearning_provider/UI/Pages/categories/list_categories.dart';
 import 'package:elearning_provider/UI/Pages/tags/list_tags.dart';
@@ -19,14 +19,14 @@ import '../lessons/user_side_of_all_lessons.dart';
 import '../users/list_users.dart';
 
 class SettingsPage extends StatelessWidget {
-  final String? userId;
+  String? userId;
   SettingsPage({Key? key, this.userId})
       : super(key: key); //required UserModel userModel
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*vappBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor:
             Colors.deepPurple[200], // Set the background color to deep purple
         elevation: 0,
@@ -74,7 +74,7 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text('User ID: $userId'),
+          Text('User ID: ${FirebaseAuth.instance.currentUser!.uid}'),
           const SizedBox(height: 6),
           const Text(
             "This is the Weclome/Home Page , these buttons will be on the Side NavBar",
@@ -161,10 +161,10 @@ class SettingsPage extends StatelessWidget {
                 ),
               );
             },
-            child: const Text('View All Lessons Admin side'),
             style: ElevatedButton.styleFrom(
               primary: Colors.deepOrangeAccent,
             ),
+            child: const Text('View All Lessons Admin side'),
           ),
           const SizedBox(height: 30),
           ElevatedButton(
@@ -176,10 +176,10 @@ class SettingsPage extends StatelessWidget {
                 ),
               );
             },
-            child: const Text('View All Lessons User side'),
             style: ElevatedButton.styleFrom(
               primary: Colors.deepOrangeAccent,
             ),
+            child: const Text('View All Lessons User side'),
           ),
           const SizedBox(height: 30),
           ElevatedButton(
@@ -191,10 +191,10 @@ class SettingsPage extends StatelessWidget {
                 ),
               );
             },
-            child: const Text('View Users Trainings'),
             style: ElevatedButton.styleFrom(
               primary: Colors.deepOrangeAccent,
             ),
+            child: const Text('View Users Trainings'),
           ),
           const SizedBox(height: 30),
           ElevatedButton(
@@ -206,10 +206,10 @@ class SettingsPage extends StatelessWidget {
                 ),
               );
             },
-            child: const Text('View Shopping Cart'),
             style: ElevatedButton.styleFrom(
               primary: Colors.deepOrangeAccent,
             ),
+            child: const Text('View Shopping Cart'),
           ),
         ]),
       ),

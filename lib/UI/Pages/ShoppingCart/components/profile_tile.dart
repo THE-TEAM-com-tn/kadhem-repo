@@ -14,9 +14,7 @@ class ProfilTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.all(0),
-      leading: const CircleAvatar(
-          backgroundImage: NetworkImage(
-              "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Favatar-icon-placeholder-facebook-1577909%2F&psig=AOvVaw0KHPTH45j0LF1qtQk-Zhp7&ust=1684005195455000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCJiH066-8P4CFQAAAAAdAAAAABAE") /*AssetImage(ImageRasterPath.avatar1)*/),
+      leading: CircleAvatar(backgroundImage: NetworkImage(data!.photo)),
       title: Text(
         data!.name,
 
@@ -25,15 +23,15 @@ class ProfilTile extends StatelessWidget {
         //   Color.fromRGBO(210, 210, 210, 1),
         //   Color.fromRGBO(170, 170, 170, 1),
         // ];
-        style: const TextStyle(
-            fontSize: 14, color: Color.fromRGBO(255, 255, 255, 1)),
+        style:
+            const TextStyle(fontSize: 14, color: Color.fromARGB(255, 0, 0, 0)),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
         data!.email,
         style: const TextStyle(
-            fontSize: 12, color: Color.fromRGBO(170, 170, 170, 1)),
+            fontSize: 12, color: Color.fromARGB(255, 66, 66, 66)),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),

@@ -16,24 +16,20 @@ class UserCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
- /*       Navigator.push(
+        /*       Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => ModifyUser(user: user)),
         );*/
       },
-
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Card(
           child: ListTile(
-
             leading: Image.network(
               'https://i.imgur.com/a73xXCl.png',
               height: 200,
             ),
-
             title: Text("User: ${user.firstname} ${user.lastname}"),
-
             subtitle: Container(
               child: (Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,47 +41,40 @@ class UserCard extends StatelessWidget {
                   Text(
                     "Role: ${user.role.toString().split('.').last}",
                     style: const TextStyle(fontSize: 14),
-
                   ),
                 ],
               )),
             ),
-
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-
                 IconButton(
                   icon: const Icon(
                     Icons.edit,
                     color: Colors.blue,
                   ),
                   onPressed: () {
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => ModifyUser(user: user),
                       ),
                     );
-
-
-                    },
+                  },
                 ),
-
                 IconButton(
                   icon: const Icon(
                     Icons.delete_forever,
                     color: Colors.red,
                   ),
-
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Confirm'),
-                          content: const Text('Are you sure you want to delete this user?'),
+                          content: const Text(
+                              'Are you sure you want to delete this user?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
@@ -93,13 +82,11 @@ class UserCard extends StatelessWidget {
                               },
                               child: const Text('No'),
                             ),
-                          TextButton(
+                            TextButton(
                               onPressed: () async {
-
                                 await userProvider.removeUser(user.userId);
                                 Navigator.pop(context);
                               },
-
                               child: const Text('Yes'),
                             ),
                           ],
@@ -107,9 +94,7 @@ class UserCard extends StatelessWidget {
                       },
                     );
                   },
-
                 ),
-
               ],
             ),
           ),

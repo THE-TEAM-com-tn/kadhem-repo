@@ -4,11 +4,11 @@ import '../../../../models/profile_model.dart';
 import 'package:badges/badges.dart' as badges;
 
 class ProfilTile extends StatelessWidget {
-  const ProfilTile({required this.data, Key? key, required this.onPressed})
+  const ProfilTile({required this.data, Key? key, required this.onPressCart})
       : super(key: key);
 
   final ProfileModel? data;
-  final void Function() onPressed;
+  final void Function() onPressCart;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ProfilTile extends StatelessWidget {
       trailing: badges.Badge(
         badgeContent: Text(data!.trainings!.length.toString()),
         child: IconButton(
-          onPressed: onPressed,
+          onPressed: onPressCart,
           icon: const Icon(Icons.shopping_cart),
         ),
       ),

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/constans/app_constants.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/screens/training_details_screen.dart';
 // import 'package:elearning_provider/UI/Pages/ShoppingCart/components/search_field.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -31,9 +33,10 @@ import '../components/header.dart';
 // import './components/team_member.dart';
 
 class DashboardScreen extends StatelessWidget {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  DashboardScreen({Key? key});
+  final userID;
+  DashboardScreen({Key? key, required this.userID});
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   DashboardController controller = DashboardController();
 
   void openDrawer() {
@@ -45,7 +48,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(60, 10, 10, 10),
+      backgroundColor: globalBackground,
       key: scaffoldKey,
       drawer: (ResponsiveBuilder.isDesktop(context))
           ? null
@@ -209,8 +212,15 @@ class DashboardScreen extends StatelessWidget {
                 return TrainingCard(
                   data: data,
                   onPressedMore: () {
-                    // Get.toNamed(AppPages.trainingDetails,
-                    //     arguments: {'trainingData': data});
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrainingDetailsScreen(
+                            userID: userID, training: data),
+                        settings:
+                            RouteSettings(arguments: {"trainingID": data.id}),
+                      ),
+                    );
                   },
                   onPressedTask: () {},
                   onPressedContributors: () {},
@@ -273,16 +283,15 @@ class DashboardScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ProfilTile(
               data: profiles[0],
-              onPressed: () {
-                // var profiles[0].trainings;
-                print(
-                    "##### dashboard_screen.dart => onPressed() => ProfilTile => _buildProfile() ::: ${profiles[0].trainings}");
-                print(
-                    "##### dashboard_screen.dart => onPressed() => ProfilTile => _buildProfile() ::: ${profiles[0].totalPrice}");
-                // Get.toNamed(AppPages.cart, arguments: {
-                //   'trainings': castedTrainings,
-                //   "totalPrice": profiles[0].totalPrice
-                // });
+              onPressCart: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => DashboardScreen(),
+                //     settings:
+                //         RouteSettings(arguments: {"profileData": profiles[0]}),
+                //   ),
+                // );
               },
             ),
           );

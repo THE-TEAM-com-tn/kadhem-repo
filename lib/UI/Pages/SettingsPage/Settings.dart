@@ -202,7 +202,8 @@ class SettingsPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DashboardScreen(),
+                  builder: (context) => DashboardScreen(
+                      userID: FirebaseAuth.instance.currentUser!.uid),
                 ),
               );
             },

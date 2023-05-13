@@ -1,5 +1,5 @@
 class ProfileModel {
-  // final ImageProvider photo;
+  final String? id;
   final String name;
   final String email;
   final String photo;
@@ -7,7 +7,7 @@ class ProfileModel {
   final List<dynamic>? trainings;
 
   const ProfileModel({
-    // required this.photo,
+    this.id,
     required this.name,
     required this.email,
     required this.photo,

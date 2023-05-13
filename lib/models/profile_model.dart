@@ -4,7 +4,7 @@ class ProfileModel {
   final String email;
   final String photo;
   final double? totalPrice;
-  final List<dynamic>? trainings;
+  final List<dynamic> trainings;
 
   const ProfileModel({
     this.id,
@@ -12,6 +12,6 @@ class ProfileModel {
     required this.email,
     required this.photo,
     this.totalPrice,
-    this.trainings,
+    required this.trainings,
   });
 }

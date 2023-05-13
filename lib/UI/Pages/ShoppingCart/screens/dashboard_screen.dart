@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning_provider/UI/Pages/ShoppingCart/constans/app_constants.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/screens/cart_screen.dart';
 import 'package:elearning_provider/UI/Pages/ShoppingCart/screens/training_details_screen.dart';
 // import 'package:elearning_provider/UI/Pages/ShoppingCart/components/search_field.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -284,14 +285,15 @@ class DashboardScreen extends StatelessWidget {
             child: ProfilTile(
               data: profiles[0],
               onPressCart: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => DashboardScreen(),
-                //     settings:
-                //         RouteSettings(arguments: {"profileData": profiles[0]}),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(
+                      trainingsIDs: profiles[0].trainings,
+                      totalPrice: profiles[0].totalPrice,
+                    ),
+                  ),
+                );
               },
             ),
           );

@@ -1,26 +1,30 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/annimations/animated_switcher_wrapper.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/components/cart_training_card.dart';
 import 'package:elearning_provider/UI/Pages/ShoppingCart/components/header.dart';
 import 'package:elearning_provider/UI/Pages/ShoppingCart/components/profile_tile.dart';
 import 'package:elearning_provider/UI/Pages/ShoppingCart/components/responsive_builder.dart';
-import 'package:elearning_provider/UI/Pages/ShoppingCart/components/sidebar.dart';
-import 'package:elearning_provider/UI/Pages/ShoppingCart/components/training_details_card.dart';
 import 'package:elearning_provider/UI/Pages/ShoppingCart/constans/app_constants.dart';
-import 'package:elearning_provider/UI/Pages/ShoppingCart/controllers/training_details_controller.dart';
-import 'package:elearning_provider/UI/Pages/ShoppingCart/screens/cart_screen.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/controllers/cart_controller.dart';
+import 'package:elearning_provider/UI/Pages/ShoppingCart/controllers/dashboard_controller.dart';
 import 'package:elearning_provider/models/profile_model.dart';
 import 'package:elearning_provider/models/training_model.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class TrainingDetailsScreen extends StatelessWidget {
-  final Training training;
-  final userID;
-  TrainingDetailsScreen(
-      {Key? key, required this.training, required this.userID});
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+class CartScreen extends StatelessWidget {
+  final List<dynamic> trainingsIDs;
+  final double? totalPrice;
+  CartScreen({Key? key, required this.trainingsIDs, required this.totalPrice})
+      : super(key: key);
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  TrainingDetailsController controller = TrainingDetailsController();
+  CartController controller = CartController();
 
   void openDrawer() {
     if (scaffoldKey.currentState != null) {
@@ -31,7 +35,6 @@ class TrainingDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: globalBackground,
       key: scaffoldKey,
       // drawer: (ResponsiveBuilder.isDesktop(context))
       //     ? null
@@ -51,8 +54,14 @@ class TrainingDetailsScreen extends StatelessWidget {
             const Divider(),
             _buildProfile(),
             const SizedBox(height: kSpacing * 2),
-            _buildTrainingCard(axis: Axis.vertical),
-            const SizedBox(height: kSpacing)
+            _buildInBasketTrainings(
+              headerAxis: Axis.vertical,
+              crossAxisCount: 6,
+              crossAxisCellCount: 6,
+            ),
+            const SizedBox(height: kSpacing),
+            bottomBarTitle(),
+            bottomBarButton(),
           ]);
         },
         tabletBuilder: (context, constraints) {
@@ -66,7 +75,17 @@ class TrainingDetailsScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing * (kIsWeb ? 1 : 2)),
                     _buildHeader(onPressedMenu: () => openDrawer()),
                     const SizedBox(height: kSpacing),
-                    _buildTrainingCard(),
+                    _buildInBasketTrainings(
+                      headerAxis: (constraints.maxWidth < 850)
+                          ? Axis.vertical
+                          : Axis.horizontal,
+                      crossAxisCount: 6,
+                      crossAxisCellCount: (constraints.maxWidth < 950)
+                          ? 6
+                          : (constraints.maxWidth < 1100)
+                              ? 3
+                              : 2,
+                    ),
                   ],
                 ),
               ),
@@ -77,6 +96,8 @@ class TrainingDetailsScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing * (kIsWeb ? 0.5 : 1.5)),
                     _buildProfile(),
                     const Divider(thickness: 1),
+                    bottomBarTitle(),
+                    bottomBarButton(),
                     const SizedBox(height: kSpacing),
                   ],
                 ),
@@ -95,7 +116,7 @@ class TrainingDetailsScreen extends StatelessWidget {
               //         topRight: Radius.circular(kBorderRadius),
               //         bottomRight: Radius.circular(kBorderRadius),
               //       ),
-              //       child: Sidebar(data: controller.getSelectedProject())),
+              //       child: _Sidebar(data: controller.getSelectedProject())),
               // ),
               Flexible(
                 flex: 9,
@@ -104,7 +125,10 @@ class TrainingDetailsScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing),
                     _buildHeader(),
                     const SizedBox(height: kSpacing),
-                    _buildTrainingCard(),
+                    _buildInBasketTrainings(
+                      crossAxisCount: 6,
+                      crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
+                    ),
                   ],
                 ),
               ),
@@ -115,6 +139,8 @@ class TrainingDetailsScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing / 2),
                     _buildProfile(),
                     const Divider(thickness: 1),
+                    bottomBarTitle(),
+                    bottomBarButton(),
                     const SizedBox(height: kSpacing),
                   ],
                 ),
@@ -146,30 +172,46 @@ class TrainingDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTrainingCard({Axis axis = Axis.horizontal}) {
-    // final trainingData = controller.getTrainingDetails();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: (axis == Axis.horizontal)
-          ? Row(
-              children: [
-                Flexible(
-                  flex: 9,
-                  child: TrainingDetailsCard(
-                    userID: userID,
-                    data: training,
-                  ),
-                )
-              ],
-            )
-          : Column(
-              children: [
-                TrainingDetailsCard(
-                  userID: userID,
-                  data: training,
-                )
-              ],
-            ),
+  Widget _buildInBasketTrainings({
+    int crossAxisCount = 6,
+    int crossAxisCellCount = 2,
+    Axis headerAxis = Axis.horizontal,
+  }) {
+    return FutureBuilder<List<Training>>(
+      future: controller.getTrainingsListById(trainingsIDs),
+      builder: (BuildContext context, AsyncSnapshot<List<Training>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final trainings = snapshot.data!;
+
+            return StaggeredGridView.countBuilder(
+              crossAxisCount: crossAxisCount,
+              itemCount: trainings.length,
+              addAutomaticKeepAlives: false,
+              padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final data = trainings[index];
+
+                return CartTrainingCard(
+                  data: data,
+                  onPressedMore: () {},
+                  onPressedTask: () {},
+                  onPressedContributors: () {},
+                  onPressedComments: () {},
+                );
+              },
+              staggeredTileBuilder: (int index) =>
+                  StaggeredTile.fit(crossAxisCellCount),
+            );
+          }
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 
@@ -200,7 +242,6 @@ class TrainingDetailsScreen extends StatelessWidget {
 
             // Create a ProfileModel instance using the retrieved fields
             var profileModel = ProfileModel(
-              id: userID,
               name: name,
               email: email,
               photo: photo,
@@ -217,19 +258,51 @@ class TrainingDetailsScreen extends StatelessWidget {
             child: ProfilTile(
                 data: profiles[0],
                 onPressCart: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CartScreen(
-                        trainingsIDs: profiles[0].trainings,
-                        totalPrice: profiles[0].totalPrice,
-                      ),
-                    ),
-                  );
+                  // Get.toNamed(AppPages.cart);
                 }),
           );
         }
       },
+    );
+  }
+
+  Widget bottomBarTitle() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Total",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+          ),
+          AnimatedSwitcherWrapper(
+            child: Text(
+              "$totalPrice DT",
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w900,
+                color: Color(0xFFEC6813),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bottomBarButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(20)),
+          onPressed: () {},
+          child: const Text("Buy Now"),
+        ),
+      ),
     );
   }
 }

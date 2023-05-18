@@ -23,13 +23,13 @@ class Sidebar extends StatelessWidget {
         controller: ScrollController(),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(kSpacing),
-              child: ProjectCard(
-                data: data,
-              ),
-            ),
-            const Divider(thickness: 1),
+            // Padding(
+            //   padding: const EdgeInsets.all(kSpacing),
+            //   child: ProjectCard(
+            //     data: data,
+            //   ),
+            // ),
+            // const Divider(thickness: 1),
             SelectionButton(
               data: [
                 SelectionButtonData(

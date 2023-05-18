@@ -1,8 +1,12 @@
-import 'package:theteam_gyp/user-interface/screens/dashboard_screen.dart';
+import 'package:theteam_gyp/user-interface/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:theteam_gyp/user-interface/themes/app_theme.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -15,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "The TEAM",
       theme: AppTheme.basic,
-      home: DashboardScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

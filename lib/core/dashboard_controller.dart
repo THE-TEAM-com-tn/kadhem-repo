@@ -1,27 +1,89 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
 import 'package:theteam_gyp/user-interface/components/project_card.dart';
 import 'package:theteam_gyp/user-interface/components/task_card.dart';
 import 'package:theteam_gyp/user-interface/constans/assets_path.dart';
-import 'package:theteam_gyp/user-interface/models/profile.dart';
-import 'package:theteam_gyp/user-interface/utils/type.dart';
+import 'package:theteam_gyp/user-interface/utils/training_category.dart';
 
 class DashboardController {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void openDrawer() {
-    if (scaffoldKey.currentState != null) {
-      scaffoldKey.currentState!.openDrawer();
+  Future<List<TrainingModel>> getTrainingsListById(trainingsIDs) async {
+    print(
+        "##### cart_controller.dart => _getTrainingsListById() ::: $trainingsIDs");
+
+    List<TrainingModel> trainingModels = [];
+
+    // Access the "training" collection in Firestore
+    QuerySnapshot querySnapshot = await _firestore
+        .collection('trainings')
+        .where(FieldPath.documentId, whereIn: trainingsIDs)
+        .get();
+
+    // Iterate over the query snapshot to create TrainingModel objects
+    for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+      Map<String, dynamic> data =
+          documentSnapshot.data() as Map<String, dynamic>;
+
+      TrainingModel trainingModel = TrainingModel(
+        id: documentSnapshot.id,
+        title: data['title'],
+        description: data['description'],
+        categories: List<String>.from(data['categories']),
+        author: data['author'],
+        duration: data['duration'],
+        price: data['price'].toDouble(),
+        trailerVid: data['trailerVid'],
+        image: data['image'],
+        tags: data['tags'] != [] ? List<String>.from(data['tags']) : [],
+        creationDate: data['creationDate'],
+      );
+
+      trainingModels.add(trainingModel);
     }
+
+    return trainingModels;
+  }
+
+  Future<bool> isLoggedIn() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    return user != null;
+  }
+
+  Future<List<TrainingModel>> getTrainingsData() async {
+    final snapshot = await _firestore.collection('trainings').get();
+    final data = snapshot.docs.map((doc) {
+      final docData = doc.data();
+      return TrainingModel(
+        id: doc.id,
+        title: docData['title'],
+        description: docData['description'],
+        categories: List<String>.from(docData['categories']),
+        author: docData['author'],
+        duration: docData['duration'],
+        price: docData['price'],
+        trailerVid: docData['trailerVid'],
+        image: docData['image'],
+        tags: List<String>.from(docData['tags']),
+        creationDate: docData['creationDate'],
+      );
+    }).toList();
+    return data;
   }
 
   // Data
-  Profile getProfil() {
-    return const Profile(
-      photo: AssetImage(ImageRasterPath.avatar1),
-      name: "Firgia",
-      email: "flutterwithgia@gmail.com",
-    );
+  Stream<QuerySnapshot<Object?>> getProfile() {
+    // Get a reference to the profiles collection
+    CollectionReference profiles = _firestore.collection('Users');
+
+    // Retrieve the profile document
+    Stream<QuerySnapshot> snapshot = profiles.snapshots();
+
+    return snapshot;
   }
 
   List<TaskCardData> getAllTask() {
@@ -30,7 +92,7 @@ class DashboardController {
         title: "Landing page UI Design",
         dueDay: 2,
         totalComments: 50,
-        type: TaskType.todo,
+        trainingCategory: TrainingCategory.agile,
         totalContributors: 30,
         profilContributors: [
           AssetImage(ImageRasterPath.avatar1),
@@ -44,7 +106,7 @@ class DashboardController {
         dueDay: -1,
         totalComments: 50,
         totalContributors: 34,
-        type: TaskType.inProgress,
+        trainingCategory: TrainingCategory.devOPS,
         profilContributors: [
           AssetImage(ImageRasterPath.avatar5),
           AssetImage(ImageRasterPath.avatar6),
@@ -57,7 +119,7 @@ class DashboardController {
         dueDay: 1,
         totalComments: 50,
         totalContributors: 34,
-        type: TaskType.done,
+        trainingCategory: TrainingCategory.business,
         profilContributors: [
           AssetImage(ImageRasterPath.avatar5),
           AssetImage(ImageRasterPath.avatar3),

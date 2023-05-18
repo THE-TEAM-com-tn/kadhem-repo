@@ -1,30 +1,9 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:theteam_gyp/user-interface/components/list_profil_image.dart';
+import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
-import 'package:theteam_gyp/user-interface/utils/extension.dart';
-import 'package:theteam_gyp/user-interface/utils/training_category.dart';
 
-class TaskCardData {
-  final String title;
-  final int dueDay;
-  final List<ImageProvider> profilContributors;
-  final TrainingCategory trainingCategory;
-  final int totalComments;
-  final int totalContributors;
-
-  const TaskCardData({
-    required this.title,
-    required this.dueDay,
-    required this.totalComments,
-    required this.totalContributors,
-    required this.trainingCategory,
-    required this.profilContributors,
-  });
-}
-
-class TaskCard extends StatelessWidget {
-  const TaskCard({
+class CartTrainingCard extends StatelessWidget {
+  const CartTrainingCard({
     required this.data,
     required this.onPressedMore,
     required this.onPressedTask,
@@ -33,7 +12,7 @@ class TaskCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final TaskCardData data;
+  final TrainingModel data;
 
   final Function() onPressedMore;
   final Function() onPressedTask;
@@ -54,11 +33,9 @@ class TaskCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(5),
               child: _Tile(
-                dotColor: data.trainingCategory.getColor(),
                 title: data.title,
-                subtitle: (data.dueDay < 0)
-                    ? "Late in ${data.dueDay * -1} days"
-                    : "Due in ${(data.dueDay > 1) ? "${data.dueDay} days" : "today"}",
+                category: data.categories,
+                duration: data.duration,
                 onPressedMore: onPressedMore,
               ),
             ),
@@ -70,43 +47,36 @@ class TaskCard extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: data.trainingCategory.getColor(),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
                     onPressed: onPressedTask,
-                    child: Text(
-                      data.trainingCategory.toStringValue(),
-                    ),
-                  ),
-                  ListProfilImage(
-                    images: data.profilContributors,
-                    onPressed: onPressedContributors,
+                    child: Text("${data.price.toString()} DT"),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: kSpacing / 2),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kSpacing / 2),
-              child: Row(
-                children: [
-                  _IconButton(
-                    iconData: EvaIcons.messageCircleOutline,
-                    onPressed: onPressedComments,
-                    totalContributors: data.totalComments,
-                  ),
-                  const SizedBox(width: kSpacing / 2),
-                  _IconButton(
-                    iconData: EvaIcons.peopleOutline,
-                    onPressed: onPressedContributors,
-                    totalContributors: data.totalContributors,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: kSpacing / 2),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: kSpacing / 2),
+            //   child: Row(
+            //     children: [
+            //       _IconButton(
+            //         iconData: EvaIcons.messageCircleOutline,
+            //         onPressed: onPressedComments,
+            //         totalContributors: data.totalComments,
+            //       ),
+            //       const SizedBox(width: kSpacing / 2),
+            //       _IconButton(
+            //         iconDat  a: EvaIcons.peopleOutline,
+            //         onPressed: onPressedContributors,
+            //         totalContributors: data.totalContributors,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(height: kSpacing / 2),
           ],
         ),
       ),
@@ -117,16 +87,17 @@ class TaskCard extends StatelessWidget {
 /* -----------------------------> COMPONENTS <------------------------------ */
 class _Tile extends StatelessWidget {
   const _Tile({
-    required this.dotColor,
     required this.title,
-    required this.subtitle,
+    required this.category,
+    required this.duration,
     required this.onPressedMore,
     Key? key,
   }) : super(key: key);
 
-  final Color dotColor;
   final String title;
-  final String subtitle;
+  final List<String> category;
+  final String duration;
+
   final Function() onPressedMore;
 
   @override
@@ -141,7 +112,7 @@ class _Tile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _dot(dotColor),
+              _dot(Colors.green),
               const SizedBox(width: 8),
               Expanded(child: _title(title)),
               _moreButton(onPressed: onPressedMore),
@@ -150,7 +121,7 @@ class _Tile extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _subtitle(subtitle, context),
+          child: _subtitle(category.join(" - ")),
         ),
         const SizedBox(height: 12),
       ],
@@ -173,10 +144,10 @@ class _Tile extends StatelessWidget {
     );
   }
 
-  Widget _subtitle(String data, BuildContext context) {
+  Widget _subtitle(String data) {
     return Text(
       data,
-      style: Theme.of(context).textTheme.caption,
+      // style: Theme.of(Get.context!).textTheme.caption,
       textAlign: TextAlign.left,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -209,7 +180,7 @@ class _IconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        primary: Colors.transparent,
+        // primary: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kBorderRadius),
         ),

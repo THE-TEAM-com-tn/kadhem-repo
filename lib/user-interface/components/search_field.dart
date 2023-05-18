@@ -6,7 +6,7 @@ class SearchField extends StatelessWidget {
   SearchField({this.onSearch, Key? key}) : super(key: key);
 
   final controller = TextEditingController();
-  final Function(String value)? onSearch;
+  final void Function(String value)? onSearch;
 
   @override
   Widget build(BuildContext context) {

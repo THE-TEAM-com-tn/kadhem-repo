@@ -2,16 +2,9 @@ class Font {
   static const poppins = "Poppins";
 }
 
-class ImageAnimationPath {
-  // you can get free animation image from rive or lottiefiles
-
-  // Example:
-  // static const _folderPath = "assets/images/animation";
-  // static const myAnim = "$_folderPath/my_anim.json";
-}
-
 class ImageRasterPath {
   static const _folderPath = "assets/images/raster";
+  static const companyLogo = "$_folderPath/theteamlogo.png";
   static const avatar1 = "$_folderPath/avatar-1.png";
   static const avatar2 = "$_folderPath/avatar-2.png";
   static const avatar3 = "$_folderPath/avatar-3.png";

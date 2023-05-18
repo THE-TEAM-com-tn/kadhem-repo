@@ -1,29 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
+import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/components/active_project_card.dart';
 import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
 import 'package:theteam_gyp/user-interface/components/get_premium_card.dart';
-import 'package:theteam_gyp/user-interface/components/header.dart';
 import 'package:theteam_gyp/user-interface/components/list_profil_image.dart';
+import 'package:theteam_gyp/user-interface/components/overview_header.dart';
+import 'package:theteam_gyp/user-interface/components/product_card.dart';
 import 'package:theteam_gyp/user-interface/components/profile_tile.dart';
 import 'package:theteam_gyp/user-interface/components/progress_card.dart';
 import 'package:theteam_gyp/user-interface/components/project_card.dart';
 import 'package:theteam_gyp/user-interface/components/recent_messages.dart';
 import 'package:theteam_gyp/user-interface/components/responsive_builder.dart';
+import 'package:theteam_gyp/user-interface/components/search_field.dart';
 import 'package:theteam_gyp/user-interface/components/sidebar.dart';
-import 'package:theteam_gyp/user-interface/components/task_card.dart';
 import 'package:theteam_gyp/user-interface/components/team_member.dart';
+import 'package:theteam_gyp/user-interface/components/today_text.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
-import 'package:theteam_gyp/user-interface/models/profile.dart';
+import 'package:theteam_gyp/core/models/profile_model.dart';
+import 'package:theteam_gyp/user-interface/screens/cart_screen.dart';
 
-class DashboardScreen extends StatelessWidget {
-  DashboardScreen({Key? key}) : super(key: key);
+class WelcomeScreen extends StatelessWidget {
+  WelcomeScreen({Key? key}) : super(key: key);
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   DashboardController controller = DashboardController();
+
+  List<TrainingModel> fetchedTrainingsList = [];
 
   void openDrawer() {
     if (scaffoldKey.currentState != null) {
@@ -33,6 +41,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("##### Loaded ::: WelcomeScreen ::: Widget");
     return Scaffold(
       key: scaffoldKey,
       drawer: (ResponsiveBuilder.isDesktop(context))
@@ -48,13 +57,16 @@ class DashboardScreen extends StatelessWidget {
         mobileBuilder: (context, constraints) {
           return Column(children: [
             const SizedBox(height: kSpacing * (kIsWeb ? 1 : 2)),
-            _buildHeader(onPressedMenu: () => controller.openDrawer()),
+            _buildHeader(onPressedMenu: () => openDrawer()),
             const SizedBox(height: kSpacing / 2),
             const Divider(),
-            _buildProfile(data: controller.getProfil()),
+            _buildProfile(),
             const SizedBox(height: kSpacing),
-            _buildProgress(axis: Axis.vertical),
-            const SizedBox(height: kSpacing)
+            buildAvaiTrsSection(
+              headerAxis: Axis.vertical,
+              crossAxisCount: 6,
+              crossAxisCellCount: 6,
+            ),
           ]);
         },
         tabletBuilder: (context, constraints) {
@@ -66,7 +78,7 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: kSpacing * (kIsWeb ? 1 : 2)),
-                    _buildHeader(onPressedMenu: () => controller.openDrawer()),
+                    _buildHeader(onPressedMenu: () => openDrawer()),
                     const SizedBox(height: kSpacing * 2),
                     _buildProgress(
                       axis: (constraints.maxWidth < 950)
@@ -74,8 +86,7 @@ class DashboardScreen extends StatelessWidget {
                           : Axis.horizontal,
                     ),
                     const SizedBox(height: kSpacing * 2),
-                    _buildTaskOverview(
-                      data: controller.getAllTask(),
+                    buildAvaiTrsSection(
                       headerAxis: (constraints.maxWidth < 850)
                           ? Axis.vertical
                           : Axis.horizontal,
@@ -105,7 +116,7 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: kSpacing * (kIsWeb ? 0.5 : 1.5)),
-                    _buildProfile(data: controller.getProfil()),
+                    _buildProfile(),
                     const Divider(thickness: 1),
                     const SizedBox(height: kSpacing),
                     _buildTeamMember(data: controller.getMember()),
@@ -144,10 +155,9 @@ class DashboardScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing),
                     _buildHeader(),
                     const SizedBox(height: kSpacing * 2),
-                    _buildProgress(),
-                    const SizedBox(height: kSpacing * 2),
-                    _buildTaskOverview(
-                      data: controller.getAllTask(),
+                    // _buildProgress(),
+                    // const SizedBox(height: kSpacing * 2),
+                    buildAvaiTrsSection(
                       crossAxisCount: 6,
                       crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
                     ),
@@ -166,7 +176,7 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: kSpacing / 2),
-                    _buildProfile(data: controller.getProfil()),
+                    _buildProfile(),
                     const Divider(thickness: 1),
                     const SizedBox(height: kSpacing),
                     _buildTeamMember(data: controller.getMember()),
@@ -190,6 +200,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Widget _buildHeader({Function()? onPressedMenu}) {
+    Rx<List<TrainingModel>> searchTrainingsResult = Rx([]);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kSpacing),
       child: Row(
@@ -203,7 +214,21 @@ class DashboardScreen extends StatelessWidget {
                 tooltip: "menu",
               ),
             ),
-          const Expanded(child: Header()),
+          Expanded(
+              child: Row(
+            children: [
+              const TodayText(),
+              const SizedBox(width: kSpacing),
+              Expanded(child: SearchField(
+                onSearch: (input) {
+                  searchTrainingsResult.value = fetchedTrainingsList
+                      .where((training) =>
+                          training.title.toLowerCase().contains(input))
+                      .toList();
+                },
+              )),
+            ],
+          )),
         ],
       ),
     );
@@ -241,40 +266,87 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTaskOverview({
-    required List<TaskCardData> data,
+  Widget buildAvaiTrsSection({
     int crossAxisCount = 6,
     int crossAxisCellCount = 2,
     Axis headerAxis = Axis.horizontal,
   }) {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: crossAxisCount,
-      itemCount: data.length + 1,
-      addAutomaticKeepAlives: false,
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return (index == 0)
-            ? const Padding(
-                padding: EdgeInsets.only(bottom: kSpacing),
-                child:
-                    Placeholder() /*OverviewHeader(
-                  axis: headerAxis,
-                  onSelected: (task) {},
-                )*/
-                ,
-              )
-            : TaskCard(
-                data: data[index - 1],
-                onPressedMore: () {},
-                onPressedTask: () {},
-                onPressedContributors: () {},
-                onPressedComments: () {},
-              );
+    return FutureBuilder<List<TrainingModel>>(
+      future: controller.getTrainingsData(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<TrainingModel>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final trainingData = snapshot.data!;
+            fetchedTrainingsList = trainingData;
+            Rx<List<TrainingModel>> filteredTrainingsList = Rx(trainingData);
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: kSpacing),
+                  child: OverviewHeader(
+                      axis: headerAxis,
+                      onSelected: (trainingCategory) {
+                        filteredTrainingsList.value = trainingData
+                            .where((training) => training.title
+                                .toLowerCase()
+                                .contains(trainingCategory))
+                            .toList();
+                        print("##### $filteredTrainingsList");
+                      }),
+                ),
+                Obx(
+                  () => StaggeredGridView.countBuilder(
+                    crossAxisCount: crossAxisCount,
+                    itemCount: filteredTrainingsList.value.length,
+                    addAutomaticKeepAlives: false,
+                    padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final data = filteredTrainingsList.value[index];
+
+                      return FutureBuilder<bool>(
+                          future: controller.isLoggedIn(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<bool> snapshot) {
+                            print(
+                                "##### welcome_screen ::: Widget buildAvaiTrsSection ::: ${snapshot.data}");
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              // Firebase Auth state is still loading
+                              return const CircularProgressIndicator();
+                            } else {
+                              if (snapshot.hasData && snapshot.data == true) {
+                                // User is logged in
+                                return ProductCard(
+                                  data: data,
+                                  isLogged: true,
+                                );
+                              } else {
+                                // User is not logged in
+                                return ProductCard(
+                                  data: data,
+                                  isLogged: false,
+                                );
+                              }
+                            }
+                          });
+                    },
+                    staggeredTileBuilder: (int index) =>
+                        StaggeredTile.fit(crossAxisCellCount),
+                  ),
+                ),
+              ],
+            );
+          }
+        } else {
+          return const CircularProgressIndicator();
+        }
       },
-      staggeredTileBuilder: (int index) =>
-          StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
     );
   }
 
@@ -305,12 +377,96 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfile({required Profile data}) {
+  Widget _buildProfile() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: ProfilTile(
-        data: data,
-        onPressedNotification: () {},
+      child: FutureBuilder<bool>(
+        future: controller.isLoggedIn(),
+        builder: (BuildContext context, AsyncSnapshot<bool> logSnapshot) {
+          print(
+              "##### welcome_screen ::: Widget _buildProfile ::: ${logSnapshot.data}");
+          if (logSnapshot.connectionState == ConnectionState.waiting) {
+            // Firebase Auth state is still loading
+            return const CircularProgressIndicator();
+          } else {
+            if (logSnapshot.hasData && logSnapshot.data == true) {
+              // User is logged in
+              return StreamBuilder<QuerySnapshot<Object?>>(
+                stream: controller.getProfile(),
+                builder: (context, profileSnapshot) {
+                  if (profileSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    // Stream is still loading, show a loading indicator
+                    return const CircularProgressIndicator();
+                  } else if (profileSnapshot.hasError) {
+                    // Error occurred while fetching the data
+                    return Text('Error: ${profileSnapshot.error}');
+                  } else if (!profileSnapshot.hasData ||
+                      profileSnapshot.data!.docs.isEmpty) {
+                    // No data found
+                    return const Text('No profile documents found');
+                  } else {
+                    // Data has been successfully received
+                    List<ProfileModel> profiles = [];
+
+                    for (var doc in profileSnapshot.data!.docs) {
+                      // Access the fields of the document
+                      // My User/Profile and the common one are diffrent
+                      var name = (doc.data()! as Map)['lastName'];
+                      var email = (doc.data()! as Map)['email'];
+                      var photo = (doc.data()! as Map)['profile_picture'];
+                      var trainings =
+                          (doc.data()! as Map)['inBasket']['trainings'];
+                      var totalPrice =
+                          (doc.data()! as Map)['inBasket']['totalPrice'];
+
+                      // Create a ProfileModel instance using the retrieved fields
+                      var profileModel = ProfileModel(
+                        name: name,
+                        email: email,
+                        photo: photo,
+                        trainings: trainings,
+                        totalPrice: totalPrice,
+                      );
+
+                      // Add the profileModel to the list
+                      profiles.add(profileModel);
+                    }
+                    List<String> castedTrainings =
+                        profiles[0].trainings!.cast<String>();
+                    print("##### ${castedTrainings}");
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: ProfilTile(
+                        isLogged: logSnapshot.data!,
+                        data: profiles[0],
+                        onPressCart: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartScreen(
+                                isLogged: logSnapshot.data!,
+                                trainingsIDs: profiles[0].trainings,
+                                totalPrice: profiles[0].totalPrice,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+              );
+            } else {
+              // User is not logged in
+              return ProfilTile(
+                onPressCart: () {},
+                isLogged: false,
+              );
+            }
+          }
+        },
       ),
     );
   }

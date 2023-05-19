@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:theteam_gyp/admin-interface/AdminDashboardPage.dart';
 import 'package:theteam_gyp/user-interface/constans/assets_path.dart';
 import 'package:theteam_gyp/user-interface/screens/register_page.dart';
 import 'package:theteam_gyp/user-interface/screens/welcome_screen.dart';
@@ -145,10 +147,31 @@ class _LoginPageState extends State<LoginPage> {
       // User is logged in
       // You can access the logged-in user details using userCredential.user
       print('User logged in: ${userCredential.user!.uid}');
+
+      String userId = userCredential.user!.uid;
+
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userId)
+          .get();
+
+      var role = (userSnapshot.data() as Map<String, dynamic>)['role'];
+
+      // if (role.toString() == "admin") {
+      //   print(
+      //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+        MaterialPageRoute(builder: (context) => DashboardAdminSummaryWidget()),
       );
+      // } else {
+      //   print(
+      //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => WelcomeScreen()),
+      //   );
+      // }
     } catch (e) {
       // Login failed
       print('Login error: $e');

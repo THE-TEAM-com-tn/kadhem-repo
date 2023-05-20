@@ -86,6 +86,27 @@ class DashboardController {
     return snapshot;
   }
 
+  // Get user by ID
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getUserById(
+      String userId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(userId)
+              .get();
+      if (userSnapshot.exists) {
+        return userSnapshot;
+      } else {
+        print('User not found');
+        return null;
+      }
+    } catch (error) {
+      print('Error retrieving user: $error');
+      return null;
+    }
+  }
+
   List<TaskCardData> getAllTask() {
     return [
       const TaskCardData(

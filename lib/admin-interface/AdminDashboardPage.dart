@@ -1,32 +1,21 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:theteam_gyp/admin-interface/EditProfilePage/EditProfilePageWidget.dart';
-import 'package:theteam_gyp/admin-interface/Settings.dart';
-import 'package:theteam_gyp/admin-interface/categories/list_categories.dart';
-import 'package:theteam_gyp/admin-interface/home_page.dart';
-import 'package:theteam_gyp/admin-interface/lessons/all_lessons_admin_side.dart';
-import 'package:theteam_gyp/admin-interface/lessons/user_side_of_all_lessons.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:theteam_gyp/admin-interface/login_or_register_page.dart';
-import 'package:theteam_gyp/admin-interface/tags/list_tags.dart';
 import 'package:theteam_gyp/admin-interface/trainings/admin_list_trainings.dart';
-import 'package:theteam_gyp/admin-interface/trainings/list_trainings.dart';
-import 'package:theteam_gyp/admin-interface/users_list_page.dart';
 import 'package:theteam_gyp/admin-interface/welcome_screen.dart';
+import 'package:theteam_gyp/core/dashboard_controller.dart';
+import 'package:theteam_gyp/core/models/UserModel.dart';
+import 'package:theteam_gyp/core/models/profile_model.dart';
 import 'package:theteam_gyp/user-interface/constans/mycolors.dart';
 
-class DashboardAdminSummaryWidget extends StatefulWidget {
-  final String? userId;
-  DashboardAdminSummaryWidget({Key? key, String? this.userId})
-      : super(key: key);
+class DashboardAdminSummaryWidget extends StatelessWidget {
+  DashboardAdminSummaryWidget({super.key});
 
-  @override
-  _DashboardAdminSummaryWidgetState createState() =>
-      _DashboardAdminSummaryWidgetState();
-}
+  DashboardController controller = DashboardController();
 
-class _DashboardAdminSummaryWidgetState
-    extends State<DashboardAdminSummaryWidget> with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
@@ -52,21 +41,15 @@ class _DashboardAdminSummaryWidgetState
     return querySnapshot.docs;
   });
 
-/*
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _unfocusNode.dispose();
-    super.dispose();
-  }
-*/
-
   @override
   Widget build(BuildContext context) {
+    print("##### Loaded ::: DashboardAdminSummaryWidget ::: Widget");
+
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final uid = arguments?['uid'] ??
+        'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
@@ -79,21 +62,21 @@ class _DashboardAdminSummaryWidgetState
             'Admin Dashboard / Nav',
             style: MyColors().labelXLarge,
           ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.settings_rounded,
-              color: MyColors.secondary,
-              size: 30.0,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AdminSettingsPageWidget(),
-                ),
-              );
-            },
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(
+          //     Icons.settings_rounded,
+          //     color: MyColors.secondary,
+          //     size: 30.0,
+          //   ),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const AdminSettingsPageWidget(),
+          //       ),
+          //     );
+          //   },
+          // ),
           actions: [
             InkWell(
               onTap: () {
@@ -115,27 +98,29 @@ class _DashboardAdminSummaryWidgetState
                       width: 2, // set the border width
                     ),
                   ),
-                  // child: ClipOval(
-                  //   child: OctoImage(
-                  //       placeholderBuilder:
-                  //           OctoPlaceholder.blurHash('BwH2.zxupJyGawt8'),
-                  //       image: CachedNetworkImageProvider(
-                  //         userModel.profilePicture ??
-                  //             'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                  //       ),
-                  //       width: 50,
-                  //       height: 50,
-                  //       fit: BoxFit.cover,
-                  //       errorBuilder: OctoError.circleAvatar(
-                  //         backgroundColor: MyColors.secondaryText,
-                  //         text: Text(
-                  //           "Profile",
-                  //           style: MyColors().labelSmall,
-                  //         ),
-                  //       )
-                  //       //progressIndicatorBuilder: OctoProgressIndicator.circularProgressIndicator(),
-                  //       ),
-                  // ),
+                  child: FutureBuilder(
+                      future: controller.getUserById(uid),
+                      builder: (BuildContext context, snapshot) {
+                        return ClipOval(
+                          child: OctoImage(
+                              placeholderBuilder:
+                                  OctoPlaceholder.blurHash('BwH2.zxupJyGawt8'),
+                              image: NetworkImage(
+                                  snapshot.data!["profile_picture"]),
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                              errorBuilder: OctoError.circleAvatar(
+                                backgroundColor: MyColors.secondaryText,
+                                text: Text(
+                                  "Profile",
+                                  style: MyColors().labelSmall,
+                                ),
+                              )
+                              //progressIndicatorBuilder: OctoProgressIndicator.circularProgressIndicator(),
+                              ),
+                        );
+                      }),
                 ),
               ),
             ),
@@ -270,7 +255,7 @@ class _DashboardAdminSummaryWidgetState
                                       // Navigator.of(context).push(
                                       //     MaterialPageRoute(
                                       //         builder: (context) =>
-                                      //             const AdminListTrainings()));
+                                      //             AdminListTrainings()));
                                     },
                                     child: Padding(
                                       padding:

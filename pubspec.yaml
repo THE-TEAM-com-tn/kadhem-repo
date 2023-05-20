@@ -55,6 +55,10 @@ dependencies:
 
   #Shopping cart
   badges: ^3.1.1
+  octo_image: ^1.0.2
+  auto_size_text: 3.0.0
+  font_awesome_flutter: ^10.4.0
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

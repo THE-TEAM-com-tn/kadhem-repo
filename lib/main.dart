@@ -1,6 +1,6 @@
+import 'package:theteam_gyp/admin-interface/AdminDashboardPage.dart';
 import 'package:theteam_gyp/user-interface/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:theteam_gyp/user-interface/themes/app_theme.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -17,9 +17,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "The TEAM",
-      theme: AppTheme.basic,
-      home: WelcomeScreen(),
+      title: 'T-Learny',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => WelcomeScreen(),
+        '/admins': (context) => DashboardAdminSummaryWidget(),
+      },
     );
   }
 }

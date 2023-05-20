@@ -156,14 +156,13 @@ class _LoginPageState extends State<LoginPage> {
           .get();
 
       var role = (userSnapshot.data() as Map<String, dynamic>)['role'];
+      var user = userSnapshot.data() as Map<String, dynamic>;
 
       // if (role.toString() == "admin") {
       //   print(
       //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => DashboardAdminSummaryWidget()),
-      );
+      Navigator.pushReplacementNamed(context, '/admins',
+          arguments: {'uid': userId});
       // } else {
       //   print(
       //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");

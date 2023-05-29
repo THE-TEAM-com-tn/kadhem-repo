@@ -12,6 +12,31 @@ class DashboardController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // Get user by id
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getUserById() async {
+    try {
+      // Get the current user
+      User? user = _auth.currentUser;
+      String? userId = user!.uid;
+
+      try {
+        DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+            await FirebaseFirestore.instance
+                .collection('Users')
+                .doc(userId)
+                .get();
+        return userSnapshot;
+      } catch (error) {
+        print('Error retrieving user: $error');
+        return null;
+      }
+    } catch (error) {
+      print('Error retrieving user credentials: $error');
+      return null;
+    }
+  }
+
+  // Get list of trainings by a list of IDs
   Future<List<TrainingModel>> getTrainingsListById(trainingsIDs) async {
     print(
         "##### cart_controller.dart => _getTrainingsListById() ::: $trainingsIDs");
@@ -84,27 +109,6 @@ class DashboardController {
     Stream<QuerySnapshot> snapshot = profiles.snapshots();
 
     return snapshot;
-  }
-
-  // Get user by ID
-  Future<DocumentSnapshot<Map<String, dynamic>>?> getUserById(
-      String userId) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-          await FirebaseFirestore.instance
-              .collection('Users')
-              .doc(userId)
-              .get();
-      if (userSnapshot.exists) {
-        return userSnapshot;
-      } else {
-        print('User not found');
-        return null;
-      }
-    } catch (error) {
-      print('Error retrieving user: $error');
-      return null;
-    }
   }
 
   List<TaskCardData> getAllTask() {

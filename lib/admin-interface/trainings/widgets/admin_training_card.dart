@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:theteam_gyp/admin-interface/trainings/components/training_edit_pop.dart';
+import 'package:theteam_gyp/admin-interface/trainings/trainings_controller.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/constans/mycolors.dart';
 
 class AdminTrainingCard extends StatelessWidget {
   final TrainingModel training;
 
-  const AdminTrainingCard({Key? key, required this.training}) : super(key: key);
+  AdminTrainingCard({Key? key, required this.training}) : super(key: key);
+
+  TrainingsController controller = TrainingsController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,75 +54,6 @@ class AdminTrainingCard extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                    /*
- // TEST 2 ( Didn't Work )
-
- Padding(
-              padding:  EdgeInsetsDirectional.fromSTEB(5, 1, 1, 1),
-                    child: LayoutBuilder(
-
-            builder: (BuildContext context, BoxConstraints constraints) {
-              if (constraints.maxWidth < 500) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: OctoImage(
-                    placeholderBuilder: OctoPlaceholder.blurHash(
-                      'LKN^h]x^^lxHxGWVX5Rj~qMx9Fba',
-                    ),
-                    image: NetworkImage(training.image),
-                    width: 339,
-                    height: 378,
-                    fit: BoxFit.cover,
-                  ),
-                );
-              } else {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: OctoImage(
-                    placeholderBuilder: OctoPlaceholder.blurHash(
-                      'LKN^h]x^^lxHxGWVX5Rj~qMx9Fba',
-                    ),
-                    image: NetworkImage(training.image),
-                    width: 100,
-                    height: 100,
-
-                    */ /* width: 339,
-                    height: 378,*/ /*
-
-                    fit: BoxFit.cover,
-                  ),
-                );
-              }
-            },
-          ),
-        ),
-*/
-
-                    /*
-                        TEST 1 :     // THIS DIDN'T WORK
-
-                          Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(5, 1, 1, 1),
-                          child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: OctoImage(
-                            placeholderBuilder: OctoPlaceholder.blurHash(
-                              'LKN^h]x^^lxHxGWVX5Rj~qMx9Fba',
-                            ),
-                            image: NetworkImage(training.image),
-                            width: kIsWeb ? 339 : 80,
-                            height: kIsWeb ? 378 : 80,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),*/
-
-                    /*  Visibility(
-                      visible: MediaQuery.of(context).size.width > 600,
-
-                       child:
-                      */
                     Expanded(
                       child: Padding(
                         padding:
@@ -129,22 +64,17 @@ class AdminTrainingCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              //Training title:
                               '${training.title}',
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                fontFamily:
-                                    'Roboto', // Change to your preferred font family
-                                color: Colors
-                                    .black87, // Change to your preferred color
+                                fontFamily: 'Roboto',
+                                color: Colors.black87,
                               ),
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               softWrap: true,
-                              // Add some padding to the text
-                              //padding:   EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                             ),
                             const SizedBox(height: 5),
                             Padding(
@@ -162,23 +92,6 @@ class AdminTrainingCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-
-/*
-                              const SizedBox(height: 5),
-
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 8, 0),
-                                child: Text(
-                                  '\$${training.price.toStringAsFixed(2)} TND',
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-*/
-
                             const SizedBox(height: 6),
                             Wrap(
                               spacing: 20.0,
@@ -237,32 +150,11 @@ class AdminTrainingCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        /*  const Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                          child: Text(
-                            'Click To view Details :',
-                          ),
-                        ),*/
-/*                    IconButton(
-                          icon: const FaIcon(
-                            FontAwesomeIcons.chevronRight,
-                            color: MyColors.primaryText,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            print('redirect to view training Details ...');
-                          },
-                        ),*/
-
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
-                              /* borderColor: Colors.transparent,
-                              borderRadius: 20,
-                              borderWidth: 1,
-                              buttonSize: 40,*/
                               icon: const FaIcon(
                                 FontAwesomeIcons.trash,
                                 color: MyColors.error,
@@ -278,66 +170,47 @@ class AdminTrainingCard extends StatelessWidget {
                                           'Are you sure you want to delete this training?'),
                                       actions: [
                                         TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(false),
-                                          child: const Text('CANCEL'),
+                                          onPressed: () {
+                                            controller.deleteDocumentById(
+                                                "trainings", training.id!);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('YES'),
                                         ),
                                         TextButton(
                                           onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: const Text('DELETE'),
+                                              Navigator.of(context).pop(),
+                                          child: const Text('NO'),
                                         ),
                                       ],
                                     );
                                   },
                                 );
-
-                                // if (confirmed == true) {
-                                //   await trainingProvider
-                                //       .removeTraining(training.id!);
-                                //   Navigator.pop(context);
-                                //   print('Training deleted successfully');
-                                // }
                               },
                             ),
                             IconButton(
-                              /*  borderColor: Colors.transparent,
-                              borderRadius: 20,
-                              borderWidth: 1,
-                              buttonSize: 40,*/
                               icon: const FaIcon(
                                 FontAwesomeIcons.pen,
                                 color: MyColors.success,
                                 size: 15,
                               ),
                               onPressed: () async {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (_) => AdminEditTrainingWidget(
-                                //             training: training)));
-                                // print('Pressed to Edit / Modify Training ...');
+                                await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return TrainingEditPop(
+                                        training: training,
+                                      );
+                                    });
                               },
                             ),
                             IconButton(
-                              /*  borderColor: Colors.transparent,
-                              borderRadius: 20,
-                              borderWidth: 1,
-                              buttonSize: 40,*/
                               icon: const FaIcon(
                                 FontAwesomeIcons.solidEye,
                                 color: MyColors.primary,
                                 size: 15,
                               ),
-                              onPressed: () async {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (_) =>
-                                //             AdminTrainingDetailsWidget(
-                                //                 training: training)));
-                                // print('Pressed to View Training Details ...');
-                              },
+                              onPressed: () async {},
                             ),
                           ],
                         ),

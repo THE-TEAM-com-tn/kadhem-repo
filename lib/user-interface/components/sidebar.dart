@@ -1,19 +1,17 @@
-import 'dart:math';
-
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:theteam_gyp/user-interface/components/project_card.dart';
 import 'package:theteam_gyp/user-interface/components/selection_button.dart';
-import 'package:theteam_gyp/user-interface/components/upgrade_premium_card.dart';
-import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({
     required this.data,
     Key? key,
+    this.indexedIn,
   }) : super(key: key);
 
   final ProjectCardData data;
+  final int? indexedIn;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +21,8 @@ class Sidebar extends StatelessWidget {
         controller: ScrollController(),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(kSpacing),
-            //   child: ProjectCard(
-            //     data: data,
-            //   ),
-            // ),
-            // const Divider(thickness: 1),
             SelectionButton(
+              initialSelected: indexedIn!,
               data: [
                 SelectionButtonData(
                   activeIcon: EvaIcons.grid,
@@ -65,16 +57,26 @@ class Sidebar extends StatelessWidget {
                 ),
               ],
               onSelected: (index, value) {
-                log("index : $index | label : ${value.label}" as num);
+                print(
+                    "##### LOG ::: sidebar => SelectionButton onSelected() ::: $index ${value.label}");
+                var indexx = index;
+                switch (indexx) {
+                  case 5:
+                    return Navigator.pushReplacementNamed(context, '/settings');
+                  case 0:
+                    return Navigator.pushReplacementNamed(context, '/');
+                  default:
+                    return null;
+                }
               },
             ),
-            const Divider(thickness: 1),
-            const SizedBox(height: kSpacing * 2),
-            UpgradePremiumCard(
-              backgroundColor: Theme.of(context).canvasColor.withOpacity(.4),
-              onPressed: () {},
-            ),
-            const SizedBox(height: kSpacing),
+            // const Divider(thickness: 1),
+            // const SizedBox(height: kSpacing * 2),
+            // UpgradePremiumCard(
+            //   backgroundColor: Theme.of(context).canvasColor.withOpacity(.4),
+            //   onPressed: () {},
+            // ),
+            // const SizedBox(height: kSpacing),
           ],
         ),
       ),

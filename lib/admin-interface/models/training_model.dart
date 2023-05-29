@@ -1,51 +1,51 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TrainingModel {
+class Training {
   String? id;
   String title;
   String description;
-  List<String> categories;
+  List<String> category;
   String author;
   String duration;
   double price;
   String trailerVid;
   String image;
   List<String>? tags;
-  Timestamp creationDate;
+  Timestamp? creationDate;
 
-  TrainingModel(
+  Training(
       {this.id,
       required this.title,
       required this.description,
-      required this.categories,
+      required this.category,
       required this.author,
       required this.duration,
       required this.price,
       required this.trailerVid,
       required this.image,
       this.tags,
-      required this.creationDate});
+      this.creationDate});
 
-  factory TrainingModel.fromJson(Map<String, dynamic> map, String id) {
-    return TrainingModel(
+  factory Training.fromJson(Map<String, dynamic> map, String id) {
+    return Training(
         id: id,
-        title: map['title'],
-        description: map['description'],
-        categories: List<String>.from(map['categories']),
-        author: map['author'],
-        duration: map['duration'],
-        price: map['price'],
-        trailerVid: map['trailerVid'],
-        image: map['image'],
-        tags: List<String>.from(map['tags']),
-        creationDate: map['creationDate']);
+        title: map['title'] ?? '',
+        description: map['description'] ?? '',
+        category: List<String>.from(map['category'] ?? ''),
+        author: map['author'] ?? '',
+        duration: map['duration'] ?? '',
+        price: map['price'] ?? '',
+        trailerVid: map['trailerVid'] ?? '',
+        image: map['image'] ?? '',
+        tags: List<String>.from(map['tags'] ?? ''),
+        creationDate: map['creationDate'] ?? '');
   }
 
   toJson() {
     return {
       "title": title,
       "description": description,
-      "categories": categories,
+      "category": category,
       "author": author,
       "duration": duration,
       "price": price,

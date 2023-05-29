@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:theteam_gyp/admin-interface/login_or_register_page.dart';
-import 'package:theteam_gyp/admin-interface/trainings/admin_list_trainings.dart';
-import 'package:theteam_gyp/admin-interface/welcome_screen.dart';
+import 'package:theteam_gyp/admin-interface/trainings/screens/admin_list_trainings.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
-import 'package:theteam_gyp/core/models/UserModel.dart';
-import 'package:theteam_gyp/core/models/profile_model.dart';
 import 'package:theteam_gyp/user-interface/constans/mycolors.dart';
+import 'package:theteam_gyp/user-interface/themes/app_theme.dart';
 
 class DashboardAdminSummaryWidget extends StatelessWidget {
   DashboardAdminSummaryWidget({super.key});
 
   DashboardController controller = DashboardController();
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  // final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
   Stream<int> getUserCount() {
@@ -53,14 +51,14 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: MyColors.secondaryBackground,
+        // key: scaffoldKey,
+        // backgroundColor: MyColors.secondaryBackground,
         appBar: AppBar(
-          backgroundColor: MyColors.secondaryBackground,
+          // backgroundColor: MyColors.secondaryBackground,
           automaticallyImplyLeading: true,
           title: Text(
             'Admin Dashboard / Nav',
-            style: MyColors().labelXLarge,
+            // style: MyColors().labelXLarge,
           ),
           // leading: IconButton(
           //   icon: const Icon(
@@ -92,14 +90,14 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: MyColors.accent2,
+                    // color: AppTheme.basic.,
                     border: Border.all(
-                      color: MyColors.secondary, // use the given color code
+                      // color: MyColors.secondary, // use the given color code
                       width: 2, // set the border width
                     ),
                   ),
                   child: FutureBuilder(
-                      future: controller.getUserById(uid),
+                      future: controller.getUserById(),
                       builder: (BuildContext context, snapshot) {
                         return ClipOval(
                           child: OctoImage(
@@ -111,7 +109,8 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                               height: 50,
                               fit: BoxFit.cover,
                               errorBuilder: OctoError.circleAvatar(
-                                backgroundColor: MyColors.secondaryText,
+                                backgroundColor:
+                                    AppTheme.basic.secondaryHeaderColor,
                                 text: Text(
                                   "Profile",
                                   style: MyColors().labelSmall,
@@ -139,6 +138,9 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                      ),
                       onPressed: () async {
                         showDialog(
                           context: context,
@@ -171,22 +173,22 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                           },
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFF1F4F8),
-                        elevation: 0,
-                        minimumSize: const Size(50.0, 34.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(38.0),
-                          side: const BorderSide(
-                            color: Color(0xFFE0E3E7),
-                            width: 2.0,
-                          ),
-                        ),
-                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //   primary: const Color(0xFFF1F4F8),
+                      //   elevation: 0,
+                      //   minimumSize: const Size(50.0, 34.0),
+                      //   shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.circular(38.0),
+                      //     side: const BorderSide(
+                      //       // color: Color(0xFFE0E3E7),
+                      //       width: 2.0,
+                      //     ),
+                      //   ),
+                      // ),
                       child: const Text(
                         'LogOut',
                         style: TextStyle(
-                          color: MyColors.secondaryText,
+                          // color: MyColors.secondaryText,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -215,11 +217,11 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                       maxHeight: 140.0,
                     ),
                     decoration: const BoxDecoration(
-                      color: MyColors.secondaryBackground,
+                      // color: MyColors.secondaryBackground,
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 3.0,
-                          color: Color(0x33000000),
+                          // color: Color(0x33000000),
                           offset: Offset(0.0, 1.0),
                         )
                       ],
@@ -252,10 +254,10 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      // Navigator.of(context).push(
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             AdminListTrainings()));
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AdminListTrainings()));
                                     },
                                     child: Padding(
                                       padding:
@@ -264,16 +266,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid8,
+                                          // color: MyColors.Grid8,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -285,7 +287,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.fitness_center,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -319,16 +321,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid8,
+                                          // color: MyColors.Grid8,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -340,7 +342,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.door_back_door_outlined,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -375,16 +377,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid0,
+                                          // color: MyColors.Grid0,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -396,7 +398,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.person,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -431,16 +433,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid0,
+                                          // color: MyColors.Grid0,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -452,7 +454,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.library_books_rounded,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -487,16 +489,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid0,
+                                          // color: MyColors.Grid0,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -509,7 +511,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                                 const Icon(
                                                   Icons
                                                       .my_library_books_outlined,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -544,16 +546,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid0,
+                                          // color: MyColors.Grid0,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -565,7 +567,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.tag_rounded,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -600,16 +602,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid0,
+                                          // color: MyColors.Grid0,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -621,7 +623,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.format_list_bulleted,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -656,16 +658,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid0,
+                                          // color: MyColors.Grid0,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -677,7 +679,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.tag_rounded,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -712,16 +714,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid5,
+                                          // color: MyColors.Grid5,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -733,7 +735,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.home_rounded,
-                                                  color: MyColors.info,
+                                                  // color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -768,16 +770,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          // color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            // color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid5,
+                                          // color: MyColors.Grid5,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -825,16 +827,16 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                       child: Container(
                                         width: 130.0,
                                         decoration: BoxDecoration(
-                                          color: MyColors.secondaryBackground,
+                                          //color: MyColors.secondaryBackground,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: MyColors.lineColor,
+                                            //color: MyColors.lineColor,
                                             width: 2.0,
                                           ),
                                         ),
                                         child: Material(
-                                          color: MyColors.Grid5,
+                                          //color: MyColors.Grid5,
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -846,7 +848,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.line_weight_rounded,
-                                                  color: MyColors.info,
+                                                  //color: MyColors.info,
                                                   size: 20.0,
                                                 ),
                                                 Padding(
@@ -905,7 +907,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: 0.0,
                         decoration: BoxDecoration(
-                          color: MyColors.primaryBackground,
+                          //color: MyColors.primaryBackground,
                           borderRadius: BorderRadius.circular(24.0),
                         ),
                         child: Padding(
@@ -917,7 +919,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.supervisor_account_rounded,
-                                color: MyColors.primaryText,
+                                //color: MyColors.primaryText,
                                 size:
                                     MediaQuery.of(context).size.shortestSide <=
                                             600
@@ -957,7 +959,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
-                          color: MyColors.secondary,
+                          //color: MyColors.secondary,
                           borderRadius: BorderRadius.circular(24.0),
                         ),
                         child: Padding(
@@ -968,7 +970,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.fitness_center_rounded,
-                                color: MyColors.primaryText,
+                                //color: MyColors.primaryText,
                                 size:
                                     MediaQuery.of(context).size.shortestSide <=
                                             600
@@ -988,9 +990,8 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                                   } else if (snapshot.hasError) {
                                     return Text(
                                       'Error: ${snapshot.error}',
-                                      style: MyColors()
-                                          .labelSmall
-                                          .copyWith(color: MyColors.error),
+                                      style: MyColors().labelSmall.copyWith(
+                                          /*color: MyColors.error*/),
                                       textAlign: TextAlign.center,
                                     );
                                   } else {
@@ -1012,7 +1013,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         decoration: BoxDecoration(
-                          color: MyColors.Grid9,
+                          //color: MyColors.Grid9,
                           borderRadius: BorderRadius.circular(24.0),
                         ),
                         child: Padding(
@@ -1023,7 +1024,7 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                             children: [
                               Icon(
                                 Icons.pie_chart_rounded,
-                                color: MyColors.primaryText,
+                                //color: MyColors.primaryText,
                                 size:
                                     MediaQuery.of(context).size.shortestSide <=
                                             600
@@ -1079,10 +1080,10 @@ style: FFTheme.of(context).labelLarge,
                             maxWidth: 570.0,
                           ),
                           decoration: BoxDecoration(
-                            color: MyColors.secondaryBackground,
+                            //color: MyColors.secondaryBackground,
                             borderRadius: BorderRadius.circular(8.0),
                             border: Border.all(
-                              color: MyColors.primaryBackground,
+                              //color: MyColors.primaryBackground,
                               width: 2.0,
                             ),
                           ),

@@ -25,8 +25,8 @@ import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';
 import 'package:theteam_gyp/user-interface/screens/cart_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  WelcomeScreen({Key? key}) : super(key: key);
+class SettingsScreen extends StatelessWidget {
+  SettingsScreen({Key? key}) : super(key: key);
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   DashboardController controller = DashboardController();
@@ -41,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("##### Loaded ::: WelcomeScreen ::: Widget");
+    print("##### Loaded ::: SettingsScreen ::: Widget");
     return Scaffold(
       key: scaffoldKey,
       drawer: (ResponsiveBuilder.isDesktop(context))
@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: kSpacing),
                 child: Sidebar(
                   data: controller.getSelectedProject(),
-                  indexedIn: 0,
+                  indexedIn: 5,
                 ),
               ),
             ),
@@ -65,11 +65,11 @@ class WelcomeScreen extends StatelessWidget {
             const Divider(),
             _buildProfile(),
             const SizedBox(height: kSpacing),
-            buildAvaiTrsSection(
-              headerAxis: Axis.vertical,
-              crossAxisCount: 6,
-              crossAxisCellCount: 6,
-            ),
+            // buildAvaiTrsSection(
+            //   headerAxis: Axis.vertical,
+            //   crossAxisCount: 6,
+            //   crossAxisCellCount: 6,
+            // ),
           ]);
         },
         tabletBuilder: (context, constraints) {
@@ -89,17 +89,17 @@ class WelcomeScreen extends StatelessWidget {
                           : Axis.horizontal,
                     ),
                     const SizedBox(height: kSpacing * 2),
-                    buildAvaiTrsSection(
-                      headerAxis: (constraints.maxWidth < 850)
-                          ? Axis.vertical
-                          : Axis.horizontal,
-                      crossAxisCount: 6,
-                      crossAxisCellCount: (constraints.maxWidth < 950)
-                          ? 6
-                          : (constraints.maxWidth < 1100)
-                              ? 3
-                              : 2,
-                    ),
+                    // buildAvaiTrsSection(
+                    //   headerAxis: (constraints.maxWidth < 850)
+                    //       ? Axis.vertical
+                    //       : Axis.horizontal,
+                    //   crossAxisCount: 6,
+                    //   crossAxisCellCount: (constraints.maxWidth < 950)
+                    //       ? 6
+                    //       : (constraints.maxWidth < 1100)
+                    //           ? 3
+                    //           : 2,
+                    // ),
                     const SizedBox(height: kSpacing * 2),
                     _buildActiveProject(
                       data: controller.getActiveProject(),
@@ -151,7 +151,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: Sidebar(
                       data: controller.getSelectedProject(),
-                      indexedIn: 0,
+                      indexedIn: 5,
                     )),
               ),
               Flexible(
@@ -163,10 +163,10 @@ class WelcomeScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing * 2),
                     // _buildProgress(),
                     // const SizedBox(height: kSpacing * 2),
-                    buildAvaiTrsSection(
-                      crossAxisCount: 6,
-                      crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
-                    ),
+                    // buildAvaiTrsSection(
+                    //   crossAxisCount: 6,
+                    //   crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
+                    // ),
                     const SizedBox(height: kSpacing * 2),
                     _buildActiveProject(
                       data: controller.getActiveProject(),

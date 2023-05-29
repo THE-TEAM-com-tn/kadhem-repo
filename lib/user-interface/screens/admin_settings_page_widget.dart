@@ -1,9 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:theteam_gyp/admin-interface/login_or_register_page.dart';
-import 'package:theteam_gyp/admin-interface/trainings/screens/admin_list_trainings.dart';
-import 'package:theteam_gyp/core/models/user_model.dart';
-import 'package:theteam_gyp/user-interface/constans/mycolors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:theteam_gyp/admin-interface/login_or_register_page.dart';
+import 'package:theteam_gyp/admin-interface/models/UserModel.dart';
+import 'package:theteam_gyp/admin-interface/trainings/screens/admin_list_trainings.dart';
+import 'package:theteam_gyp/user-interface/constans/mycolors.dart';
+import 'package:theteam_gyp/user-interface/screens/settings_screen.dart';
 
 class AdminSettingsPageWidget extends StatefulWidget {
   const AdminSettingsPageWidget({Key? key}) : super(key: key);
@@ -84,43 +88,42 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                     //     ),
                     //   ),
                     // ),
-                    // Align(
-                    //   alignment: const AlignmentDirectional(-1.0, 1.0),
-                    //   child: Padding(
-                    //     padding: const EdgeInsetsDirectional.fromSTEB(
-                    //         24.0, 0.0, 0.0, 16.0),
-                    //     child: Container(
-                    //       width: 90.0,
-                    //       height: 90.0,
-                    //       decoration: BoxDecoration(
-                    //         color: MyColors.accent2,
-                    //         shape: BoxShape.circle,
-                    //         border: Border.all(
-                    //           color: MyColors.secondary,
-                    //           width: 2.0,
-                    //         ),
-                    //       ),
-                    //       child: Padding(
-                    //         padding: EdgeInsetsDirectional.fromSTEB(
-                    //             4.0, 4.0, 4.0, 4.0),
-                    //         child: ClipRRect(
-                    //           borderRadius: BorderRadius.circular(50.0),
-                    //           child: OctoImage(
-                    //             placeholderBuilder: OctoPlaceholder.blurHash(
-                    //                 'BwH2.zxupJyGawt8'),
-                    //             image: CachedNetworkImageProvider(
-                    //               userModel.profilePicture ??
-                    //                   'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                    //             ),
-                    //             width: 100.0,
-                    //             height: 100.0,
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 1.0),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            24.0, 0.0, 0.0, 16.0),
+                        child: Container(
+                          width: 90.0,
+                          height: 90.0,
+                          decoration: BoxDecoration(
+                            color: MyColors.accent2,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: MyColors.secondary,
+                              width: 2.0,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                4.0, 4.0, 4.0, 4.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: OctoImage(
+                                placeholderBuilder: OctoPlaceholder.blurHash(
+                                    'BwH2.zxupJyGawt8'),
+                                image: CachedNetworkImageProvider(
+                                  userModel.profilePicture,
+                                ),
+                                width: 100.0,
+                                height: 100.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -128,7 +131,7 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                 padding:
                     const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  myfullName ?? 'Andrew Tate',
+                  myfullName,
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -137,7 +140,7 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                 padding:
                     const EdgeInsetsDirectional.fromSTEB(24.0, 4.0, 0.0, 16.0),
                 child: Text(
-                  myEmail ?? 'andrew@domainname.com',
+                  myEmail,
                   /*'andrew@domainname.com',*/
                   // style: FFTheme.of(context).labelMedium,
                 ),
@@ -564,11 +567,11 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: const [
-                          // FaIcon(
-                          //   FontAwesomeIcons.usersCog,
-                          //   color: MyColors.secondaryText,
-                          //   size: 24.0,
-                          // ),
+                          FaIcon(
+                            FontAwesomeIcons.usersCog,
+                            color: MyColors.secondaryText,
+                            size: 24.0,
+                          ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
@@ -606,8 +609,8 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const AdminListTrainings()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AdminListTrainings()));
                     /* context.pushNamed('HomePage');*/
                   },
                   child: Container(
@@ -757,11 +760,11 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: const [
-                          // FaIcon(
-                          //   FontAwesomeIcons.tasks,
-                          //   color: MyColors.secondaryText,
-                          //   size: 30.0,
-                          // ),
+                          FaIcon(
+                            FontAwesomeIcons.tasks,
+                            color: MyColors.secondaryText,
+                            size: 30.0,
+                          ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
@@ -817,11 +820,11 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: const [
-                          // FaIcon(
-                          //   FontAwesomeIcons.tags,
-                          //   color: MyColors.secondaryText,
-                          //   size: 30.0,
-                          // ),
+                          FaIcon(
+                            FontAwesomeIcons.tags,
+                            color: MyColors.secondaryText,
+                            size: 30.0,
+                          ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
@@ -879,11 +882,11 @@ class _AdminSettingsPageWidgetState extends State<AdminSettingsPageWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: const [
-                        // FaIcon(
-                        //   FontAwesomeIcons.hive,
-                        //   color: MyColors.secondaryText,
-                        //   size: 30.0,
-                        // ),
+                        FaIcon(
+                          FontAwesomeIcons.hive,
+                          color: MyColors.secondaryText,
+                          size: 30.0,
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 0.0, 0.0),

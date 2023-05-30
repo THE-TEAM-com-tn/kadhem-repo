@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/components/active_project_card.dart';
+import 'package:theteam_gyp/user-interface/components/cart_training_card.dart';
 import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
 import 'package:theteam_gyp/user-interface/components/get_premium_card.dart';
 import 'package:theteam_gyp/user-interface/components/list_profil_image.dart';
@@ -41,6 +42,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.streamController.add("welcome");
     print("##### Loaded ::: WelcomeScreen ::: Widget");
     return Scaffold(
       key: scaffoldKey,
@@ -148,29 +150,51 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: Sidebar(data: controller.getSelectedProject())),
               ),
-              Flexible(
-                flex: 9,
-                child: Column(
-                  children: [
-                    const SizedBox(height: kSpacing),
-                    _buildHeader(),
-                    const SizedBox(height: kSpacing * 2),
-                    // _buildProgress(),
-                    // const SizedBox(height: kSpacing * 2),
-                    buildAvaiTrsSection(
-                      crossAxisCount: 6,
-                      crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
-                    ),
-                    const SizedBox(height: kSpacing * 2),
-                    _buildActiveProject(
-                      data: controller.getActiveProject(),
-                      crossAxisCount: 6,
-                      crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
-                    ),
-                    const SizedBox(height: kSpacing),
-                  ],
-                ),
-              ),
+              StreamBuilder<String>(
+                  stream: controller.streamController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == "welcome") {
+                      return Flexible(
+                        flex: 9,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kSpacing),
+                            _buildHeader(),
+                            const SizedBox(height: kSpacing * 2),
+                            // _buildProgress(),
+                            // const SizedBox(height: kSpacing * 2),
+                            buildAvaiTrsSection(
+                              crossAxisCount: 6,
+                              crossAxisCellCount:
+                                  (constraints.maxWidth < 1360) ? 3 : 2,
+                            ),
+                            const SizedBox(height: kSpacing * 2),
+                            // _buildActiveProject(
+                            //   data: controller.getActiveProject(),
+                            //   crossAxisCount: 6,
+                            //   crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
+                            // ),
+                            // const SizedBox(height: kSpacing),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.data == "cart") {
+                      return Flexible(
+                        flex: 9,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kSpacing),
+                            _buildHeader(),
+                            const SizedBox(height: kSpacing * 2),
+                            _buildInBasketTrainings(),
+                            const SizedBox(height: kSpacing * 2),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  }),
               Flexible(
                 flex: 4,
                 child: Column(
@@ -178,17 +202,17 @@ class WelcomeScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing / 2),
                     _buildProfile(),
                     const Divider(thickness: 1),
-                    const SizedBox(height: kSpacing),
-                    _buildTeamMember(data: controller.getMember()),
-                    const SizedBox(height: kSpacing),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-                      child: GetPremiumCard(onPressed: () {}),
-                    ),
-                    const SizedBox(height: kSpacing),
-                    const Divider(thickness: 1),
-                    const SizedBox(height: kSpacing),
-                    _buildRecentMessages(data: controller.getChatting()),
+                    // const SizedBox(height: kSpacing),
+                    // _buildTeamMember(data: controller.getMember()),
+                    // const SizedBox(height: kSpacing),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+                    //   child: GetPremiumCard(onPressed: () {}),
+                    // ),
+                    // const SizedBox(height: kSpacing),
+                    // const Divider(thickness: 1),
+                    // const SizedBox(height: kSpacing),
+                    // _buildRecentMessages(data: controller.getChatting()),
                   ],
                 ),
               )
@@ -196,6 +220,50 @@ class WelcomeScreen extends StatelessWidget {
           );
         },
       )),
+    );
+  }
+
+  Widget _buildInBasketTrainings({
+    int crossAxisCount = 6,
+    int crossAxisCellCount = 2,
+    Axis headerAxis = Axis.horizontal,
+  }) {
+    return FutureBuilder<List<TrainingModel>>(
+      future: controller.getTraineesBasket(controller.uid),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<TrainingModel>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final trainings = snapshot.data!;
+
+            return StaggeredGridView.countBuilder(
+              crossAxisCount: crossAxisCount,
+              itemCount: trainings.length,
+              addAutomaticKeepAlives: false,
+              padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final data = trainings[index];
+
+                return CartTrainingCard(
+                  data: data,
+                  onPressedMore: () {},
+                  onPressedTask: () {},
+                  onPressedContributors: () {},
+                  onPressedComments: () {},
+                );
+              },
+              staggeredTileBuilder: (int index) =>
+                  StaggeredTile.fit(crossAxisCellCount),
+            );
+          }
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 
@@ -412,13 +480,13 @@ class WelcomeScreen extends StatelessWidget {
                     for (var doc in profileSnapshot.data!.docs) {
                       // Access the fields of the document
                       // My User/Profile and the common one are diffrent
-                      var name = (doc.data()! as Map)['lastName'];
+                      var name = (doc.data()! as Map)['name'];
                       var email = (doc.data()! as Map)['email'];
-                      var photo = (doc.data()! as Map)['profile_picture'];
+                      var photo = (doc.data()! as Map)['photo'];
                       var trainings =
-                          (doc.data()! as Map)['inBasket']['trainings'];
+                          (doc.data()! as Map)['inBasket']['trainings'] ?? [];
                       var totalPrice =
-                          (doc.data()! as Map)['inBasket']['totalPrice'];
+                          (doc.data()! as Map)['inBasket']['totalPrice'] ?? 0;
 
                       // Create a ProfileModel instance using the retrieved fields
                       var profileModel = ProfileModel(
@@ -442,16 +510,18 @@ class WelcomeScreen extends StatelessWidget {
                         isLogged: logSnapshot.data!,
                         data: profiles[0],
                         onPressCart: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CartScreen(
-                                isLogged: logSnapshot.data!,
-                                trainingsIDs: profiles[0].trainings,
-                                totalPrice: profiles[0].totalPrice,
-                              ),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => CartScreen(
+                          //       isLogged: logSnapshot.data!,
+                          //       trainingsIDs: profiles[0].trainings!,
+                          //       totalPrice: profiles[0].totalPrice,
+                          //     ),
+                          //   ),
+                          // );
+                          controller.streamController.add("cart");
+                          controller.streamController.close();
                         },
                       ),
                     );

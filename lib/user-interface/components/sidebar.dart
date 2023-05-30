@@ -2,18 +2,23 @@ import 'dart:math';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/user-interface/components/project_card.dart';
 import 'package:theteam_gyp/user-interface/components/selection_button.dart';
 import 'package:theteam_gyp/user-interface/components/upgrade_premium_card.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
+import 'package:theteam_gyp/user-interface/screens/EditProfilePage/EditProfilePage.dart';
+import 'package:theteam_gyp/user-interface/screens/welcome_screen.dart';
 
 class Sidebar extends StatelessWidget {
-  const Sidebar({
+  Sidebar({
     required this.data,
     Key? key,
   }) : super(key: key);
 
   final ProjectCardData data;
+
+  DashboardController controller = DashboardController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +35,7 @@ class Sidebar extends StatelessWidget {
             //   ),
             // ),
             // const Divider(thickness: 1),
+            const SizedBox(height: kSpacing),
             SelectionButton(
               data: [
                 SelectionButtonData(
@@ -65,16 +71,23 @@ class Sidebar extends StatelessWidget {
                 ),
               ],
               onSelected: (index, value) {
-                log("index : $index | label : ${value.label}" as num);
+                switch (index) {
+                  case 4:
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfilePage()),
+                    );
+                }
               },
             ),
             const Divider(thickness: 1),
             const SizedBox(height: kSpacing * 2),
-            UpgradePremiumCard(
-              backgroundColor: Theme.of(context).canvasColor.withOpacity(.4),
-              onPressed: () {},
-            ),
-            const SizedBox(height: kSpacing),
+            // UpgradePremiumCard(
+            //   backgroundColor: Theme.of(context).canvasColor.withOpacity(.4),
+            //   onPressed: () {},
+            // ),
+            // const SizedBox(height: kSpacing),
           ],
         ),
       ),

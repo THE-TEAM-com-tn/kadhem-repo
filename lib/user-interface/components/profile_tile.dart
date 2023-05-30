@@ -34,7 +34,7 @@ class ProfilTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             trailing: badges.Badge(
-              badgeContent: Text(data!.trainings.length.toString()),
+              badgeContent: Text(data!.trainings!.length.toString()),
               child: IconButton(
                 onPressed: onPressCart,
                 icon: const Icon(Icons.shopping_cart),

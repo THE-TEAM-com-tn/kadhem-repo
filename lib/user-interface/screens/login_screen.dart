@@ -148,21 +148,21 @@ class _LoginPageState extends State<LoginPage> {
       // You can access the logged-in user details using userCredential.user
       print('User logged in: ${userCredential.user!.uid}');
 
-      String userId = userCredential.user!.uid;
+      // String userId = userCredential.user!.uid;
 
-      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(userId)
-          .get();
+      // DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+      //     .collection('Users')
+      //     .doc(userId)
+      //     .get();
 
-      var role = (userSnapshot.data() as Map<String, dynamic>)['role'];
+      // var role = (userSnapshot.data() as Map<String, dynamic>)['role'];
 
       // if (role.toString() == "admin") {
       //   print(
       //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DashboardAdminSummaryWidget()),
+        MaterialPageRoute(builder: (context) => WelcomeScreen()),
       );
       // } else {
       //   print(

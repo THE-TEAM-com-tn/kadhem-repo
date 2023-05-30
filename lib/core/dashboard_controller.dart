@@ -23,20 +23,26 @@ class DashboardController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final String uid = FirebaseAuth.instance.currentUser!.uid;
+  late String? uid;
+  late dynamic totalPrice = 0;
+
+  void getUserID() async {
+    uid = _auth.currentUser!.uid;
+  }
 
   // Get trainings that their IDs are in basket in user's entity ##### FUNCTION
-  Future<List<TrainingModel>> getTraineesBasket(traineesId) async {
+  Future<List<TrainingModel>> getTraineesBasket() async {
+    // Get loggedin user's id
+    final String uid = FirebaseAuth.instance.currentUser!.uid;
+
     // Get loggedin trainee's doc
-    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-        .instance
-        .collection('trainees')
-        .doc(traineesId)
-        .get();
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('trainees').doc(uid).get();
 
     Map<String, dynamic>? data = snapshot.data();
 
     Map<String, dynamic> basket = data!['inBasket'];
+    totalPrice = basket['totalPrice'];
 
     List<dynamic> trainingsIDs = basket['trainings'];
     print("##### LOG ::: controller ::: getTraineesBasket ::: $trainingsIDs");

@@ -6,6 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
+import 'package:theteam_gyp/user-interface/annimations/animated_switcher_wrapper.dart';
 import 'package:theteam_gyp/user-interface/components/active_project_card.dart';
 import 'package:theteam_gyp/user-interface/components/cart_training_card.dart';
 import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
@@ -24,7 +25,6 @@ import 'package:theteam_gyp/user-interface/components/team_member.dart';
 import 'package:theteam_gyp/user-interface/components/today_text.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';
-import 'package:theteam_gyp/user-interface/screens/cart_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -56,6 +56,9 @@ class WelcomeScreen extends StatelessWidget {
             ),
       body: SingleChildScrollView(
           child: ResponsiveBuilder(
+        // #####
+        // ##### MOBILE CODE SECTION #####
+        // #####
         mobileBuilder: (context, constraints) {
           return Column(children: [
             const SizedBox(height: kSpacing * (kIsWeb ? 1 : 2)),
@@ -71,6 +74,9 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ]);
         },
+        // #####
+        // ##### TABLET CODE SECTION #####
+        // #####
         tabletBuilder: (context, constraints) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,26 +88,10 @@ class WelcomeScreen extends StatelessWidget {
                     const SizedBox(height: kSpacing * (kIsWeb ? 1 : 2)),
                     _buildHeader(onPressedMenu: () => openDrawer()),
                     const SizedBox(height: kSpacing * 2),
-                    _buildProgress(
-                      axis: (constraints.maxWidth < 950)
-                          ? Axis.vertical
-                          : Axis.horizontal,
-                    ),
-                    const SizedBox(height: kSpacing * 2),
                     buildAvaiTrsSection(
                       headerAxis: (constraints.maxWidth < 850)
                           ? Axis.vertical
                           : Axis.horizontal,
-                      crossAxisCount: 6,
-                      crossAxisCellCount: (constraints.maxWidth < 950)
-                          ? 6
-                          : (constraints.maxWidth < 1100)
-                              ? 3
-                              : 2,
-                    ),
-                    const SizedBox(height: kSpacing * 2),
-                    _buildActiveProject(
-                      data: controller.getActiveProject(),
                       crossAxisCount: 6,
                       crossAxisCellCount: (constraints.maxWidth < 950)
                           ? 6
@@ -118,108 +108,169 @@ class WelcomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: kSpacing * (kIsWeb ? 0.5 : 1.5)),
-                    _buildProfile(),
+                    // _buildProfile(),
                     const Divider(thickness: 1),
-                    const SizedBox(height: kSpacing),
-                    _buildTeamMember(data: controller.getMember()),
-                    const SizedBox(height: kSpacing),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-                      child: GetPremiumCard(onPressed: () {}),
-                    ),
-                    const SizedBox(height: kSpacing),
-                    const Divider(thickness: 1),
-                    const SizedBox(height: kSpacing),
-                    _buildRecentMessages(data: controller.getChatting()),
                   ],
                 ),
               )
             ],
           );
         },
+        // #####
+        // ##### DESKTOP CODE SECTION #####
+        // #####
         desktopBuilder: (context, constraints) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                flex: (constraints.maxWidth < 1360) ? 4 : 3,
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(kBorderRadius),
-                      bottomRight: Radius.circular(kBorderRadius),
-                    ),
-                    child: Sidebar(data: controller.getSelectedProject())),
-              ),
-              StreamBuilder<String>(
-                  stream: controller.streamController.stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.data == "welcome") {
-                      return Flexible(
+          return StreamBuilder<String>(
+              stream: controller.streamController.stream,
+              builder: (context, snapshot) {
+                if (snapshot.data == "welcome") {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // #####
+                      // ##### NAVBAR CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: (constraints.maxWidth < 1360) ? 4 : 3,
+                        child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(kBorderRadius),
+                              bottomRight: Radius.circular(kBorderRadius),
+                            ),
+                            child:
+                                Sidebar(data: controller.getSelectedProject())),
+                      ),
+                      // #####
+                      // ##### MAIN CODE SECTION #####
+                      // #####
+                      Flexible(
                         flex: 9,
                         child: Column(
                           children: [
                             const SizedBox(height: kSpacing),
                             _buildHeader(),
                             const SizedBox(height: kSpacing * 2),
-                            // _buildProgress(),
-                            // const SizedBox(height: kSpacing * 2),
                             buildAvaiTrsSection(
                               crossAxisCount: 6,
                               crossAxisCellCount:
                                   (constraints.maxWidth < 1360) ? 3 : 2,
                             ),
-                            const SizedBox(height: kSpacing * 2),
-                            // _buildActiveProject(
-                            //   data: controller.getActiveProject(),
-                            //   crossAxisCount: 6,
-                            //   crossAxisCellCount: (constraints.maxWidth < 1360) ? 3 : 2,
-                            // ),
-                            // const SizedBox(height: kSpacing),
                           ],
                         ),
-                      );
-                    } else if (snapshot.data == "cart") {
-                      return Flexible(
+                      ),
+                      // #####
+                      // ##### PROFIL CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: 4,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kSpacing / 2),
+                            _buildProfile(),
+                            const Divider(thickness: 1),
+                            // bottomBarTitle(),
+                            // bottomBarButton(),
+                            const SizedBox(height: kSpacing),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (snapshot.data == "cart") {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // #####
+                      // ##### NAVBAR CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: (constraints.maxWidth < 1360) ? 4 : 3,
+                        child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(kBorderRadius),
+                              bottomRight: Radius.circular(kBorderRadius),
+                            ),
+                            child:
+                                Sidebar(data: controller.getSelectedProject())),
+                      ),
+                      // #####
+                      // ##### MAIN CODE SECTION #####
+                      // #####
+                      Flexible(
                         flex: 9,
                         child: Column(
                           children: [
                             const SizedBox(height: kSpacing),
                             _buildHeader(),
                             const SizedBox(height: kSpacing * 2),
-                            _buildInBasketTrainings(),
-                            const SizedBox(height: kSpacing * 2),
+                            _buildInBasketTrainings()
                           ],
                         ),
-                      );
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  }),
-              Flexible(
-                flex: 4,
-                child: Column(
-                  children: [
-                    const SizedBox(height: kSpacing / 2),
-                    _buildProfile(),
-                    const Divider(thickness: 1),
-                    // const SizedBox(height: kSpacing),
-                    // _buildTeamMember(data: controller.getMember()),
-                    // const SizedBox(height: kSpacing),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-                    //   child: GetPremiumCard(onPressed: () {}),
-                    // ),
-                    // const SizedBox(height: kSpacing),
-                    // const Divider(thickness: 1),
-                    // const SizedBox(height: kSpacing),
-                    // _buildRecentMessages(data: controller.getChatting()),
-                  ],
-                ),
-              )
-            ],
-          );
+                      ),
+                      // #####
+                      // ##### PROFIL CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: 4,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kSpacing / 2),
+                            _buildProfile(),
+                            const Divider(thickness: 1),
+                            bottomBarTitle(),
+                            bottomBarButton(),
+                            const SizedBox(height: kSpacing),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              });
         },
       )),
+    );
+  }
+
+  Widget bottomBarTitle() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Total",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+          ),
+          AnimatedSwitcherWrapper(
+            child: Text(
+              "${controller.totalPrice} DT",
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w900,
+                color: Color(0xFFEC6813),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bottomBarButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(20)),
+          onPressed: () {},
+          child: const Text("Buy Now"),
+        ),
+      ),
     );
   }
 
@@ -229,7 +280,7 @@ class WelcomeScreen extends StatelessWidget {
     Axis headerAxis = Axis.horizontal,
   }) {
     return FutureBuilder<List<TrainingModel>>(
-      future: controller.getTraineesBasket(controller.uid),
+      future: controller.getTraineesBasket(),
       builder:
           (BuildContext context, AsyncSnapshot<List<TrainingModel>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -510,18 +561,7 @@ class WelcomeScreen extends StatelessWidget {
                         isLogged: logSnapshot.data!,
                         data: profiles[0],
                         onPressCart: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => CartScreen(
-                          //       isLogged: logSnapshot.data!,
-                          //       trainingsIDs: profiles[0].trainings!,
-                          //       totalPrice: profiles[0].totalPrice,
-                          //     ),
-                          //   ),
-                          // );
                           controller.streamController.add("cart");
-                          controller.streamController.close();
                         },
                       ),
                     );
@@ -539,37 +579,5 @@ class WelcomeScreen extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Widget _buildTeamMember({required List<ImageProvider> data}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TeamMember(
-            totalMember: data.length,
-            onPressedAdd: () {},
-          ),
-          const SizedBox(height: kSpacing / 2),
-          ListProfilImage(maxImages: 6, images: data),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecentMessages({required List<ChattingCardData> data}) {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-        child: RecentMessages(onPressedMore: () {}),
-      ),
-      const SizedBox(height: kSpacing / 2),
-      ...data
-          .map(
-            (e) => ChattingCard(data: e, onPressed: () {}),
-          )
-          .toList(),
-    ]);
   }
 }

@@ -7,24 +7,18 @@ import 'package:get/get.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/annimations/animated_switcher_wrapper.dart';
-import 'package:theteam_gyp/user-interface/components/active_project_card.dart';
 import 'package:theteam_gyp/user-interface/components/cart_training_card.dart';
-import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
-import 'package:theteam_gyp/user-interface/components/get_premium_card.dart';
-import 'package:theteam_gyp/user-interface/components/list_profil_image.dart';
 import 'package:theteam_gyp/user-interface/components/overview_header.dart';
 import 'package:theteam_gyp/user-interface/components/product_card.dart';
 import 'package:theteam_gyp/user-interface/components/profile_tile.dart';
-import 'package:theteam_gyp/user-interface/components/progress_card.dart';
-import 'package:theteam_gyp/user-interface/components/project_card.dart';
-import 'package:theteam_gyp/user-interface/components/recent_messages.dart';
 import 'package:theteam_gyp/user-interface/components/responsive_builder.dart';
 import 'package:theteam_gyp/user-interface/components/search_field.dart';
+import 'package:theteam_gyp/user-interface/components/selection_button.dart';
 import 'package:theteam_gyp/user-interface/components/sidebar.dart';
-import 'package:theteam_gyp/user-interface/components/team_member.dart';
 import 'package:theteam_gyp/user-interface/components/today_text.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';
+import 'package:theteam_gyp/user-interface/screens/EditProfilePage/EditProfilePage.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -51,7 +45,7 @@ class WelcomeScreen extends StatelessWidget {
           : Drawer(
               child: Padding(
                 padding: const EdgeInsets.only(top: kSpacing),
-                child: Sidebar(data: controller.getSelectedProject()),
+                child: _buildSideBar(),
               ),
             ),
       body: SingleChildScrollView(
@@ -137,8 +131,7 @@ class WelcomeScreen extends StatelessWidget {
                               topRight: Radius.circular(kBorderRadius),
                               bottomRight: Radius.circular(kBorderRadius),
                             ),
-                            child:
-                                Sidebar(data: controller.getSelectedProject())),
+                            child: _buildSideBar()),
                       ),
                       // #####
                       // ##### MAIN CODE SECTION #####
@@ -168,8 +161,6 @@ class WelcomeScreen extends StatelessWidget {
                             const SizedBox(height: kSpacing / 2),
                             _buildProfile(),
                             const Divider(thickness: 1),
-                            // bottomBarTitle(),
-                            // bottomBarButton(),
                             const SizedBox(height: kSpacing),
                           ],
                         ),
@@ -190,8 +181,7 @@ class WelcomeScreen extends StatelessWidget {
                               topRight: Radius.circular(kBorderRadius),
                               bottomRight: Radius.circular(kBorderRadius),
                             ),
-                            child:
-                                Sidebar(data: controller.getSelectedProject())),
+                            child: _buildSideBar()),
                       ),
                       // #####
                       // ##### MAIN CODE SECTION #####
@@ -219,6 +209,47 @@ class WelcomeScreen extends StatelessWidget {
                             const Divider(thickness: 1),
                             bottomBarTitle(),
                             bottomBarButton(),
+                            const SizedBox(height: kSpacing),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (snapshot.data == "profil") {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // #####
+                      // ##### NAVBAR CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: (constraints.maxWidth < 1360) ? 4 : 3,
+                        child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(kBorderRadius),
+                              bottomRight: Radius.circular(kBorderRadius),
+                            ),
+                            child: _buildSideBar()),
+                      ),
+                      // #####
+                      // ##### MAIN CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: 9,
+                        child: Column(
+                          children: const [EditProfilePage()],
+                        ),
+                      ),
+                      // #####
+                      // ##### PROFIL CODE SECTION #####
+                      // #####
+                      Flexible(
+                        flex: 4,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kSpacing / 2),
+                            _buildProfile(),
+                            const Divider(thickness: 1),
                             const SizedBox(height: kSpacing),
                           ],
                         ),
@@ -353,38 +384,6 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress({Axis axis = Axis.horizontal}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: (axis == Axis.horizontal)
-          ? Row(
-              children: [
-                Flexible(
-                  flex: 9,
-                  child: ProgressCard(
-                    data: const ProgressCardData(
-                      totalUndone: 10,
-                      totalTaskInProress: 2,
-                    ),
-                    onPressedCheck: () {},
-                  ),
-                )
-              ],
-            )
-          : Column(
-              children: [
-                ProgressCard(
-                  data: const ProgressCardData(
-                    totalUndone: 100,
-                    totalTaskInProress: 2,
-                  ),
-                  onPressedCheck: () {},
-                )
-              ],
-            ),
-    );
-  }
-
   Widget buildAvaiTrsSection({
     int crossAxisCount = 6,
     int crossAxisCellCount = 2,
@@ -469,33 +468,6 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActiveProject({
-    required List<ProjectCardData> data,
-    int crossAxisCount = 6,
-    int crossAxisCellCount = 2,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: ActiveProjectCard(
-        onPressedSeeAll: () {},
-        child: StaggeredGridView.countBuilder(
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: crossAxisCount,
-          itemCount: data.length,
-          addAutomaticKeepAlives: false,
-          mainAxisSpacing: kSpacing,
-          crossAxisSpacing: kSpacing,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return ProjectCard(data: data[index]);
-          },
-          staggeredTileBuilder: (int index) =>
-              StaggeredTile.fit(crossAxisCellCount),
-        ),
-      ),
-    );
-  }
-
   Widget _buildProfile() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kSpacing),
@@ -577,6 +549,63 @@ class WelcomeScreen extends StatelessWidget {
             }
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildSideBar() {
+    return SingleChildScrollView(
+      controller: ScrollController(),
+      child: Column(
+        children: [
+          const SizedBox(height: kSpacing),
+          SelectionButton(
+            data: [
+              SelectionButtonData(
+                activeIcon: EvaIcons.grid,
+                icon: EvaIcons.gridOutline,
+                label: "Dashboard",
+              ),
+              SelectionButtonData(
+                activeIcon: EvaIcons.archive,
+                icon: EvaIcons.archiveOutline,
+                label: "Reports",
+              ),
+              SelectionButtonData(
+                activeIcon: EvaIcons.calendar,
+                icon: EvaIcons.calendarOutline,
+                label: "Calendar",
+              ),
+              SelectionButtonData(
+                activeIcon: EvaIcons.email,
+                icon: EvaIcons.emailOutline,
+                label: "Email",
+                totalNotif: 20,
+              ),
+              SelectionButtonData(
+                activeIcon: EvaIcons.person,
+                icon: EvaIcons.personOutline,
+                label: "Profil",
+              ),
+              SelectionButtonData(
+                activeIcon: EvaIcons.settings,
+                icon: EvaIcons.settingsOutline,
+                label: "Setting",
+              ),
+            ],
+            onSelected: (index, value) {
+              if (index == 0) {
+                controller.streamController.add("welcome");
+              } else if (index == 1) {
+                controller.streamController.add("cart");
+              } else {
+                controller.streamController.add("profil");
+              }
+            },
+          ),
+          const Divider(thickness: 1),
+          const SizedBox(height: kSpacing * 2),
+        ],
       ),
     );
   }

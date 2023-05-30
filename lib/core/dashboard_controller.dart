@@ -12,13 +12,8 @@ import 'package:theteam_gyp/user-interface/constans/assets_path.dart';
 import 'package:theteam_gyp/user-interface/utils/training_category.dart';
 
 class DashboardController {
-  final int navIndex = 0;
-
   // Create a StreamController
   StreamController<String> streamController = StreamController<String>();
-
-  // Get the stream from the StreamController
-  late Stream<String> stream = streamController.stream;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;

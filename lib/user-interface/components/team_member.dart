@@ -20,7 +20,6 @@ class TeamMember extends StatelessWidget {
           text: TextSpan(
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: kFontColorPallets[0],
             ),
             children: [
               const TextSpan(text: "Team Member "),
@@ -28,7 +27,6 @@ class TeamMember extends StatelessWidget {
                 text: "($totalMember)",
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: kFontColorPallets[2],
                 ),
               ),
             ],

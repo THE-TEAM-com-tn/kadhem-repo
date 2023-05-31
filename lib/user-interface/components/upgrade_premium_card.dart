@@ -93,16 +93,13 @@ class _Info extends StatelessWidget {
         text: TextSpan(
           style: TextStyle(
             fontSize: 10,
-            color: kFontColorPallets[0],
             fontWeight: FontWeight.w200,
           ),
           children: [
             const TextSpan(text: "10\$ "),
             TextSpan(
               text: "per month",
-              style: TextStyle(
-                color: kFontColorPallets[1],
-              ),
+              style: TextStyle(),
             ),
           ],
         ),

@@ -28,7 +28,6 @@ class SearchField extends StatelessWidget {
         if (onSearch != null) onSearch!(controller.text);
       },
       textInputAction: TextInputAction.search,
-      style: TextStyle(color: kFontColorPallets[1]),
     );
   }
 }

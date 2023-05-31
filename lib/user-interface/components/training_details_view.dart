@@ -14,6 +14,7 @@ class TrainingDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+        backgroundColor: Color.fromARGB(0, 1, 1, 1),
         scrollable: true,
         content: Padding(
           padding: const EdgeInsets.symmetric(horizontal: kSpacing),

@@ -23,13 +23,11 @@ class ProfilTile extends StatelessWidget {
             leading: CircleAvatar(backgroundImage: NetworkImage(data!.photo)),
             title: Text(
               data!.name,
-              style: TextStyle(fontSize: 14, color: kFontColorPallets[0]),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
               data!.email,
-              style: TextStyle(fontSize: 12, color: kFontColorPallets[2]),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

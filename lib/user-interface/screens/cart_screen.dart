@@ -41,7 +41,6 @@ class CartScreen extends StatelessWidget {
     controller.streamController.add("cart");
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: globalBackground,
       // drawer: (ResponsiveBuilder.isDesktop(context))
       //     ? null
       //     : Drawer(

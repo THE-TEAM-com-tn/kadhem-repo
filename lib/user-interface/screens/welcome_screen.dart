@@ -14,7 +14,6 @@ import 'package:theteam_gyp/user-interface/components/profile_tile.dart';
 import 'package:theteam_gyp/user-interface/components/responsive_builder.dart';
 import 'package:theteam_gyp/user-interface/components/search_field.dart';
 import 'package:theteam_gyp/user-interface/components/selection_button.dart';
-import 'package:theteam_gyp/user-interface/components/sidebar.dart';
 import 'package:theteam_gyp/user-interface/components/today_text.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';

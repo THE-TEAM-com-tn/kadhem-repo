@@ -57,7 +57,6 @@ class TrainingDetailsCard extends StatelessWidget {
                 ),
                 Text(
                   data.categories.join(" - "),
-                  style: TextStyle(color: kFontColorPallets[1]),
                 ),
                 const SizedBox(height: kSpacing),
                 ElevatedButton(

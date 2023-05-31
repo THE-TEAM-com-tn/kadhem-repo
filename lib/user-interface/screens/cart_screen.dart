@@ -38,9 +38,9 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.streamController.add("cart");
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: globalBackground,
       // drawer: (ResponsiveBuilder.isDesktop(context))
       //     ? null
       //     : Drawer(
@@ -183,7 +183,7 @@ class CartScreen extends StatelessWidget {
     Axis headerAxis = Axis.horizontal,
   }) {
     return FutureBuilder<List<TrainingModel>>(
-      future: controller.getTrainingsListById(trainingsIDs),
+      future: null,
       builder:
           (BuildContext context, AsyncSnapshot<List<TrainingModel>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -240,9 +240,9 @@ class CartScreen extends StatelessWidget {
 
           for (var doc in snapshot.data!.docs) {
             // Access the fields of the document
-            var name = (doc.data()! as Map)['lastName'];
+            var name = (doc.data()! as Map)['name'];
             var email = (doc.data()! as Map)['email'];
-            var photo = (doc.data()! as Map)['profile_picture'];
+            var photo = (doc.data()! as Map)['photo'];
             var trainings = (doc.data()! as Map)['inBasket']['trainings'];
             var totalPrice = (doc.data()! as Map)['inBasket']['totalPrice'];
 

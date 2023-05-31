@@ -50,7 +50,6 @@ class SettingsScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: kSpacing),
                 child: Sidebar(
-                  data: controller.getSelectedProject(),
                   indexedIn: 5,
                 ),
               ),
@@ -150,7 +149,6 @@ class SettingsScreen extends StatelessWidget {
                       bottomRight: Radius.circular(kBorderRadius),
                     ),
                     child: Sidebar(
-                      data: controller.getSelectedProject(),
                       indexedIn: 5,
                     )),
               ),
@@ -453,7 +451,7 @@ class SettingsScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => CartScreen(
                                 isLogged: logSnapshot.data!,
-                                trainingsIDs: profiles[0].trainings,
+                                trainingsIDs: profiles[0].trainings!,
                                 totalPrice: profiles[0].totalPrice,
                               ),
                             ),

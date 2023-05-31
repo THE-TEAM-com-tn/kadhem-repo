@@ -1,7 +1,7 @@
 // lib/pages/login_or_register_page.dart
 import 'package:flutter/material.dart';
 import 'package:theteam_gyp/user-interface/screens/login_screen.dart';
-import 'package:theteam_gyp/user-interface/screens/register_page.dart';
+import '../admin-interface/register_page.dart';
 
 class LoginOrRegisterPage extends StatefulWidget {
   const LoginOrRegisterPage({Key? key}) : super(key: key);

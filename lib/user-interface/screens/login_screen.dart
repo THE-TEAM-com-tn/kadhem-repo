@@ -1,16 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:theteam_gyp/admin-interface/AdminDashboardPage.dart';
+import 'package:theteam_gyp/admin-interface/welcome_screen.dart';
 import 'package:theteam_gyp/user-interface/constans/assets_path.dart';
-import 'package:theteam_gyp/user-interface/screens/register_page.dart';
 import 'package:theteam_gyp/user-interface/screens/welcome_screen.dart';
 import '../components/my_button.dart';
 import '../components/my_textfield.dart';
-import '../components/square_tile.dart';
-// import 'package:lottie/lottie.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import '../../core/services/google_auth_service.dart';
 import 'forgot_pwd_screen.dart';
 import 'package:flutter/services.dart';
 
@@ -148,25 +143,40 @@ class _LoginPageState extends State<LoginPage> {
       // You can access the logged-in user details using userCredential.user
       print('User logged in: ${userCredential.user!.uid}');
 
-      String userId = userCredential.user!.uid;
+      // String userId = userCredential.user!.uid;
 
-      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(userId)
-          .get();
+      // DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+      //     .collection('Users')
+      //     .doc(userId)
+      //     .get();
 
-      var role = (userSnapshot.data() as Map<String, dynamic>)['role'];
-      var user = userSnapshot.data() as Map<String, dynamic>;
+      // var role = (userSnapshot.data() as Map<String, dynamic>)['role'];
+      // var user = userSnapshot.data() as Map<String, dynamic>;
 
-      if (role.toString() == "admin") {
-        print(
-            "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
-        Navigator.pushReplacementNamed(context, '/admins');
-      } else {
-        print(
-            "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
-        Navigator.pushReplacementNamed(context, '/');
-      }
+      // if (role.toString() == "admin") {
+      //   print(
+      //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => DashboardAdminSummaryWidget()),
+      );
+      // } else {
+      //   print(
+      //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => WelcomeScreen()),
+      //   );
+      // }
+      // if (role.toString() == "admin") {
+      //   print(
+      //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
+      //   Navigator.pushReplacementNamed(context, '/admins');
+      // } else {
+      //   print(
+      //       "##### ROLE-LOG ::: login_screen => signUserIn() ::: Logged in as $role");
+      //   Navigator.pushReplacementNamed(context, '/');
+      // }
     } catch (e) {
       // Login failed
       print('Login error: $e');
@@ -452,12 +462,13 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(width: 4),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegisterPage(onTap: () {})),
-                                );
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           RegisterPage(onTap: () {})
+                                //           ),
+                                // );
                               },
                               child: const Text(
                                 'Register now',

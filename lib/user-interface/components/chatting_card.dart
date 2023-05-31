@@ -46,14 +46,12 @@ class ChattingCard extends StatelessWidget {
             data.name,
             style: TextStyle(
               fontSize: 13,
-              color: kFontColorPallets[0],
             ),
           ),
           subtitle: Text(
             data.lastMessage,
             style: TextStyle(
               fontSize: 11,
-              color: kFontColorPallets[2],
             ),
           ),
           onTap: onPressed,

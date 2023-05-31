@@ -110,8 +110,7 @@ class _Button extends StatelessWidget {
     return Icon(
       iconData,
       size: 20,
-      color:
-          (!selected) ? kFontColorPallets[1] : Theme.of(context).primaryColor,
+      color: Theme.of(context).primaryColor,
     );
   }
 
@@ -119,8 +118,7 @@ class _Button extends StatelessWidget {
     return Text(
       data,
       style: TextStyle(
-        color:
-            (!selected) ? kFontColorPallets[1] : Theme.of(context).primaryColor,
+        color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.w600,
         letterSpacing: .8,
         fontSize: 13,
@@ -135,7 +133,6 @@ class _Button extends StatelessWidget {
             width: 30,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: kNotifColor,
               borderRadius: BorderRadius.circular(15),
             ),
             alignment: Alignment.center,

@@ -1,13 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:octo_image/octo_image.dart';
 import 'package:theteam_gyp/admin-interface/login_or_register_page.dart';
 import 'package:theteam_gyp/admin-interface/trainings/screens/admin_list_trainings.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/user-interface/constans/mycolors.dart';
-import 'package:theteam_gyp/user-interface/themes/app_theme.dart';
 
 class DashboardAdminSummaryWidget extends StatelessWidget {
   DashboardAdminSummaryWidget({super.key});
@@ -96,30 +93,31 @@ class DashboardAdminSummaryWidget extends StatelessWidget {
                       width: 2, // set the border width
                     ),
                   ),
-                  child: FutureBuilder(
-                      future: controller.getUserById(),
-                      builder: (BuildContext context, snapshot) {
-                        return ClipOval(
-                          child: OctoImage(
-                              placeholderBuilder:
-                                  OctoPlaceholder.blurHash('BwH2.zxupJyGawt8'),
-                              image: NetworkImage(
-                                  snapshot.data!["profile_picture"]),
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                              errorBuilder: OctoError.circleAvatar(
-                                backgroundColor:
-                                    AppTheme.basic.secondaryHeaderColor,
-                                text: Text(
-                                  "Profile",
-                                  style: MyColors().labelSmall,
-                                ),
-                              )
-                              //progressIndicatorBuilder: OctoProgressIndicator.circularProgressIndicator(),
-                              ),
-                        );
-                      }),
+
+                  // child: FutureBuilder(
+                  //     future: controller.getUserById(),
+                  //     builder: (BuildContext context, snapshot) {
+                  //       return ClipOval(
+                  //         child: OctoImage(
+                  //             placeholderBuilder:
+                  //                 OctoPlaceholder.blurHash('BwH2.zxupJyGawt8'),
+                  //             image: NetworkImage(
+                  //                 snapshot.data!["profile_picture"]),
+                  //             width: 50,
+                  //             height: 50,
+                  //             fit: BoxFit.cover,
+                  //             errorBuilder: OctoError.circleAvatar(
+                  //               backgroundColor:
+                  //                   AppTheme.basic.secondaryHeaderColor,
+                  //               text: Text(
+                  //                 "Profile",
+                  //                 style: MyColors().labelSmall,
+                  //               ),
+                  //             )
+                  //             //progressIndicatorBuilder: OctoProgressIndicator.circularProgressIndicator(),
+                  //             ),
+                  //       );
+                  //     }),
                 ),
               ),
             ),

@@ -84,7 +84,6 @@ class _RichText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(
-          color: kFontColorPallets[0],
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
@@ -93,7 +92,6 @@ class _RichText extends StatelessWidget {
           TextSpan(
             text: value2,
             style: TextStyle(
-              color: kFontColorPallets[0],
               fontWeight: FontWeight.w100,
             ),
           ),

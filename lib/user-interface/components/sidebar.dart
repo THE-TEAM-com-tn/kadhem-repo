@@ -1,17 +1,17 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:theteam_gyp/user-interface/components/project_card.dart';
+import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/user-interface/components/selection_button.dart';
+import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 
 class Sidebar extends StatelessWidget {
-  const Sidebar({
-    required this.data,
+  Sidebar({
     Key? key,
     this.indexedIn,
   }) : super(key: key);
 
-  final ProjectCardData data;
   final int? indexedIn;
+  DashboardController controller = DashboardController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class Sidebar extends StatelessWidget {
         controller: ScrollController(),
         child: Column(
           children: [
+            const SizedBox(height: kSpacing),
             SelectionButton(
               initialSelected: indexedIn!,
               data: [
@@ -57,6 +58,19 @@ class Sidebar extends StatelessWidget {
                 ),
               ],
               onSelected: (index, value) {
+                if (index == 0) {
+                  controller.streamController.add("welcome");
+                  print(
+                      "##### NAV INDEX ::: $index ${controller.streamController.stream}");
+                } else if (index == 1) {
+                  controller.streamController.add("cart");
+                  print(
+                      "##### NAV INDEX ::: $index ${controller.streamController.stream}");
+                } else {
+                  controller.streamController.add("profil");
+                  print(
+                      "##### NAV INDEX ::: $index ${controller.streamController.stream}");
+                }
                 print(
                     "##### LOG ::: sidebar => SelectionButton onSelected() ::: $index ${value.label}");
                 var indexx = index;
@@ -70,6 +84,8 @@ class Sidebar extends StatelessWidget {
                 }
               },
             ),
+            const Divider(thickness: 1),
+            const SizedBox(height: kSpacing * 2),
             // const Divider(thickness: 1),
             // const SizedBox(height: kSpacing * 2),
             // UpgradePremiumCard(

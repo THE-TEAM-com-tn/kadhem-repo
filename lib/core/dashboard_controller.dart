@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:theteam_gyp/core/models/profile_model.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
 import 'package:theteam_gyp/user-interface/components/project_card.dart';
@@ -9,6 +12,9 @@ import 'package:theteam_gyp/user-interface/constans/assets_path.dart';
 import 'package:theteam_gyp/user-interface/utils/training_category.dart';
 
 class DashboardController {
+  // Create a StreamController
+  StreamController<String> streamController = StreamController<String>();
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -37,9 +43,29 @@ class DashboardController {
   }
 
   // Get list of trainings by a list of IDs
-  Future<List<TrainingModel>> getTrainingsListById(trainingsIDs) async {
-    print(
-        "##### cart_controller.dart => _getTrainingsListById() ::: $trainingsIDs");
+  late String? uid;
+  late dynamic totalPrice = 0;
+
+  void getUserID() async {
+    uid = _auth.currentUser!.uid;
+  }
+
+  // Get trainings that their IDs are in basket in user's entity ##### FUNCTION
+  Future<List<TrainingModel>> getTraineesBasket() async {
+    // Get loggedin user's id
+    final String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    // Get loggedin trainee's doc
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('trainees').doc(uid).get();
+
+    Map<String, dynamic>? data = snapshot.data();
+
+    Map<String, dynamic> basket = data!['inBasket'];
+    totalPrice = basket['totalPrice'];
+
+    List<dynamic> trainingsIDs = basket['trainings'];
+    print("##### LOG ::: controller ::: getTraineesBasket ::: $trainingsIDs");
 
     List<TrainingModel> trainingModels = [];
 
@@ -74,11 +100,13 @@ class DashboardController {
     return trainingModels;
   }
 
+  // See if there is a user logged in or not ##### FUNCTION
   Future<bool> isLoggedIn() async {
-    final User? user = FirebaseAuth.instance.currentUser;
+    final User? user = _auth.currentUser;
     return user != null;
   }
 
+  // Get all available trainings in DB ##### FUNCTION
   Future<List<TrainingModel>> getTrainingsData() async {
     final snapshot = await _firestore.collection('trainings').get();
     final data = snapshot.docs.map((doc) {
@@ -103,12 +131,34 @@ class DashboardController {
   // Data
   Stream<QuerySnapshot<Object?>> getProfile() {
     // Get a reference to the profiles collection
-    CollectionReference profiles = _firestore.collection('Users');
+    CollectionReference profiles = _firestore.collection('trainees');
 
     // Retrieve the profile document
     Stream<QuerySnapshot> snapshot = profiles.snapshots();
 
     return snapshot;
+  }
+
+  // Get user's details from DB ##### FUNCTION
+  Future<ProfileModel> getUserDetails() async {
+    final userid = _auth.currentUser!.uid;
+    final snapshot = await _firestore.collection('trainees').doc(userid).get();
+    final userdata = snapshot.data();
+    final phone = userdata!['phone'];
+    final company = userdata!['company'];
+    final address = userdata!['address'];
+    final bio = userdata!['bio'];
+    final name = userdata!['name'];
+    final email = userdata!['email'];
+    final photo = userdata!['photo'];
+    return ProfileModel(
+        phone: phone,
+        company: company,
+        address: address,
+        bio: bio,
+        name: name,
+        email: email,
+        photo: photo);
   }
 
   List<TaskCardData> getAllTask() {

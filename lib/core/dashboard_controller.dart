@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:theteam_gyp/core/models/course_model.dart';
+import 'package:theteam_gyp/core/models/lesson_model.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/components/chatting_card.dart';
@@ -17,6 +19,37 @@ class DashboardController {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  late List<LessonModel> lessonsList = [];
+
+  getLessons() async {
+    final snapshot = await _firestore.collection('lessons').get();
+    final data = snapshot.docs.map((doc) {
+      final docData = doc.data();
+      print("##### controller ::: getLessons ::: $docData['title']");
+      return LessonModel(
+        id: doc.id,
+        title: docData['title'],
+        content: docData['content'],
+      );
+    }).toList();
+    lessonsList = data;
+  }
+
+  Future<List<CourseModel>> getCourses() async {
+    getLessons();
+    final snapshot = await _firestore.collection('courses').get();
+    final data = snapshot.docs.map((doc) {
+      final docData = doc.data();
+      return CourseModel(
+        id: doc.id,
+        title: docData['title'],
+        description: docData['description'],
+        lessons: lessonsList,
+      );
+    }).toList();
+    return data;
+  }
 
   // Get user by id
   Future<DocumentSnapshot<Map<String, dynamic>>?> getUserById() async {
@@ -145,12 +178,12 @@ class DashboardController {
     final snapshot = await _firestore.collection('trainees').doc(userid).get();
     final userdata = snapshot.data();
     final phone = userdata!['phone'];
-    final company = userdata!['company'];
-    final address = userdata!['address'];
-    final bio = userdata!['bio'];
-    final name = userdata!['name'];
-    final email = userdata!['email'];
-    final photo = userdata!['photo'];
+    final company = userdata['company'];
+    final address = userdata['address'];
+    final bio = userdata['bio'];
+    final name = userdata['name'];
+    final email = userdata['email'];
+    final photo = userdata['photo'];
     return ProfileModel(
         phone: phone,
         company: company,

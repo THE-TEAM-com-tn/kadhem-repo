@@ -7,6 +7,7 @@ class ProfileModel {
   final String? company;
   final String? address;
   final String? bio;
+  final String? role;
   final double? totalPrice;
   final List<dynamic>? trainings;
 
@@ -19,6 +20,7 @@ class ProfileModel {
       this.company,
       this.address,
       this.bio,
+      this.role,
       this.totalPrice,
       this.trainings});
 

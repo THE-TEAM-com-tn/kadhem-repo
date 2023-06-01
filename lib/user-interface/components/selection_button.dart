@@ -110,7 +110,7 @@ class _Button extends StatelessWidget {
     return Icon(
       iconData,
       size: 20,
-      color: Theme.of(context).primaryColor,
+      // color: Theme.of(context).primaryColor,
     );
   }
 
@@ -118,7 +118,7 @@ class _Button extends StatelessWidget {
     return Text(
       data,
       style: TextStyle(
-        color: Theme.of(context).primaryColor,
+        // color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.w600,
         letterSpacing: .8,
         fontSize: 13,
@@ -139,7 +139,7 @@ class _Button extends StatelessWidget {
             child: Text(
               (total >= 100) ? "99+" : "$total",
               style: const TextStyle(
-                color: Colors.white,
+                // color: Colors.white,
                 fontSize: 10,
                 fontWeight: FontWeight.w600,
               ),

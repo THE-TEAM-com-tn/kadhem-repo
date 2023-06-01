@@ -114,10 +114,12 @@ class OverviewHeader extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            backgroundColor: !selected
+                ? Color.fromARGB(255, 19, 215, 84)
+                : Color.fromARGB(255, 34, 151, 73)),
         child: Text(
           label,
         ),

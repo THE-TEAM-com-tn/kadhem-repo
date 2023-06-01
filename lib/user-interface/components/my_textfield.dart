@@ -6,9 +6,9 @@ class MyTextField extends StatefulWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
-   void Function(String)? onchanged = (value) {}  ; 
+  void Function(String)? onchanged = (value) {};
 
-   MyTextField({
+  MyTextField({
     Key? key,
     this.onchanged,
     required this.controller,
@@ -20,39 +20,41 @@ class MyTextField extends StatefulWidget {
   @override
   State<MyTextField> createState() => _MyTextFieldState();
 }
+
 bool _passwordVisible = true;
+
 class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
-        onChanged:  widget.onchanged ,
+        onChanged: widget.onchanged,
         controller: widget.controller,
         obscureText: widget.obscureText ? _passwordVisible : false,
         keyboardType: widget.keyboardType, // Add this line
         decoration: InputDecoration(
-          suffixIcon: widget.obscureText? IconButton(
-              icon:  Icon(
-                !_passwordVisible ? Icons.visibility : Icons.visibility_off,
-              ) ,
-              onPressed: () {
-                setState(() {
-                _passwordVisible = !_passwordVisible;  
-                });
-                
-              }) : null ,
+          suffixIcon: widget.obscureText
+              ? IconButton(
+                  icon: Icon(
+                    !_passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  })
+              : null,
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
+              // borderSide: BorderSide(color: Colors.white),
+              ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-          ),
-          fillColor: Colors.grey.shade200,
+              // borderSide: BorderSide(color: Colors.grey.shade400),
+              ),
+          // fillColor: Colors.grey.shade200,
           filled: true,
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: Colors.grey[500]),
+          // hintStyle: TextStyle(color: Colors.grey[500]),
         ),
         validator: widget.validator,
       ),

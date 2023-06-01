@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
+import 'package:theteam_gyp/core/models/course_model.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
 import 'package:theteam_gyp/user-interface/annimations/animated_switcher_wrapper.dart';
 import 'package:theteam_gyp/user-interface/components/cart_training_card.dart';
@@ -18,7 +19,7 @@ import 'package:theteam_gyp/user-interface/components/today_text.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';
 import 'package:theteam_gyp/user-interface/screens/EditProfilePage/EditProfilePage.dart';
-import 'package:theteam_gyp/user-interface/trainings/trainings_main.dart';
+import 'package:theteam_gyp/user-interface/trainings/expantion_panel.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
@@ -278,7 +279,7 @@ class WelcomeScreen extends StatelessWidget {
                       Flexible(
                         flex: 9,
                         child: Column(
-                          children: const [TrainingsMain()],
+                          children: [_buildCourses()],
                         ),
                       ),
                       // #####
@@ -306,6 +307,26 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildCourses() {
+    return FutureBuilder(
+      future: controller.getCourses(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(0, 100, 0, 20),
+              child: Course(courses: snapshot.data!),
+            );
+          }
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
   Widget bottomBarTitle() {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
@@ -323,7 +344,7 @@ class WelcomeScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.w900,
-                color: Color(0xFFEC6813),
+                // color: Color(0xFFEC6813),
               ),
             ),
           ),

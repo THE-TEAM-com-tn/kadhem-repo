@@ -63,6 +63,8 @@ dependencies:
   cached_network_image: ^3.2.3
   firebase_storage: ^11.2.1
   multiselect: ^0.1.0
+  provider: ^6.0.5
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:

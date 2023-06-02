@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:provider/provider.dart';
 import 'package:theteam_gyp/core/models/course_model.dart';
 import 'package:theteam_gyp/core/models/lesson_model.dart';
+import 'package:theteam_gyp/user-interface/quiz/controller/index_controller.dart';
+import 'package:theteam_gyp/user-interface/quiz/view/screens/home_screen.dart';
 
 class Course extends StatefulWidget {
   const Course({Key? key, required this.courses}) : super(key: key);
@@ -33,6 +36,10 @@ class _CourseState extends State<Course> {
     );
   }
 
+  // Widget _renderQuizzes() {
+
+  // }
+
   Widget _renderLessons(List<LessonModel> lessons) {
     return ExpansionPanelList.radio(
         children: lessons.map<ExpansionPanelRadio>((LessonModel lesson) {
@@ -58,7 +65,16 @@ class _CourseState extends State<Course> {
           },
           body: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListTile(subtitle: _renderLessons(course.lessons)),
+            child: Column(
+              children: [
+                ListTile(subtitle: _renderLessons(course.lessons)),
+                ListTile(
+                  subtitle: ChangeNotifierProvider<IndexController>(
+                      create: (context) => IndexController(),
+                      child: FirstPage()),
+                )
+              ],
+            ),
           ),
           value: course.title);
     }).toList());

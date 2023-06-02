@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:theteam_gyp/core/dashboard_controller.dart';
 import 'package:theteam_gyp/core/models/course_model.dart';
 import 'package:theteam_gyp/core/models/training_model.dart';
@@ -18,6 +19,8 @@ import 'package:theteam_gyp/user-interface/components/selection_button.dart';
 import 'package:theteam_gyp/user-interface/components/today_text.dart';
 import 'package:theteam_gyp/user-interface/constans/app_constants.dart';
 import 'package:theteam_gyp/core/models/profile_model.dart';
+import 'package:theteam_gyp/user-interface/quiz/controller/index_controller.dart';
+import 'package:theteam_gyp/user-interface/quiz/view/screens/home_screen.dart';
 import 'package:theteam_gyp/user-interface/screens/EditProfilePage/EditProfilePage.dart';
 import 'package:theteam_gyp/user-interface/trainings/expantion_panel.dart';
 
@@ -279,7 +282,9 @@ class WelcomeScreen extends StatelessWidget {
                       Flexible(
                         flex: 9,
                         child: Column(
-                          children: [_buildCourses()],
+                          children: [
+                            _buildCourses(),
+                          ],
                         ),
                       ),
                       // #####

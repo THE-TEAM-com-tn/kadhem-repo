@@ -1,6 +1,6 @@
 # theteam_gyp
 
-A new Flutter project.
+Graduation Year Project: E-Learning Flutter & Firebase template
 
 ## Getting Started
 
@@ -14,3 +14,12 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Branch Goals
+
+Attempting to add a quiz mechanism to the Trainings Enrollment section
+
+- Quiz part functions correctly
+- Quiz part functions correctly
+
+### Ready to be dunamic in Firestore databasing

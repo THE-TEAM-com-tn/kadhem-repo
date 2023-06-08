@@ -1,4 +1,5 @@
-```
+```@mermaid
+
 classDiagram
     hide circle
 
@@ -80,4 +81,3 @@ classDiagram
     Course "1" o-- "0..*" Lesson
     Course "1" o-- "0..*" Quiz
     Quiz "1" --* "0..*" Question
-    ```

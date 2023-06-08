@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class IndexController extends ChangeNotifier {
   int currentQuestionIndex = 1;
-  List<int> selectedOptionList = [0, 1, 2, 3, 4];
+  List<int> selectedOptionList = [0, 1, 2, 3];
   int optionSelected = 0;
 
   void updateIndexForQuestion() {

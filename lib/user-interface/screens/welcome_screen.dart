@@ -43,6 +43,7 @@ class WelcomeScreen extends StatelessWidget {
     controller.streamController.add("welcome");
     print("##### Loaded ::: WelcomeScreen ::: Widget");
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 222, 222, 222),
       key: scaffoldKey,
       drawer: (ResponsiveBuilder.isDesktop(context))
           ? null

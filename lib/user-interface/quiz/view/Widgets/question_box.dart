@@ -10,7 +10,6 @@ class QuestionBox extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 17.92, right: 80),
       child: SizedBox(
-        
         width: 270,
         height: 70,
         child: Text(

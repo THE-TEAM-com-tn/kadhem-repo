@@ -26,7 +26,7 @@ class DashboardController {
     final snapshot = await _firestore.collection('lessons').get();
     final data = snapshot.docs.map((doc) {
       final docData = doc.data();
-      print("##### controller ::: getLessons ::: $docData['title']");
+      // print("##### controller ::: getLessons ::: $docData['title']");
       return LessonModel(
         id: doc.id,
         title: docData['title'],
@@ -114,17 +114,17 @@ class DashboardController {
           documentSnapshot.data() as Map<String, dynamic>;
 
       TrainingModel trainingModel = TrainingModel(
-        id: documentSnapshot.id,
-        title: data['title'],
-        description: data['description'],
-        categories: List<String>.from(data['categories']),
-        author: data['author'],
-        duration: data['duration'],
-        price: data['price'].toDouble(),
-        trailerVid: data['trailerVid'],
-        image: data['image'],
+        id: documentSnapshot.id ?? 'azeezaazeeza',
+        title: data['name'] ?? '',
+        description: data['description'] ?? '',
+        categories: List<String>.from(data['categories']) ?? [],
+        author: data['author'] ?? '',
+        duration: data['duration'] ?? '',
+        price: data['price'].toDouble() ?? '',
+        trailerVid: data['trailerVid'] ?? '',
+        image: data['image'] ?? '',
         tags: data['tags'] != [] ? List<String>.from(data['tags']) : [],
-        creationDate: data['creationDate'],
+        creationDate: data['creationDate'] ?? '',
       );
 
       trainingModels.add(trainingModel);
@@ -146,16 +146,17 @@ class DashboardController {
       final docData = doc.data();
       return TrainingModel(
         id: doc.id,
-        title: docData['title'],
-        description: docData['description'],
-        categories: List<String>.from(docData['categories']),
-        author: docData['author'],
-        duration: docData['duration'],
-        price: docData['price'],
-        trailerVid: docData['trailerVid'],
-        image: docData['image'],
-        tags: List<String>.from(docData['tags']),
-        creationDate: docData['creationDate'],
+        title: docData['name'] ?? '',
+        description: docData['description'] ?? '',
+        categories: List<String>.from(docData['categories']) ?? [],
+        author: docData['author'] ?? '',
+        duration: docData['duration'] ?? '',
+        price: docData['price'] ?? '',
+        trailerVid: docData['trailerVid'] ?? '',
+        image: docData['image'] ?? '',
+        tags: List<String>.from(docData['tags']) ?? [],
+        creationDate: docData['creationDate'] ??
+            Timestamp.fromMicrosecondsSinceEpoch(999999999),
       );
     }).toList();
     return data;
@@ -177,13 +178,14 @@ class DashboardController {
     final userid = _auth.currentUser!.uid;
     final snapshot = await _firestore.collection('trainees').doc(userid).get();
     final userdata = snapshot.data();
-    final phone = userdata!['phone'];
-    final company = userdata['company'];
-    final address = userdata['address'];
-    final bio = userdata['bio'];
-    final name = userdata['name'];
-    final email = userdata['email'];
-    final photo = userdata['photo'];
+    final phone = '55 987 545';
+    final company = 'The TEAM';
+    final address = 'Tunisia, Tunis, El Manar 2';
+    final bio = 'Dev';
+    final name = 'Kadhem SELLAMI';
+    final email = 'kadhemsellami@outlook.com';
+    final photo =
+        'https://firebasestorage.googleapis.com/v0/b/fir-cruddemo-2bf79.appspot.com/o/TestFolder%2Fac90d887-6fe4-423e-b889-8f90a612ebf5?alt=media&token=4e812fc6-c65c-4385-9abf-fddd2207a9bc';
     return ProfileModel(
         phone: phone,
         company: company,

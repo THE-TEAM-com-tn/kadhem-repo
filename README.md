@@ -1,84 +1,25 @@
-```@mermaid
+# theteam_gyp
 
-classDiagram
-    hide circle
+Graduation Year Project: E-Learning Flutter & Firebase template
 
-    class Training {
-        id: string
-        name: string
-        description: string
-        duration: Duration
-        categories: ArrayList&lt;Category&gt;
-        tags: ArrayList&lt;Tag&gt;
-        price: double
-        author: Admin
-        courses: ArrayList&lt;Course&gt;
-        creation_date: date
-    }
+## Getting Started
 
-    class Duration {
-        days: int
-        hours: int
-    }
+This project is a starting point for a Flutter application.
 
-    class Category {
-        id: string
-        name: string
-        description: string
-    }
+A few resources to get you started if this is your first Flutter project:
 
-    class Tag {
-        id: string
-        label: string
-        description: string
-    }
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-    class User {
-        id: string
-        firstname: string
-        lastname: string
-        email: string
-        hashed_password: string
-        basket: Basket
-    }
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
-    class Admin {}
+## Branch Goals
 
-    class Basket {
-        training: ArrayList&lt;Training&gt;
-        totalPrice: Double
-    }
+Attempting to add a quiz mechanism to the Trainings Enrollment section
 
-    class Course {
-        id: string
-        lessons: ArrayList&lt;Lesson&gt;
-        quizzes: ArrayList&lt;Quiz&gt;
-    }
+- Quiz part functions correctly
+- Quiz part functions correctly
 
-    class Lesson {
-        id: string
-        content: string
-    }
-
-    class Quiz {
-        id: string
-        questions: ArrayList&lt;Question&gt;
-    }
-
-    class Question {
-        question: string
-        answer: string
-    }
-
-    User "0..1" --* "1" Basket
-    Training "0..*" --* "0..*" Basket
-    User <|-- Admin
-    Training "1" o-- "0..*" Admin
-    Duration "1" --* "1" Training
-    Training "0..*" o-- "0..*" Category
-    Training "0..*" o-- "0..*" Tag
-    Training "0..*" o-- "0..*" Course
-    Course "1" o-- "0..*" Lesson
-    Course "1" o-- "0..*" Quiz
-    Quiz "1" --* "0..*" Question
-```
+### Ready to be dunamic in Firestore databasing

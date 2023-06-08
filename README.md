@@ -1,4 +1,5 @@
-```@startuml
+```
+@startuml
 
 hide circle
 class Training {
